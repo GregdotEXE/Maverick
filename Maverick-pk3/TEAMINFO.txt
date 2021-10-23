@@ -1,0 +1,77 @@
+ClearTeams
+
+Team "Hunter Team"
+{
+   PlayerColor "38 B8 F8"
+   TextColor "Blue"
+   RailColor "00 FF 00"
+   FlagItem "MegaBlueFlag"
+   SkullItem "BlueSkullST"
+   SmallFlagHUDIcon "LFLG"
+   SmallSkullHUDIcon "STKEYS3"
+   LargeFlagHUDIcon "BFLASMAL"
+   LargeSkullHUDIcon "BSKUA0"
+   WinnerPic "LIGHTWIN"
+   LoserPic "LIGHTLOS"
+   WinnerTheme "HUNTWIN"
+   LoserTheme "HUNLOSS"
+   AllowCustomPlayerColor
+   PlayerStartThingNumber 5080
+}
+
+Team "Maverick Team"
+{
+	PlayerColor "FF 9B 9B"
+	TextColor "Red"
+	RailColor "FF 00 00"
+	FlagItem "MegaRedFlag"
+	SkullItem "RedSkullST"
+	SmallFlagHUDIcon "WFLG"
+	SmallSkullHUDIcon "STKEYS5"
+	LargeFlagHUDIcon "RFLASMAL"
+	LargeSkullHUDIcon "RSKUA0"
+	WinnerPic "WilyWin"
+	LoserPic "WilyLose"
+	WinnerTheme "WILYVIC"
+	LoserTheme "MM10RAIN"
+	AllowCustomPlayerColor
+	PlayerStartThingNumber 5081
+}
+
+Team "Repliforce Team"
+{
+	PlayerColor "B8 F8 18"
+	TextColor "Green"
+	RailColor "FF A5 00"
+	FlagItem "MegaGreenFlag"
+	SkullItem "GreenSkullST"
+	SmallFlagHUDIcon "CFLG"
+	SmallSkullHUDIcon "STKEYS5"
+	LargeFlagHUDIcon "YFLASMAL"
+	LargeSkullHUDIcon "YSKUA0"
+	WinnerPic "CosWin"
+	LoserPic "CosLose"
+	WinnerTheme "REPLWIN"
+	LoserTheme "REPLOSS"
+	AllowCustomPlayerColor
+	PlayerStartThingNumber 5083
+}
+
+Team "Nightmare Police Team"
+{
+	PlayerColor "F8 B8 00"
+	TextColor "Gold"
+	RailColor "80 00 80"
+	FlagItem "MegaYellowFlag"
+	SkullItem "YellowSkullST"
+	SmallFlagHUDIcon "KFLG"
+	SmallSkullHUDIcon "STKEYS5"
+	LargeFlagHUDIcon "BFLASMAL"
+	LargeSkullHUDIcon "BSKUA0"
+	WinnerPic "KNGWIN"
+	LoserPic "KNGLOSE"
+	WinnerTheme "NPOLWIN"
+	LoserTheme "NPOLOSS"
+	AllowCustomPlayerColor
+	PlayerStartThingNumber 5084
+}

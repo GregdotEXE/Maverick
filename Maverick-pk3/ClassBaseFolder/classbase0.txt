@@ -1,0 +1,462 @@
+actor ClassBase0 : PlayerPawn
+{
+player.displayname "megaman"
+player.soundclass "megaman"
+player.damagescreencolor "yellow"
+player.forwardmove 0.8, 0.8
+player.sidemove 0.78, 0.78
+player.jumpz 10
+Player.MaxHealth 100
+player.colorrange 0 0
+player.startitem "MegaBuster"
+player.startitem "BusterAmmo", 3
+player.startitem "BaseFlagPack", 1
+mass 9999
+gravity 0.8
++NODAMAGETHRUST
++DONTBLAST
++NOBLOOD
++QUICKTORETALIATE
+damagefactor "Dummy", 0.0
+Player.MaxSkinSizeFactor 0, 0
+scale 2.5
+bloodtype "MegamanBlood"
+var int user_hp;
+States
+{
+Spawn:
+"----" A 0
+"----" B 1
+"----" A 1
+Goto Spawn+2
+See:
+"----" BCDE 5
+Goto Spawn
+Missile:
+"----" F 5
+"----" G 4
+goto Spawn
+
+Pain.BotSight:
+"----" B 5 HealThing(1)
+Goto Spawn+2
+
+SuperSpawn:
+"----" A 1 A_Jump(256,"Spawn")
+wait
+SuperClassPain:
+"----" A 1 A_Jump(256,"ClassPain")
+wait
+SuperClassDeath:
+"----" A 1 A_Jump(256,"ClassDeath")
+wait
+
+MegamanPain:
+"----" A 0 ACS_NamedExecuteWithResult("core_decdmg_begin")
+"----" A 0 A_Pain
+"----" A 1 A_SpawnItemEx("PainFX",-5,0,3,0,0,0)
+"----" AAAAAAAAA 2 A_SpawnItemEx("PainFX",-5,0,3,0,0,0)
+"----" A 1
+goto SuperSpawn
+
+MegamanDeath:
+"----" A 0 ACS_NamedExecuteWithResult("core_decdmg_begin")
+"----" AAAAAAAAAAAAAAAAAAAA 1 A_JumpIfInventory("CriticalDeath",1,"MegamanGib")
+MegamanExplode:
+TNT1 A 0 A_SpawnItemEx("FakeDeathFX", 0, 0, 32)
+MegamanFall:
+TNT1 A 0 A_PlayerScream
+MegamanErase:
+TNT1 A 1 A_CheckPlayerDone
+wait
+MegamanGib:
+TNT1 A 0 A_GiveInventory("CriticalDeathGiver", 1)
+TNT1 A 0 A_SpawnItemEx("FakeDeathFX", 0, 0, 32)
+goto MegamanErase
+
+// SINGLEPLAYER STUFF
+TheEnd: // Used in the original ending
+"####" G 4
+loop
+WalkForward: 
+"####" BBBBBCCCCCDDDDDEEEEE 1 A_Recoil(-0.8)
+loop
+CreditWalk: 
+"####" BCDE 8
+loop
+CreditRun:
+"####" BCDE 5
+loop
+DozerCarry:
+"####" BBBBCCCCDDDDEEEEBBBBCCCCDDDDBBBBCCCCDDDD 1 A_Recoil(-1)
+"####" F 10 A_Stop
+"####" F -1
+stop
+DozerThrow:
+"####" F 0 A_ChangeFlag("THRUACTORS",1)
+"####" F 20 ThrustThingZ(0, 60, 0, 1)
+"####" G 20
+"####" A -1
+stop
+EndlessPain:
+"####" H -1
+stop
+
+Pain.ZeroSword:
+"----" H 0 A_GiveToTarget("TechniqueCounter",1)
+goto Pain+2
+
+Pain.Raikousen:
+"----" H 0 A_SpawnItemEx("ShockFX",4,0,32)
+"----" H 0 A_GiveInventory("Shocked",1)
+goto Pain+2
+
+Pain.EyeLaser:
+"----" H 0 A_GiveInventory("EyeLaserProtect",1)
+goto Pain+2
+
+Pain.SigmaVirusExplode:
+"----" H 0 A_GiveInventory("SigmaVirus",1)
+goto Pain+2
+
+Pain.BoomerangCutter:
+"----" H 0 A_GiveInventory("BoomerangCutterProtect",1)
+Goto Pain+2
+
+Pain.MothSpin:
+"----" H 0 A_GiveToTarget("CocoonAmmo",3)
+goto Pain+2
+
+Pain.MothJunk:
+"----" H 0 A_GiveInventory("MothJunkProtect",1)
+"----" H 0 A_GiveToTarget("CocoonAmmo",5)
+goto Pain+2
+
+Pain.CrawfishNet:
+"----" H 0 A_GiveInventory("NetSlow",1)
+"----" H 0 ACS_NamedExecuteAlways("tempJumpChanger",0,10,5,86)
+goto Pain+2
+
+//Fling
+Pain.KuwangerRam:
+"----" H 0 A_SpawnItemEx("BaseFlingerSuper")
+"----" H 0 ThrustThingZ(0,28,0,0)
+"----" H 0 A_PlaySoundEx("weapon/BASH1","BASH1")
+Goto Pain+2
+
+Pain.KuwangerToss:
+//"----" H 0 A_JumpIfInventory("FlightDisableFlag",1,2)
+"----" H 0
+"----" H 0 ThrustThingZ(0,80,0,0)
+"----" H 0 A_PlaySoundEx("weapon/BASH2","BASH2")
+Goto Pain+2
+Death.KuwangerToss:
+"----" H 0 ThrustThingZ(0,100,0,0)
+"----" H 0 A_SpawnItemEx("DeathKuwangerTossHit",1)
+"----" H 0 A_PlaySoundEx("weapon/BASH2","BASH2")
+Goto FlingDeath
+
+Pain.StormTornado:
+"----" H 0 ThrustThingZ(0,2,0,1)
+goto Pain+2
+
+Pain.ClassPain:
+Pain:
+"----" H 0 A_GiveInventory("PainScaleVelocityC",1)
+"----" H 0 A_GiveInventory("PainRecoilC",1)
+"----" H 0 A_TakeInventory("SuperEffective",1)
+"----" H 0 A_GiveInventory("EndBossFlashStoppered",1)
+"----" H 0 A_Pain
+"----" H 0 A_GiveInventory("TimeStoppedUnfreeze",1)
+"----" H 0
+"----" H 0 A_JumpIfInventory("SkipClassPainJump",1,"PainContinue")
+"----" H 0 A_Jump(256, "ClassPain")
+goto ClassPain
+ClassPain:
+"----" H 0
+goto PainContinue
+PainContinue:
+"----" "#" 0 A_GiveInventory("IsInPain",1)
+"----" "##########" 2 A_SpawnItemEx("PainFX_CBM",-5,0,3,0,0,0)//HHHHHHHHHH
+"----" H 1
+"----" H 0 A_Jump(256, "Spawn")
+"----" H 1 A_Jump(256, "Spawn")
+Goto Spawn
+
+Death:
+"----" H 0 A_GiveInventory("DeadClassBundle")
+"----" H 0 A_Jump(256,"DeathFix")
+goto DeathFix
+
+DeathFix://Used to show the H sprite for a class on death and check if a class should do a special death.
+"----" H 0
+"----" H 1
+goto DeathContinue
+
+ClassDeath://Used for special deaths. (such as grenademan cbm)
+"----" H 0
+"----" H 1
+goto MegaDeathEnd
+
+ClassDeathM://Placeholder to fix desync online
+"----" H 1
+goto MegaDeathEnd
+ClassDeathF:
+"----" H 19
+goto MegaDeathEnd
+ClassDeathR:
+"----" H 1
+goto RiseDeath
+ClassDeathRE:
+"----" H 1
+goto MegaDeathEnd
+ClassDeathI:
+"----" H 1
+goto IceDeath
+
+DeathContinue://Which state to hop to
+"----" H 0
+"----" H 0 A_JumpIfInventory("SpecialDeathFlag",1,"ClassDeath")
+"----" H 0 A_JumpIfInventory("InstagibFlag",1,"MegaDeathEnd")
+"----" H 0 A_JumpIfInventory("RiseDeathFlag",1,"RiseDeath")
+"----" H 0 A_JumpIfInventory("IceDeathFlag",1,"IceDeath")
+"----" H 19
+"----" H 0
+goto MegaDeathEnd
+
+RiseDeath:
+"----" H 1 ThrustThingZ(0,21,0,1)
+"----" H 0 A_JumpIf(ceilingz-z<64,"MegaDeathEnd")
+"----" H 0 A_GiveInventory("RiseDeathFlag2",1)
+"----" H 0 A_JumpIfInventory("RiseDeathFlag2",25,"MegaDeathEnd")
+Goto RiseDeath
+IceDeath:
+//"----" H 0 ACS_ExecuteAlways(998,0,DYE_ICEDEATHCBM,10)
+"----" H 1 A_PlaySoundEx("CBM/freeze","Voice")
+"----" HHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHH 1 A_SpawnItemEx("FrozenDeathBitFX",frandom(16,48),0,fRandom(16,48),0,0,0,random(0,359))
+"----" H 0 A_PlaySoundEx("CBM/icebreak","Body")
+"----" H 0 A_SpawnItemEx("FrozenDeathFXC",0,0,0)
+goto DeathWait
+Death.Falling:
+"----" H 0 A_GiveInventory("FallingFlag",1)
+"----" H 0 A_GiveInventory("DeadClassBundle")
+"----" H 0 A_SetTranslucent(0.0,0)
+"----" H 0 A_PlaySoundEx("*death","Voice")
+goto DeathWait
+
+MegaDeathEnd:
+"----" H 0 A_ChangeVelocity(0,0,0,CVF_REPLACE)
+"----" H 0 A_PlaySoundEx("*death","Voice")//A_XScream
+"----" H 0 A_JumpIf(ACS_ExecuteWithResult(143,0)>=0,3)//Check if team game
+"----" H 0 A_SpawnItemEx("FakeDeathFXC",0,0,32)
+"----" H 0 A_Jump(256,2)
+"----" H 0 A_SpawnItemEx("TFakeDeathFX",0,0,32,0,0,0,0,1)
+"----" H 0
+goto DeathWait
+
+DeathWait:
+MEGA Z 1 A_CheckPlayerDone
+wait
+}
+}
+
+actor BasicHitBase
+{
+Height 0
+Radius 0
++NOINTERACTION
+-SOLID
++NOGRAVITY
++MISSILE
+States
+{
+Spawn:
+TNT1 A 0
+TNT1 A 0
+stop
+}
+}
+
+
+actor BasicHitBaseF : BasicHitBase
+{
+var int user_HIT;
+}
+
+//FLING
+actor BaseFlinger
+{
+//+SERVERSIDEONLY
+PROJECTILE
++NOINTERACTION
++NOCLIP
++DONTBLAST
+damage 0
+radius 1
+height 1
+speed 0
+var int user_force;
+States
+{
+Spawn:
+TNT1 A 0
+TNT1 A 0 A_SetUserVar("user_force",-60)
+Spawn2:
+TNT1 A 0 A_TransferPointer(AAPTR_TARGET,AAPTR_DEFAULT,AAPTR_TARGET,AAPTR_TRACER) //target's target to self's tracer
+TNT1 A 0 A_FaceTracer
+TNT1 A 0 A_GiveInventory("TempPitProtect_P",1,AAPTR_TARGET)
+TNT1 A 0 ThrustThing(angle*256/360,user_force,1,ACS_ExecuteWithResult(257,0))
+stop
+Death:
+TNT1 A 0
+Stop
+}
+}
+
+Actor BaseFlingerWeakF : BaseFlinger
+{
+States
+{
+Spawn:
+TNT1 A 0
+TNT1 A 0 A_SetUserVar("user_force",-10)
+goto Super::Spawn2
+}
+}
+Actor BaseFlingerWeak : BaseFlinger
+{
+States
+{
+Spawn:
+TNT1 A 0
+TNT1 A 0 A_SetUserVar("user_force",-5)
+goto Super::Spawn2
+}
+}
+
+actor BaseFlinger2 : BaseFlinger
+{
+States
+{
+Spawn:
+TNT1 A 0
+TNT1 A 0 A_SetUserVar("user_force",-30)
+goto Super::Spawn2
+}
+}
+
+actor BaseFlinger3 : BaseFlinger
+{
+States
+{
+Spawn:
+TNT1 A 0
+TNT1 A 0 A_SetUserVar("user_force",-25)
+Spawn2:
+TNT1 A 0 A_TransferPointer(AAPTR_TARGET,AAPTR_DEFAULT,AAPTR_TARGET,AAPTR_TRACER)
+TNT1 A 0 A_FaceTracer
+TNT1 A 0 A_GiveInventory("TempPitProtect_P",1,AAPTR_TARGET)
+TNT1 A 0 ThrustThing(angle+random(-90,90)/360,user_force,1,ACS_ExecuteWithResult(257,0))
+stop
+}
+}
+
+actor BaseFlinger4 : BaseFlinger
+{
+States
+{
+Spawn:
+TNT1 A 0
+TNT1 A 0 A_SetUserVar("user_force",-35)
+goto Super::Spawn2
+}
+}
+
+actor BaseFlinger5 : BaseFlinger
+{
+States
+{
+Spawn:
+TNT1 A 0
+TNT1 A 0 A_SetUserVar("user_force",-25)
+goto Super::Spawn2
+}
+}
+
+actor BaseFlingerSuper : BaseFlinger
+{
+States
+{
+Spawn:
+TNT1 A 0
+TNT1 A 0 A_SetUserVar("user_force",-60)
+goto Super::Spawn2
+}
+}
+
+actor DeathKuwangerTossHit : BaseFlinger
+{
+states
+{
+Spawn:
+TNT1 A 0
+TNT1 A 0 A_SetUserVar("user_force",40)
+goto Super::Spawn2
+}
+}
+
+actor TempPitProtect : CustomInventory
+{
+States
+{
+Pickup:
+TNT1 A 0 A_JumpIf(ACS_ExecuteWithResult(804,66)>=1,"No")
+TNT1 A 0 A_JumpIfInventory("TempPitProtectFlag",1,"Pickup2")
+TNT1 A 0 A_ChangeFlag("NOBLOCKMONST",0)
+TNT1 A 0 A_SpawnItemEx("TempPitProtectEnder")
+Pickup2:
+TNT1 A 0 A_GiveInventory("TempPitProtectFlag",1)
+stop
+No:
+TNT1 A 0
+stop
+}
+}
+
+actor TempPitProtectFlag : Powerup
+{
+Powerup.Duration 35
+}
+
+actor TempPitProtectEnder
+{
+Height 0
+Radius 0
++NOINTERACTION
+-SOLID
++NOGRAVITY
++MISSILE
+States
+{
+Spawn:
+TNT1 A 0
+Spawn2:
+TNT1 A 1
+TNT1 A 0 A_JumpIfInTargetInventory("TempPitProtectFlag",1,"Spawn2")
+TNT1 A 0 A_GiveToTarget("TempPitProtectEnd", 1)
+stop
+}
+}
+
+actor TempPitProtectEnd : CustomInventory
+{
+States
+{
+Pickup:
+TNT1 A 0 A_JumpIfInventory("IsBot",1,"Pickup2")
+TNT1 A 0 A_ChangeFlag("NOBLOCKMONST",1)
+Pickup2:
+TNT1 A 0
+stop
+}
+}

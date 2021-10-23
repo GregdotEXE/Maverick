@@ -1,0 +1,37 @@
+actor FlameStag : ClassBase1
+{
+//player.ScoreIcon "C_X2##X"
+player.displayname "Flame Stag"
+Health 100
+Player.MaxHealth 100
+player.startitem "SpeedBurnerBoss"
+player.ForwardMove .8, .8
+player.SideMove .8, .8
+player.jumpz 10
+player.startitem "FSAmmo", 28
+player.startitem "NormalArmor"
+States
+{
+Spawn:
+BURN A 0
+BURN B 1
+BURN A 1
+Goto Spawn+2
+See:
+BURN BCDE 5
+Goto Spawn
+Missile:
+BURN F 5
+BURN G 4
+Goto Spawn+2
+ClassPain:
+BURN H 0
+goto PainContinue
+DeathFix:
+BURN H 0
+goto DeathContinue
+ClassDeath:
+BURN H 1
+goto MegaDeathEnd
+}
+}

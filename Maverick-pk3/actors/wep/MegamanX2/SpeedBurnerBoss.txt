@@ -1,0 +1,266 @@
+actor SpeedBurnerBoss : BaseMM8BDMWep
+{
+//$Category MM8BDM-Weapons
+//$Title Bubble Bomb
+//$Sprite BBOMA0
+Weapon.AmmoUse 2
+Weapon.AmmoGive 50
+Weapon.SlotNumber 5
+Obituary "$OB_BUBBLEBOMB"
+Tag "$TAG_BUBBLEBOMB"
+Inventory.Pickupmessage "FlameStag"
+weapon.ammotype "FSAmmo"
+inventory.icon "BBOMWI"
+States
+{
+SpawnLoop:
+BBOM A -1
+loop
+Ready:
+BBOM F 0 ACS_ExecuteAlways(998,0,198)
+BBOM F 0 A_TakeInventory("FSSwitch", 1)
+BBOM F 1 A_WeaponReady
+BBOM F 6 A_GiveInventory("FSAmmo",1)
+Goto Ready+2
+Deselect:
+TNT1 AAAAAAAAAAAAAAAAAAAAAA 0 A_Lower
+BBOM F 1 A_Lower
+Loop
+Select:
+TNT1 AAAAAAAAAAAAAAAAAAAAAA 0 A_Raise
+BBOM F 1 A_Raise
+Loop
+Fire:
+FHUD A 0 A_JumpIfNoAmmo("NoAmmo")
+FHUD A 1
+FHUD A 0 A_JumpIfInventory("FSSwitch", 1, "FireSwap")
+FHUD CD 1
+FHUD D 0 A_PlaySoundEx("weapon/solarshoot","Weapon")
+FHUD D 0 A_FireCustomMissile("FireBit3",0,1,8,0)
+FHUD D 0 A_GiveInventory("FSFrames", 1)
+FHUD D 0 A_GiveInventory("FSSwitch", 1)
+FHUD DEFG 1
+goto FireEnd
+FireSwap:
+FHUD JK 1
+BBOM F 0 A_PlaySoundEx("weapon/solarshoot","Weapon")
+BBOM F 0 A_FireCustomMissile("FireS",0,1,8,0)
+BBOM F 0 A_GiveInventory("FSFrames", 1)
+BBOM F 0 A_TakeInventory("FSSwitch", 1)
+FHUD KLMN 1
+goto FireEnd
+
+Altfire:
+HEAT G 0 A_TakeInventory("AtomicFireAmmo",12,TIF_NOTAKEINFINITE)
+BUST B 0 A_TakeInventory("WeaponCharge",999)
+FHUD A 0 A_JumpIfNoAmmo("NoAmmo")
+TNT1 A 0 A_StopSoundEx("SoundSlot5")
+FHUD A 0 A_JumpIfNoAmmo("NoAmmo")
+BUST B 0 A_PlaySoundEx("weapon/waveburner", "Weapon")
+FHUD A 0 A_JumpIfNoAmmo("NoAmmo")
+TENA E 0 A_Recoil(-10)
+DASH:
+FHUD A 0 A_JumpIfNoAmmo("NoAmmo")
+BUST C 0 A_TakeInventory("FSAmmo",1)
+BUST C 0 A_SpawnItemEx("FSBurn", 0, 0, 32, momx, momy, momz, 0, SXF_ABSOLUTEMOMENTUM)
+BUST CCD 1 
+ESPA I 0 A_Refire
+ESPA D 0 A_JumpIfNoAmmo("FireEndTrue")
+goto FireEndTrue
+
+FireEnd:
+TNT1 A 1 A_RailWait
+TNT1 A 0 A_JumpIfInventory("FSFrames", 1, "FrameRefireCheck")
+goto FireEndTrue
+FrameRefireCheck:
+TNT1 A 0 A_Refire("FireEnd")
+goto FireEndReleased
+FireEndReleased:
+TNT1 A 1 A_RailWait
+TNT1 A 0 A_JumpIfInventory("FSFrames", 1, "FireEndReleased")
+BBOM F 0 A_TakeInventory("FSSwitch", 1)
+goto FireEndTrue
+FireEndTrue:
+TNT1 A 0 A_JumpIfNoAmmo("NoAmmoReady")
+BBOM HG 2 A_WeaponReady
+Goto Ready+1
+NoAmmoReady:
+BBOM HG 2
+Goto Ready+1
+
+NoAmmo:
+BBOM F 1 ACS_Execute(979,0)
+Goto Ready+1
+}
+}
+
+actor FSSwitch : Once {}
+actor FSFrames : PowerUp { powerup.duration 15 }
+
+actor FSAmmo : Ammo
+{
+inventory.amount 1
+inventory.maxamount 50
++INVENTORY.IGNORESKILL
+}
+
+actor FSBurn
+{
+-BRIGHT
+PROJECTILE
+damagetype "WaveBurner"
+RenderStyle "Translucent"
+Alpha 0.70
+Speed 26
+Damage (3)
+radius 7
+height 7
+scale 7.5
+States
+{
+Spawn:
+MGM2 ABCDEF 1
+TNT1 A 0 A_SpawnItemEx("FSBurn2",-13,0,0,0,0,0,0)
+goto Death
+Death:
+TNT1 A 1
+stop
+}
+}
+
+actor FSBurn2
+{
+-BRIGHT
+PROJECTILE
+damagetype "WaveBurner"
+RenderStyle "Translucent"
+Alpha 0.55
+Speed 26
+Damage (1)
+radius 5
+height 5
+scale 6.7
+States
+{
+Spawn:
+TNT1 A 0 A_SpawnItemEx("FSBurn3",-13,0,0,0,0,0,0)
+MGM2 ABCDEF 1
+goto Death
+Death:
+TNT1 A 1
+stop
+}
+}
+
+actor FSBurn3
+{
+-BRIGHT
+PROJECTILE
+damagetype "WaveBurner"
+RenderStyle "Translucent"
+Alpha 0.30
+Speed 26
+radius 5
+height 5
+scale 4.5
+States
+{
+Spawn:
+MGM2 ABCDEF 1
+goto Death
+Death:
+TNT1 A 1
+stop
+}
+}
+
+
+ 
+ACTOR FireBit3
+{
+PROJECTILE
+-NOGRAVITY
++NOEXPLODEFLOOR
++STEPMISSILE
+maxstepheight 15
++BOUNCEONCEILINGS
++FORCEXYBILLBOARD
+BounceCount 1
+Damage (12)
+DamageType "BubbleLead"
+Obituary "$OB_BUBBLELEAD"
+Height 16
+Radius 20
+Scale 2.5
+gravity 3.0
+speed 22
+reactiontime 50
+States
+{
+Spawn:
+FIRE ABC 1 A_CountDown
+FIRE B 1 A_SpawnItemEx("WaveBurn",-1,0,1,0,0,1)
+loop
+XDeath:
+Crash:
+TNT1 A 0
+stop
+Death:
+TNT1 A 0 A_SpawnItemEx("pSnake0",-1,0,16,0,0,1)
+stop
+}
+}
+
+actor pSnake0 : FireBit3
+{
++NOGRAVITY
++STEPMISSILE
+maxstepheight 17
+States
+{
+Spawn:
+FIRE ABCB 0
+FIRE ABCB 0 A_ChangeVelocity(23,0,0, CVF_REPLACE | CVF_RELATIVE) //A_Recoil(-23)
+FIRE ABCB 1
+TNT1 A 0 A_JumpIf(z-floorz < 90, "SpawnFloor")
+TNT1 A 0 A_SpawnItemEx("FireBit3",0,0,0,23)
+stop
+SpawnFloor:
+BUBB A 0 A_SpawnItemEx("FireBit3",0,0,-(z-floorz),23)
+stop
+XDeath:
+Crash:
+TNT1 A 0
+stop
+Death:
+TNT1 A 0 A_JumpIf(ceilingz-z > 40, "Continue")
+TNT1 A 0
+stop
+Continue:
+TNT1 A 0 A_SpawnItemEx("pSnake0",0,0,4,0,0,18)
+stop
+}
+}
+
+actor FireS
+{
+PROJECTILE
++BRIGHT
+damagetype "FireStorm"
+Obituary "$OB_FIRESTORM"
+Radius 6
+Height 7
+scale 2.5
+damage (27)
+speed 40
+States
+{
+Spawn:
+FIRE ABC 2 A_SpawnItemEx("WaveBurn",-1,0,1,0,0,1)
+loop
+Death:
+TNT1 A 0
+TNT1 A 0 A_SpawnItemEx("OilPitIgnite",0,0,8)
+stop
+}
+}

@@ -1,0 +1,26 @@
+texture BARSIG
+pic BARSIGA tics 2
+pic BARSIGB tics 2
+pic BARSIGC tics 2
+pic BARSIGD tics 2
+
+texture BARWHE
+pic BARWHEA tics 2
+pic BARWHEB tics 2
+pic BARWHEC tics 2
+pic BARWHED tics 2
+
+texture BARMLAS
+allowdecals
+pic BARMLA1 tics 8
+pic BARMLA2 tics 8
+pic BARMLA3 tics 8
+pic BARMLA4 tics 8
+pic BARMLA5 tics 8
+pic BARMLA6 tics 8
+pic BARMLA7 tics 8
+pic BARMLA8 tics 8
+
+texture BHORLCK
+pic BHORLCK1 tics 12
+pic BHORLCK2 tics 12

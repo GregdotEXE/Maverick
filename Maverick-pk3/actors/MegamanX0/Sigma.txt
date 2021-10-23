@@ -1,0 +1,54 @@
+actor Sigma : ClassBase1
+{
+//Player.ScoreIcon
+player.DisplayName "Sigma"
+player.maxhealth 120
+health 120
+player.StartItem "SigmaVirusBoss"
+player.StartItem "ToScytheItem"
+player.ForwardMove 0.8, 0.8
+player.SideMove 0.78, 0.78
+player.startitem "CanWallJump"
+player.startitem "CanWallJumpStack", 5
+player.Jumpz 12
++NOSKIN
+States
+{
+Spawn:
+JUNM A 0
+JUNM B 1
+JUNM A 1
+Goto Spawn+2
+See:
+JUNM BCDE 5
+Goto Spawn
+Missile:
+JUNM FG 4
+goto Spawn
+
+ClassPain:
+JUNM H 0
+JUNM H 0 A_JumpIfInventory("ParryFlagS",1,"ClassPainParry1")
+JUNM H 0 A_JumpIfInventory("ParryFlagB",1,"ClassPainParry2")
+goto PainContinue
+ClassPainParry1:
+JUNM H 0 A_GiveInventory("SigmaSwordParry1_CI",1)
+JUNM H 0 HealThing(1,1)
+JUNM H 0 A_GiveInventory("SigmaParryArmor",1)
+JUNM H 0 A_GiveInventory("ParryIsHit",1)
+goto PainContinue
+ClassPainParry2:
+JUNM H 0 A_GiveInventory("SigmaSwordParry2_CI",1)
+JUNM H 0 HealThing(1,1)
+JUNM H 0 A_GiveInventory("SigmaParryArmor",1)
+JUNM H 0 A_GiveInventory("ParryIsHit",1)
+goto PainContinue
+
+DeathFix:
+JUNM H 0
+goto DeathContinue
+ClassDeath:
+JUNM H 0
+goto MegaDeathEnd
+}
+}

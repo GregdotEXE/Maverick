@@ -1,0 +1,265 @@
+actor OnceC : Inventory
+{
+inventory.amount 1
+inventory.maxamount 1
+}
+
+actor IsInGame : Inventory
+{
+inventory.amount 1
+inventory.maxamount 1
+}
+
+actor ZangiefAngle : Inventory
+{
+inventory.amount 1
+inventory.maxamount 255
+}
+
+actor IsPerformingSuplex : OnceC{}
+
+actor SuplexID : Inventory //ID of the player grabbed
+{
+inventory.amount 1
+inventory.maxamount 64
+}
+
+actor ProjectilePortDead : OnceC{}
+actor ProjectilePorting : Powerup
+{
+Powerup.Duration 3//2
+}
+
+actor IsLMSFlag : OnceC{}
+actor LMSCheckPickup : CustomInventory
+{
+States
+{
+Pickup:
+TNT1 A 0 A_JumpIf(ACS_ExecuteWithResult(975)==2,"Yes")
+stop
+Yes:
+TNT1 A 0 A_GiveInventory("IsLMSFlag",1)
+stop
+}
+}
+
+actor TeamColor_CI : CustomInventory
+{
+states
+{
+Pickup:
+TNT1 A 0 A_JumpIfInventory("LightTeamFlag",1,"FireB")
+TNT1 A 0 A_JumpIfInventory("WilyTeamFlag",1,"FireR")
+TNT1 A 0 A_JumpIfInventory("CossackTeamFlag",1,"FireO")
+TNT1 A 0 A_JumpIfInventory("KingTeamFlag",1,"FireP")
+TNT1 A 0 A_JumpIfInventory("IsInGame",1,"FireX")
+TNT1 A 0
+Done:
+TNT1 A 0
+stop
+}
+}
+
+actor PowerNoGravityFix : PowerFlight
+{
++NOGRAVITY
+Powerup.Duration 1
+}
+
+actor StaminaFlag : Ammo
+{
+inventory.amount 1
+inventory.maxamount 500
++INVENTORY.IGNORESKILL
+}
+
+//Jumps
+actor CanWallJump : OnceC{}
+actor CanAirJump : OnceC{}
+
+actor CanAirJumpLimit : Inventory
+{
+inventory.amount 1
+inventory.maxamount 99
+}
+actor CanAirJumpStack : CanAirJumpLimit{}
+actor CanWallJumpLimit : CanAirJumpLimit{}
+actor CanWallJumpStack : CanAirJumpLimit{}
+
+actor AirJumpBoost_P : CustomInventory
+{
+States
+{
+Pickup:
+TNT1 A 0 A_JumpIfInventory("FlightDisableFlag",1,"No")
+TNT1 A 0 A_JumpIfInventory("CanAirJumpLimit",1,"Jump")
+stop
+No:
+TNT1 A 0
+stop
+Jump:
+TNT1 A 0 A_TakeInventory("CanAirJumpLimit",1)
+TNT1 A 0 A_ChangeVelocity(momx,momy,CallACS("Mav_FetchJumpZ"),2)
+TNT1 A 0 A_GiveInventory("JumpCancler",1)
+stop
+}
+}
+
+actor PowerWallJumpSpeed : PowerSpeed
+{
+powerup.duration 7
+Speed 2.85
++POWERSPEED.NOTRAIL
+}
+
+actor WallJumpingCheck_P : CustomInventory
+{
+States
+{
+Pickup:
+TNT1 A 0 A_JumpIfInventory("FlightDisableFlag",1,"No")
+TNT1 A 0 A_JumpIfInventory("WallN",1,"JumpC")
+TNT1 A 0 A_JumpIfInventory("WallE",1,"JumpC")
+TNT1 A 0 A_JumpIfInventory("WallS",1,"JumpC")
+TNT1 A 0 A_JumpIfInventory("WallW",1,"JumpC")
+stop
+No:
+TNT1 A 0 
+stop
+JumpC:
+TNT1 A 0 A_JumpIfInventory("CanWallJumpLimit",1,"Jump")
+stop
+Jump:
+TNT1 A 0 A_GiveInventory("PowerWallJumpSpeed",1)
+TNT1 A 0 A_TakeInventory("CanWallJumpLimit",1)
+TNT1 A 0 ACS_NamedExecuteAlways("Mav_WallJumpThruster",0,10)
+stop
+}
+}
+
+
+actor WallJumping_P : CustomInventory
+{
+States
+{
+Pickup:
+TNT1 A 0 A_SpawnItemEx("WallCheckN",23,0,8,momx,momy,0,0,8,0)//momz
+TNT1 A 0 A_SpawnItemEx("WallCheckS",-23,0,8,momx,momy,0,0,8,0)
+TNT1 A 0 A_SpawnItemEx("WallCheckE",0,23,8,momx,momy,0,0,8,0)
+TNT1 A 0 A_SpawnItemEx("WallCheckW",0,-23,8,momx,momy,0,0,8,0)
+TNT1 A 0 A_SpawnItemEx("WallJumping_H")
+stop
+}
+}
+
+actor WallJumping_H : BasicHelper
+{
+States
+{
+Spawn:
+TNT1 A 0
+TNT1 A 1 A_GiveToTarget("WallJumpingCheck_P")
+TNT1 A 1
+stop
+}
+}
+
+actor WallN : OnceC{}
+actor WallS : WallN{}
+actor WallE : WallN{}
+actor WallW : WallN{}
+
+actor WallCheckN 
+{
+PROJECTILE
+//+RIPPER
+//+THRUACTORS
++THRUGHOST
++PAINLESS
++NOTARGETSWITCH
++DONTBLAST
++DONTREFLECT
++DONTSPLASH
+damage (0)
+Height 10
+Radius 10
+Speed 0
+States
+{
+Spawn:
+TNT1 A 0
+TNT1 A 0 A_TakeFromTarget("WallN",1)
+TNT1 A 1
+stop
+Death:
+TNT1 A 0
+TNT1 A 0 A_GiveToTarget("WallN",1)
+TNT1 A 1
+stop
+}
+}
+
+actor WallCheckS : WallCheckN
+{
+States
+{
+Spawn:
+TNT1 A 0
+TNT1 A 0 A_TakeFromTarget("WallS",1)
+TNT1 A 1
+stop
+Death:
+TNT1 A 0
+TNT1 A 0 A_GiveToTarget("WallS",1)
+TNT1 A 1
+stop
+}
+}
+
+actor WallCheckE : WallCheckN
+{
+States
+{
+Spawn:
+TNT1 A 0
+TNT1 A 0 A_TakeFromTarget("WallE",1)
+TNT1 A 1
+stop
+Death:
+TNT1 A 0
+TNT1 A 0 A_GiveToTarget("WallE",1)
+TNT1 A 1
+stop
+}
+}
+
+actor WallCheckW : WallCheckN
+{
+States
+{
+Spawn:
+TNT1 A 0
+TNT1 A 0 A_TakeFromTarget("WallW",1)
+TNT1 A 1
+stop
+Death:
+TNT1 A 0
+TNT1 A 0 A_GiveToTarget("WallW",1)
+TNT1 A 1
+stop
+}
+}
+
+Actor WallJumperCheck : CustomInventory
+{
+States
+{
+Pickup:
+TNT1 A 0 ACS_NamedExecuteAlways("WallJumpGiver",0,10)
+goto Done
+Done:
+TNT1 A 0
+stop
+}
+}

@@ -1,0 +1,36 @@
+Actor WheelGator : ClassBase1
+{
+player.ScoreIcon "C_X2A1X"
+player.DisplayName "WheelGator"
+player.maxhealth 125
+health 125
+player.StartItem "SpinWheelBoss"
+player.ForwardMove 0.68, 0.68
+player.SideMove 0.66, 0.66
+player.Jumpz 10
++NOSKIN
+States
+{
+Spawn:
+GROU A 0 
+GROU B 1
+GROU A 1
+Goto Spawn+2
+See:
+GROU BCDE 5
+Goto Spawn
+Missile:
+GROU F 5
+GROU G 4
+goto Spawn+2
+ClassPain:
+GROU H 0
+goto PainContinue
+DeathFix:
+GROU H 0
+goto DeathContinue
+ClassDeath:
+GROU H 1
+goto MegaDeathEnd
+}
+}

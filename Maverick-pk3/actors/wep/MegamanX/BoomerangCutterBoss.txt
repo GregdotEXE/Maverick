@@ -1,0 +1,507 @@
+actor BoomerangCutterBoss : BaseMM8BDMWepX
+{
+	Tag "BoomerKuwanger"
+	//Obituary 
+	Weapon.AmmoType "BoomerangCutterAmmo"
+	Inventory.PickupMessage "What's a Kuwanger?!??!"
+	States
+	{
+		Spawn:
+		C_X1 A 1
+		loop
+
+		Ready:
+		//CUTA A 0 ACS_ExecuteAlways(998,0,DYE_BOOMERKUWANGER)
+		BKUW A 0
+		BKUW A 0 A_GunFlash
+		goto Ready1
+
+		Ready1:
+		BKUW A 8 A_WeaponReady(WRF_ALLOWRELOAD)
+		BKUW A 0 A_GiveInventory("BoomerangCutterAmmo",3)
+		loop
+
+		Deselect:
+		TNT1 AAAAAAAAAAAAAAAAAAAAAA 0 A_Lower
+		DRIA A 1 A_Lower
+		Loop
+		
+		Select:
+		TNT1 AAAAAAAAAAAAAAAAAAAAAA 0 A_Raise
+		DRIA A 1 A_Raise
+		Loop
+		
+		Fire:
+		BKUW A 0 A_TakeInventory("RollingCutterFlag",99)
+		TNT1 A 0 A_TakeInventory("CutterReturned",99)
+		BKUW D 2 A_GiveInventory("CutterFlagX",1)
+		BKUW D 2
+		BKUW D 2 OffSet(0,3)
+		BKUW D 2 OffSet(8,-6)
+		BKUW C 1 OffSet(10,3)
+		BKUW C 1 OffSet(12,9)
+		BKUW C 1 OffSet(14,15)
+		BKUW C 1 OffSet(16,21)
+		BKUW B 1 OffSet(3,8)
+		BKUW B 1 OffSet(6,16)
+		BKUW B 1 OffSet(9,32) A_GiveInventory("KuwangerMain_CI",1)
+		BKUW B 1 OffSet(12,64)
+		TNT1 A 5
+		Check:
+		TNT1 A 0 A_JumpIfInventory("RollingCutterFlag",1,"Return")
+		TNT1 A 1 A_GiveInventory("MissingCutter",3)
+		TNT1 A 1 A_GiveInventory("BoomerangCutterAmmo",1)
+		TNT1 A 0 A_JumpIfInventory("MissingCutter",50,"Return")
+		TNT1 A 0 A_PlaySoundEx("weapon/BKCUTT","Weapon",0)
+		loop
+		Return:
+		TNT1 A 0 A_TakeInventory("MissingCutter",999)
+		TNT1 A 0 A_TakeInventory("RollingCutterFlag",99)
+		TNT1 A 0 A_TakeInventory("CutterFlagX",99)
+		TNT1 A 0 A_GiveInventory("CutterReturned",1)
+		BKUW C 1 OffSet(-14,-10)
+		BKUW C 1 OffSet(-8,-8)
+		BKUW C 1 OffSet(-2,-2)
+		BKUW A 2 OffSet(-2,18)
+		BKUW A 2 OffSet(4,24) A_TakeInventory("MissingCutter",999)
+		BKUW A 1
+		Goto Ready+1
+
+		AltFire:
+		BKUW A 0
+		BKUW A 0 A_JumpIfInventory("BoomerangCutterAmmo",28,"KuwangerDash")
+		Goto NoAmmo
+		KuwangerDash:
+		TNT1 A 0 A_PlaySoundEx("weapon/BKDASH","Weapon",0)
+		BKUW E 1 OffSet(0,10)
+		BKUW E 1 OffSet(0,13)
+		BKUW E 1 OffSet(0,18)
+		BKUW F 2
+		BKUW F 0 A_FireCustomMissile("KuwangerToss",0,0,0,0)
+		BKUW E 1 ThrustThingZ(0,0,1,0)
+		BKUW G 1 OffSet(0,-5)
+		BKUW G 1 OffSet(0,-10)
+		BKUW G 1 OffSet(0,-15)
+		BKUW F 0 A_TakeInventory("BoomerangCutterAmmo",28)
+		BKUW F 0 A_Refire("KuwangerDash2")
+		goto Ready1
+		KuwangerDash2:
+		BKUW E 0 ACS_ExecuteAlways(191,0,APROP_JumpZ,0,1)
+		BKUW E 0 SetPlayerProperty(0,1,0)
+		BKUW F 2
+		BKUW F 6
+		BKUW E 1 OffSet(0,5)
+		BKUW E 1 OffSet(0,7)
+		BKUW E 1 OffSet(0,10)
+		BKUW E 1 OffSet(0,13)
+		BKUW E 1 OffSet(0,16)
+		BKUW E 1 OffSet(0,20)
+		BKUW E 0 A_FireCustomMissile("KuwangerRam",0,0,0,0)
+		BKUW E 0 ThrustThingZ(0,0,1,0)
+		BKUW E 1 ThrustThingZ(0,0,1,0)
+		BKUW E 0 A_Recoil(-32)
+		BKUW E 1 OffSet(0,-5)
+		BKUW E 1 OffSet(0,-10)
+		BKUW E 0 ThrustThingZ(0,0,1,0)
+		BKUW E 1 OffSet(0,-10)
+		BKUW E 1 OffSet(0,-20)
+		BKUW E 1 OffSet(0,-25)
+		BKUW E 1 OffSet(0,-40)
+		BKUW E 1 OffSet(0,-60)
+		BKUW E 1 OffSet(0,-100)
+		BKUW E 1 OffSet(0,-120)
+		BKUW E 1 OffSet(0,-160)
+		BKUW E 1 OffSet(0,-200)
+		BKUW E 1 OffSet(0,-240)
+		BKUW E 1 OffSet(0,-280)
+		BKUW A 1 OffSet(0,73)
+		BKUW A 1 OffSet(0,70)
+		BKUW A 1 OffSet(0,67)
+		BKUW A 1 OffSet(0,64)
+		BKUW A 1 OffSet(0,61)
+		BKUW A 1 OffSet(0,58)
+		BKUW A 1 OffSet(0,55)
+		BKUW A 1 OffSet(0,52)
+		BKUW A 1 OffSet(0,48)
+		BKUW A 1 OffSet(0,42)
+		BKUW A 1 OffSet(0,39)SetPlayerProperty(0,0,0)
+		BKUW A 1 OffSet(0,33)
+		BKUW E 0 ACS_ExecuteAlways(191,0,APROP_JumpZ,12.5,1)
+		BKUW A 0 A_Refire
+		goto Ready1
+		
+		Reload:
+		CUTA A 0
+		CUTA A 0 A_JumpIfInventory("BoomerangCutterAmmo",56,"CutterTStart")
+		Goto NoAmmo
+		CutterTStart:
+		CUTA A 1 A_GiveInventory("CutterTThrow",1)
+		CUTA A 0 A_ChangeFlag("NOTELEPORT",1)
+		CUTA A 0 A_ChangeFlag("SOLID",0)
+		CUTA A 0 A_TakeInventory("UnSolid",1)
+		CUTA A 1 A_ChangeFlag("PICKUP",0)
+		CUTA A 1 A_GiveInventory("KuwangerReload_CI",1)
+		TNT1 A 0 A_PlaySoundEx("weapon/BKTELE","Weapon",0)
+		BKUW A 0 A_TakeInventory("RollingCutterFlag",99)
+		TNT1 A 0 A_TakeInventory("CutterReturned",99)
+		BKUW D 2 A_GiveInventory("CutterFlagX",1)
+		CUTA C 1
+		CUTA C 1 OffSet(-70,72)
+		CUTA C 1 OffSet(-121,112)
+		CUTA F 2 OffSet(1,33)
+		CUTA F 2 OffSet(-21,56)
+		CUTA F 2 OffSet(-35,84)
+		TNT1 A 5
+		Check:
+		TNT1 A 0 A_JumpIfInventory("RollingCutterFlag",1,"TeleportC")
+		TNT1 A 1 A_GiveInventory("MissingCutter",25)
+		TNT1 A 0 A_JumpIfInventory("MissingCutter",50,"TeleportC")
+		loop
+		TeleportC:
+		TNT1 A 0 A_TakeInventory("MissingCutter",999)
+		TNT1 A 0 A_TakeInventory("RollingCutterFlag",99)
+		TNT1 A 0 A_TakeInventory("CutterFlagX",99)
+		TNT1 A 0 A_GiveInventory("CutterReturned",1)
+		CUTA A 4
+		CUTA A 0 A_JumpIf(1,1)
+		CUTA A 1 A_GiveInventory("CutterTEnd",1)
+		CUTA A 0 A_TakeInventory("BoomerangCutterAmmo",56)
+		CUTA A 0 A_ChangeFlag("PICKUP",1)
+		CUTA A 0 A_ChangeFlag("NOTELEPORT",0)
+		CUTA A 0 A_SpawnItemEx("ReSolidifier")
+		CUTA A 12 A_TakeInventory("ProjectilePortDead",99)
+		//CUTA A 0 A_PlaySound("classes/GalaxyTeleport",1,0.5)
+		CUTA A 4
+		CUTA AAAAA 1
+		CUTA A 4
+		Goto Ready+1
+		
+		
+		NoAmmo:
+		CUTA A 9 A_GiveInventory("BoomerangCutterAmmo",3)
+		goto Ready+1
+		
+	}
+}
+
+/////////////////////
+/*----Inventory----*/
+/////////////////////
+actor CutterReturned : OnceC{}
+
+actor CutterFlagX : OnceC{}
+
+actor BoomerangCutterFlag : Once {}
+actor CutterTEnd : Once {}
+
+actor BoomerangCutterAmmo : Ammo
+{
+	inventory.amount 1
+	inventory.maxamount 84
+	+INVENTORY.IGNORESKILL
+}
+
+actor MissingCutter : Inventory
+{
+	inventory.amount 1
+	inventory.maxamount 50
+}
+
+actor CutterTCooldown : Powerup
+{
+	Powerup.Duration 35
+}
+
+actor CutterTPickupSync : CustomInventory
+{
+	States
+	{
+		Pickup:
+		TNT1 A 0 A_GiveInventory("CutterTCooldown",1)
+		TNT1 A 0 A_SetTranslucent(0.0,0)
+		stop
+	}
+}
+
+actor CutterTPickupSync2 : CustomInventory
+{
+States
+{
+Pickup:
+TNT1 A 0 A_SetTranslucent(1.0,0)
+stop
+}
+}
+
+actor CutterTThrow : CustomInventory
+{
+States
+{
+Pickup:
+TNT1 A 0 A_TakeInventory("CutterTEnd",99)
+stop
+}
+}
+
+actor BoomerangCutterProtect : PowerProtection
+{
+Powerup.Duration 20
+DamageFactor "BoomerangCutter", 0.2
+}
+
+///////////////////
+/*----Weapons----*/
+///////////////////
+actor BoomerangCutter
+{
+	Translation "202:202=4:4"
+	PROJECTILE
+	Obituary "$OB_BOOMERANGCUTTER"
+	damagetype "BoomerangCutter"
+	+DONTSPLASH
+	+HEXENBOUNCE
+	+RIPPER
+	+NOTARGETSWITCH
+	+SKYEXPLODE
+	bouncefactor 1.0
+	wallbouncefactor 1.0
+	reactiontime 48
+	damage (20)
+	Radius 8
+	Height 8
+	scale 2.5
+	speed 38
+	States
+	{
+		Spawn:
+		TNT1 A 0 
+		SpawnLOOP:
+		RCTC ABCD 1
+		TNT1 A 0 A_PlaySoundEx("weapon/BKCUTT","Weapon",0)
+		RCTC ABCDABCD 1
+		TNT1 A 0 A_PlaySoundEx("weapon/BKCUTT","Weapon",0)
+		RCTC ABCDABCD 1
+		TNT1 A 0 A_PlaySoundEx("weapon/BKCUTT","Weapon",0)
+		RCTC ABCD 1
+		TNT1 A 0 A_PlaySoundEx("weapon/BKCUTT","Weapon",0)
+		RCTC A 0 A_TakeFromTarget("MissingCutter",999)
+		RCTC A 0 A_SpawnItemEx("ReturningBoomerangCutter",0,0,0,0,0,0,0,1)
+		stop
+		Death2:
+		RCTC A 0 A_GiveToTarget("BoomerangCutterFlag",1)
+		stop
+		Death:
+		RCTC A 0 A_GiveToTarget("BoomerangCutterFlag",1)
+		stop
+	}
+}
+actor BoomerangCutterB : BoomerangCutter{translation "202:202=205:205"}
+actor BoomerangCutterR : BoomerangCutter{translation "202:202=171:171"}
+actor BoomerangCutterO : BoomerangCutter{translation "202:202=104:104"}
+actor BoomerangCutterP : BoomerangCutter{translation "202:202=229:229"}
+
+actor ReturningBoomerangCutter : BoomerangCutter
+{
+	+NOINTERACTION
+	+SEEKERMISSILE
+	reactiontime 87
+	damage (20)
+	speed 38
+	States
+	{
+		Spawn:
+		RCTC A 0
+		TNT1 A 0
+		SpawnLOOP:
+		RCTC A 0 A_JumpIf(ACS_ExecuteWithResult(649)==0,"Death2")
+		RCTC A 0 A_RearrangePointers(AAPTR_DEFAULT,AAPTR_DEFAULT,AAPTR_TARGET)
+		RCTC A 0 A_FaceTarget
+		goto Spawn2
+		Spawn2:
+		RCTC A 0 A_TakeFromTarget("MissingCutter",50)
+		RCTC A 1 A_JumpIfCloser(58,"Death")
+		RCTC AA 0 A_SeekerMissile(90,90,SMF_PRECISE)
+		RCTC A 1 A_JumpIfCloser(58,"Death")
+		RCTC BB 0 A_SeekerMissile(90,90,SMF_PRECISE)
+		RCTC B 1 A_JumpIfCloser(58,"Death")
+		RCTC CC 0 A_SeekerMissile(90,90,SMF_PRECISE)
+		RCTC C 1 A_JumpIfCloser(58,"Death")
+		RCTC DD 0 A_SeekerMissile(90,90,SMF_PRECISE)
+		RCTC D 1 A_JumpIfCloser(58,"Death")
+		RCTC A 0 A_CountDown
+		RCTC A 0 A_JumpIf(ACS_ExecuteWithResult(649)==0,"Death2")
+		loop
+	}
+}
+
+actor BoomerangCutterT
+{
+	translation "199:199=176:176","202:202=218:218"
+	PROJECTILE
+	Damagetype "BoomerangCutter"
+	//Obituary "$OB_MAGICBALL"
+	+DONTBLAST
+	+DONTREFLECT
+	+DONTSPLASH
+	+THRUGHOST
+	+HEXENBOUNCE
+	+RIPPER
+	+NOTARGETSWITCH
+	+SKYEXPLODE
+	bouncefactor 1.0
+	wallbouncefactor 1.0
+	reactiontime 24
+	damage (10)
+	Radius 8
+	Height 8
+	scale 2.5
+	speed 30
+	states
+	{
+		Spawn:
+		RCTC A 0
+		RCTC A 0 ACS_ExecuteAlways(815,0,200)
+		RCTC A 0 A_GiveToTarget("CutterTPickupSync",1)
+		RCTC ABCD 1 A_JumpIfInTargetInventory("CutterTEnd",1,"Death")
+		TNT1 A 0 A_PlaySoundEx("weapon/BKCUTT","Weapon",0)
+		RCTC A 0 A_GiveToTarget("CutterTPickupSync",1)
+		RCTC ABCD 1 A_JumpIfInTargetInventory("CutterTEnd",1,"Death")
+		TNT1 A 0 A_PlaySoundEx("weapon/BKCUTT","Weapon",0)
+		goto Spawn2+3
+		Spawn2:
+		RCTC A 0 A_GiveToTarget("CutterTCooldown",1)
+		RCTC ABCDABCD 1 A_JumpIfInTargetInventory("CutterTEnd",1,"Death")
+		TNT1 A 0 A_PlaySoundEx("weapon/BKCUTT","Weapon",0)
+		RCTC A 0 A_CountDown
+		loop
+		Death:
+		TNT1 A 0 A_GiveInventory("ProjectilePortDead",1)
+		TNT1 A 0 A_ChangeFlag("NOINTERACTION",1)
+		TNT1 A 0 A_ChangeFlag("NOGRAVITY",1)
+		TNT1 A 0 A_GiveToTarget("CutterTEnd",1)
+		TNT1 AB 1 A_GiveToTarget("CutterTPickupSync2",1)
+		stop
+	}
+}
+actor BoomerangCutterTB : BoomerangCutterT{translation "202:202=205:205"}
+actor BoomerangCutterTR : BoomerangCutterT{translation "202:202=171:171"}
+actor BoomerangCutterTO : BoomerangCutterT{translation "202:202=104:104"}
+actor BoomerangCutterTP : BoomerangCutterT{translation "202:202=229:229"}
+		
+actor KuwangerRam
+{
+	PROJECTILE
+	damagetype "KuwangerRam"
+	//Obituary 
+	+DONTBLAST
+	+DONTREFLECT
+	+THRUGHOST
+	Bouncetype Hexen
+	-ALLOWBOUNCEONACTORS
+	+CANBOUNCEWATER
+	+NOEXPLODEFLOOR
+	BounceFactor 1.0
+	WallBounceFactor 1.0
+	BounceCount 0
+	ReactionTime 10
+	damage (15)
+	Radius 16
+	Height 25
+	speed 10
+	scale 2.5
+	States
+	{
+		Spawn:
+		TNT1 A 0
+		TNT1 A 1 A_Warp(2,24,0,16,0,72)
+		TNT1 A 0 A_CountDown
+		loop
+		Death:
+		TNT1 A 1
+		stop
+	}
+}
+
+actor KuwangerToss
+{
+	PROJECTILE
+	damagetype "KuwangerToss"
+	//Obituary 
+	+DONTBLAST
+	+DONTREFLECT
+	+THRUGHOST
+	Bouncetype Hexen
+	-ALLOWBOUNCEONACTORS
+	+CANBOUNCEWATER
+	+NOEXPLODEFLOOR
+	BounceFactor 1.0
+	WallBounceFactor 1.0
+	BounceCount 0
+	ReactionTime 10
+	damage (25)
+	Radius 16
+	Height 25
+	speed 10
+	scale 2.5
+	states
+	{
+		Spawn:
+		TNT1 A 10
+		stop
+	}
+}
+
+/////////////////////
+/*----Weapon CI----*/
+/////////////////////
+actor KuwangerMain_CI : TeamColor_CI
+{
+	states
+	{
+		FireX:
+		TNT1 A 0 A_FireCustomMissile("BoomerangCutter",0,0,0,0)
+		goto Done
+		
+		FireB:
+		TNT1 A 0 A_FireCustomMissile("BoomerangCutterB",0,0,0,0)
+		goto Done
+		
+		FireR:
+		TNT1 A 0 A_FireCustomMissile("BoomerangCutterR",0,0,0,0)
+		goto Done
+		
+		FireO:
+		TNT1 A 0 A_FireCustomMissile("BoomerangCutterO",0,0,0,0)
+		goto Done
+		
+		FireP:
+		TNT1 A 0 A_FireCustomMissile("BoomerangCutterP",0,0,0,0)
+		goto Done
+	}
+}
+
+actor KuwangerReload_CI : TeamColor_CI
+{
+	states
+	{
+		FireX:
+		TNT1 A 0 A_FireCustomMissile("BoomerangCutterT",0,0,0,0)
+		goto Done
+		
+		FireB:
+		TNT1 A 0 A_FireCustomMissile("BoomerangCutterTB",0,0,0,0)
+		goto Done
+		
+		FireR:
+		TNT1 A 0 A_FireCustomMissile("BoomerangCutterTR",0,0,0,0)
+		goto Done
+		
+		FireO:
+		TNT1 A 0 A_FireCustomMissile("BoomerangCutterTO",0,0,0,0)
+		goto Done
+		
+		FireP:
+		TNT1 A 0 A_FireCustomMissile("BoomerangCutterTP",0,0,0,0)
+		goto Done
+	}
+}

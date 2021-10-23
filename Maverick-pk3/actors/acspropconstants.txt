@@ -1,0 +1,19 @@
+const int APROP_Health = 0;
+const int APROP_Speed = 1;
+const int APROP_JumpZ = 12;
+const int APROP_Gravity	 = 15;
+const int APROP_SpawnHealth	= 17;
+const int APROP_Dropped	= 18;
+const int APROP_DamageFactor = 24;
+const int APROP_Height = 35;
+const int APROP_Radius = 36;
+const int APROP_Reactiontime = 37;
+const int APROP_MeleeRange = 38;
+
+const int STICKYMODE_GUTSLIFT = 0;
+const int STICKYMODE_MAGFLY   = 1;
+
+const int CLCVAR_GIBS = 1;
+
+//const int SXF_WEPTRANS = SXF_TRANSFERTRANSLATION;
+const int SXF_WEPFXTRANS = SXF_TRANSFERTRANSLATION;

@@ -1,0 +1,1030 @@
+Actor XBusterBoss : BaseMM8BDMWepX
+{
+	Tag "MegamanX"
+	//Obituary
+	Weapon.ammotype "XDashAmmo"
+	Weapon.ammotype2 "ArmorAmmo"
+	States
+	{
+		Spawn:
+		TNT1 A 1
+		loop
+		
+		Ready:
+		BUST B 0
+		BUST B 0 A_GunFlash
+		goto Ready1
+		
+		Ready1:
+		BUST B 8 A_WeaponReady(WRF_ALLOWRELOAD)
+		BUST B 1
+		loop
+		
+		Deselect:
+		TNT1 AAAAAAAAAAAAAAAAAAAAAA 0 A_Lower
+		DRIA A 1 A_Lower
+		Loop
+		
+		Select:
+		TNT1 AAAAAAAAAAAAAAAAAAAAAA 0 A_Raise
+		DRIA A 1 A_Raise
+		Loop
+		
+		Fire:
+		BUST B 0 A_JumpIfInventory("IsPicking",1,"GiveFirstArmor")
+		BUST B 1
+		goto Hold
+		Hold:
+		BUST B 0 A_JumpIfInventory("WeaponCharge",8,"Charge")
+		BUST B 2 A_GiveInventory("WeaponCharge",1)
+		BUST B 0 A_Refire
+		goto MegaShot
+		Charge:
+		BUST B 0 A_JumpIfInventory("WeaponCharge",20,"Charge2")
+		BUST B 1 //ACS_ExecuteAlways(998,0,14981,1)
+		BUST B 2 A_GiveInventory("WeaponCharge",1)
+		BUST B 1 //ACS_ExecuteAlways(998,0,14980,1)
+		BUST B 0 A_Refire
+		Goto MegaShot
+		Charge2:
+		BUST B 1 //ACS_ExecuteAlways(998,0,14983,1)
+		BUST B 1
+		BUST B 1 //ACS_ExecuteAlways(998,0,14980,1)
+		BUST B 0 A_Refire
+		Goto MegaShot
+		
+		MegaShot:
+		BUST B 3
+		BUST B 0 A_JumpIfInventory("WeaponCharge",20,"BigLemonShoot")
+		BUST B 0 A_JumpIfInventory("WeaponCharge",8,"MidLemonShoot")
+		BUST B 2 A_GiveInventory("MegamanXMain_CI",1)
+		goto Ender
+		MidLemonShoot:
+		BUST B 2 A_GiveInventory("MegamanXMain2_CI",1)
+		goto Ender
+		BigLemonShoot:
+		BUST B 2 A_GiveInventory("MegamanXMain3_CI",1)
+		goto Ender
+		Ender:
+		BUST B 5 A_TakeInventory("WeaponCharge",999)
+		goto Ready1
+		GiveFirstArmor:
+		TNT1 A 0 A_GiveInventory("FirstArmorPickup",1)
+		goto Ready1
+		
+		Altfire:
+		BUST B 0 A_JumpIfInventory("IsPicking",1,"GiveSecondArmor")
+		BUST B 1 A_JumpIf(floorz-z==0,"Dash")
+		goto Ready1
+		Dash:
+		BUST B 0 A_ChangeVelocity(40,0,momz,3)
+		BUST B 0 A_SetArg(3,momy)
+		BUST B 0 A_SetArg(2,momx)
+		BUST B 20
+		goto Ready1
+		GiveSecondArmor:
+		TNT1 A 0 A_GiveInventory("SecondArmorPickup",1)
+		goto Ready1
+		
+		Reload:
+		BUST B 0 A_JumpIfInventory("IsPicking",1,"GiveThirdArmor")
+		BUST B 0 A_JumpIfInventory("CanGiga",1,"GrabStart")
+		goto Ready1
+		GrabStart:
+		BUST B 35 SetPlayerProperty(0,1,0)
+		BUST B 0 A_ChangeVelocity(60,0,momz,3)
+		BUST B 0 A_SetArg(3,momy)
+		BUST B 0 A_SetArg(2,momx)
+		GrabCheck:
+		BUST B 1 A_SpawnItemEx("GrabCheck",8,0,-8,momx,momy,momz,0,8)
+		BUST B 0 A_JumpIfInventory("SuplexID",1,"ShiningFinger")
+		BUST B 1 A_SpawnItemEx("GrabCheck",8,0,-8,momx,momy,momz,0,8)
+		BUST B 0 A_JumpIfInventory("SuplexID",1,"ShiningFinger")
+		BUST B 1 A_SpawnItemEx("GrabCheck",8,0,-8,momx,momy,momz,0,8)
+		BUST B 0 A_JumpIfInventory("SuplexID",1,"ShiningFinger")
+		BUST B 1 A_SpawnItemEx("GrabCheck",8,0,-8,momx,momy,momz,0,8)
+		BUST B 0 A_JumpIfInventory("SuplexID",1,"ShiningFinger")
+		BUST B 1 A_SpawnItemEx("GrabCheck",8,0,-8,momx,momy,momz,0,8)
+		BUST B 0 A_JumpIfInventory("SuplexID",1,"ShiningFinger")
+		BUST B 1 A_SpawnItemEx("GrabCheck",8,0,-8,momx,momy,momz,0,8)
+		BUST B 0 A_JumpIfInventory("SuplexID",1,"ShiningFinger")
+		BUST B 1 A_SpawnItemEx("GrabCheck",8,0,-8,momx,momy,momz,0,8)
+		BUST B 0 A_JumpIfInventory("SuplexID",1,"ShiningFinger")
+		BUST B 1 A_SpawnItemEx("GrabCheck",8,0,-8,momx,momy,momz,0,8)
+		BUST B 0 A_JumpIfInventory("SuplexID",1,"ShiningFinger")
+		BUST B 1 A_SpawnItemEx("GrabCheck",8,0,-8,momx,momy,momz,0,8)
+		BUST B 0 A_JumpIfInventory("SuplexID",1,"ShiningFinger")
+		BUST B 1 A_SpawnItemEx("GrabCheck",8,0,-8,momx,momy,momz,0,8)
+		BUST B 0 A_JumpIfInventory("SuplexID",1,"ShiningFinger")
+		BUST B 1 A_SpawnItemEx("GrabCheck",8,0,-8,momx,momy,momz,0,8)
+		BUST B 0 A_JumpIfInventory("SuplexID",1,"ShiningFinger")
+		goto Ready1
+		ShiningFinger:
+		BUST B 1 A_JumpIf(CallACS("mav_ZangiefGrab",350,angle*256/360,70)==0,"ShiningFingerEnd")
+		BUST B 1 A_JumpIf(CallACS("mav_ZangiefGrab",350,angle*256/360,70)==0,"ShiningFingerEnd")
+		BUST B 1 A_JumpIf(CallACS("mav_ZangiefGrab",350,angle*256/360,70)==0,"ShiningFingerEnd")
+		BUST B 1 A_JumpIf(CallACS("mav_ZangiefGrab",350,angle*256/360,70)==0,"ShiningFingerEnd")
+		BUST B 1 A_JumpIf(CallACS("mav_ZangiefGrab",350,angle*256/360,70)==0,"ShiningFingerEnd")
+		BUST B 1 A_JumpIf(CallACS("mav_ZangiefGrab",350,angle*256/360,70)==0,"ShiningFingerEnd")
+		BUST B 1 A_JumpIf(CallACS("mav_ZangiefGrab",350,angle*256/360,70)==0,"ShiningFingerEnd")
+		BUST B 1 A_JumpIf(CallACS("mav_ZangiefGrab",350,angle*256/360,70)==0,"ShiningFingerEnd")
+		BUST B 1 A_JumpIf(CallACS("mav_ZangiefGrab",350,angle*256/360,70)==0,"ShiningFingerEnd")
+		BUST B 1 A_JumpIf(CallACS("mav_ZangiefGrab",350,angle*256/360,70)==0,"ShiningFingerEnd")
+		BUST B 1 A_FireCustomMissile("ShiningExplosion",0,1,0,0)
+		ShiningFingerEnd:
+		TNT1 A 0 SetPlayerProperty(0,0,0)
+		TNT1 A 0 A_TakeInventory("IsPerformingSuplex",999)
+		BUST B 0 A_GiveInventory("WeaponCharge",10)
+		BUST B 1 A_TakeInventory("CanGiga",1)
+		goto Ready1
+		GiveThirdArmor:
+		TNT1 A 0 A_GiveInventory("ThirdArmorPickup",1)
+		goto Ready1
+	}
+}
+
+actor ArmorUpItem : CustomInventory
+{
+	inventory.amount 1
+	inventory.maxamount 1
+	inventory.icon "MEGAZ"
+	scale 2.0
+	+INVBAR
+	States
+	{
+		Spawn:
+		MEGA Z 1
+		loop
+		Use:
+		TNT1 A 0 A_JumpIfInventory("ArmorAmmo",150,"Use2")
+		fail
+		Use2:
+		TNT1 A 1 A_GiveInventory("IsPicking",1)
+		fail
+		GiveFirstArmor:
+		TNT1 A 0
+		fail
+		GiveThirdArmor:
+		TNT1 A 0
+		fail
+	}
+}
+
+Actor FirstArmorPickup : CustomInventory
+{
+	States
+	{
+		Pickup:
+		TNT1 A 0 A_TakeInventory("ArmorAmmo",150)
+		TNT1 A 0 A_TakeInventory("XBusterBoss",1)
+		TNT1 A 0 A_TakeInventory("ArmorUpItem",1)
+		TNT1 A 0 A_TakeInventory("IsPicking",1)
+		TNT1 A 0 A_GiveInventory("X1BusterBoss",1)
+	}
+}
+
+Actor SecondArmorPickup : CustomInventory
+{
+	States
+	{
+		Pickup:
+		TNT1 A 0 A_TakeInventory("ArmorAmmo",150)
+		TNT1 A 0 A_TakeInventory("XBusterBoss",1)
+		TNT1 A 0 A_TakeInventory("ArmorUpItem",1)
+		TNT1 A 0 A_TakeInventory("IsPicking",1)
+		TNT1 A 0 A_GiveInventory("X2BusterBoss",1)
+	}
+}
+
+Actor ThirdArmorPickup : CustomInventory
+{
+	States
+	{
+		Pickup:
+		TNT1 A 0 A_TakeInventory("ArmorAmmo",150)
+		TNT1 A 0 A_TakeInventory("XBusterBoss",1)
+		TNT1 A 0 A_TakeInventory("ArmorUpItem",1)
+		TNT1 A 0 A_TakeInventory("IsPicking",1)
+		TNT1 A 0 A_GiveInventory("X3BusterBoss",1)
+	}
+}
+
+actor XDashAmmo : Ammo
+{
+	inventory.amount 1
+	inventory.maxamount 70
+	+IGNORESKILL
+}
+
+actor ArmorAmmo : Ammo
+{
+	inventory.amount 1
+	inventory.maxamount 150
+	+IGNORESKILL
+}
+
+actor CanGiga : OnceC{}
+actor IsPicking : OnceC{}
+
+actor MegaLemon
+{
+	Translation "204:204=215:215"
+	PROJECTILE
+	//damagetype "Buster"
+	//Obituary "$OB_MEGABUSTER"
+	Damage (10)
+	radius 5
+	height 5
+	Speed 32
+	scale 2.5
+	States
+	{
+		Spawn:
+		BUST A 1
+		wait
+		
+		Death:
+		BUST A 1
+		stop
+	}
+}
+
+actor MegaMidLemon
+{
+	Translation "204:204=215:215"
+	PROJECTILE
+	//damagetype "Buster"
+	//Obituary "$OB_MEGABUSTER"
+	Damage (15)
+	radius 7
+	height 7
+	Speed 38
+	scale 2.5
+	States
+	{
+		Spawn:
+		BUST A 1
+		wait
+		
+		Death:
+		BUST A 1
+		stop
+	}
+}
+
+actor MegaBigLemon
+{
+	Translation "204:204=215:215"
+	PROJECTILE
+	//damagetype "Buster"
+	//Obituary "$OB_MEGABUSTER"
+	Damage (20)
+	radius 10
+	height 10
+	Speed 40
+	scale 2.5
+	States
+	{
+		Spawn:
+		BUST A 1
+		wait
+		
+		Death:
+		BUST A 1
+		stop
+	}
+}
+
+actor Hadoken : FastProjectile
+{
+	Translation "204:204=215:215"
+	PROJECTILE
+	//damagetype "Buster"
+	//Obituary "$OB_MEGABUSTER"
+	Damage (40)
+	radius 10
+	height 10
+	Speed 120
+	scale 2.5
+	States
+	{
+		Spawn:
+		BUST A 1
+		wait
+		
+		Death:
+		BUST A 1
+		stop
+	}
+}
+
+
+actor MegaLemonX2
+{
+	Translation "204:204=215:215"
+	PROJECTILE
+	//damagetype "Buster"
+	//Obituary "$OB_MEGABUSTER"
+	Damage (25)
+	radius 10
+	height 10
+	Speed 40
+	scale 2.5
+	States
+	{
+		Spawn:
+		BUST A 1
+		wait
+		
+		Death:
+		BUST A 1
+		stop
+	}
+}
+
+actor MegaLemonX2Jr
+{
+	Translation "204:204=215:215"
+	PROJECTILE
+	//damagetype "Buster"
+	//Obituary "$OB_MEGABUSTER"
+	Damage (25)
+	radius 10
+	height 10
+	Speed 70
+	scale 2.5
+	States
+	{
+		Spawn:
+		BUST A 1
+		wait
+		
+		Death:
+		BUST A 1
+		stop
+	}
+}
+
+Actor GrabCheck
+{
+	+MISSILE
+	+NOBLOCKMAP
+	+NOGRAVITY
+	+NOEXPLODEFLOOR
+	+DONTBLAST
+	+DONTREFLECT
+	+HITTRACER
+	+THRUGHOST
+	+THRUSPECIES
+	species "MegaX"
+	height 64
+	radius 64
+	renderstyle none
+	States
+	{
+		Spawn:
+		TNT1 A 0
+		TNT1 A 1
+		stop
+		Crash:
+		TNT1 A 0 A_JumpIfInTargetInventory("SuplexID",1,"Death")
+		TNT1 A 0 A_JumpIfInventory("IsPerformingSuplex",1,"Death",8)
+		TNT1 A 0 A_JumpIfInventory("NoPushFlag",1,"Death",8)
+		TNT1 A 1 A_JumpIf(ACS_NamedExecuteWithResult("mav_istracerenemy")==1,"GiveGrab")
+		stop
+		GiveGrab:
+		TNT1 A 0 A_JumpIfInTargetInventory("SuplexID",1,"Death")
+		TNT1 A 0 A_JumpIfInventory("IsPerformingSuplex",1,"Death",8)
+		TNT1 A 0 A_JumpIfInventory("NoPushFlag",1,"Death",8)
+		TNT1 A 0 A_GiveToTarget("SuplexID",(ACS_ExecuteWithResult(147,1)-1000)+1)
+		TNT1 A 1 A_GiveInventory("TempPitProtect",1,8)
+		Carry:
+		TNT1 A 0 A_JumpIf(ACS_ExecuteWithResult(649)==0,"Death")
+		TNT1 A 1 A_JumpIfInTargetInventory("HandIsShining",1,"Carry")
+		StopCarry:
+		TNT1 A 1
+		stop
+		
+		Death:
+		TNT1 A 1
+		stop
+	}
+}
+
+actor ShiningExplosion : BasicExplosion
+{
+	PROJECTILE
+	//Obituary "$OB_SPARKSUPLEX"
+	+NOCLIP
+	+NOTARGETSWITCH
+	radius 1
+	height 1
+	States
+	{
+		Spawn:
+		TNT1 A 0
+		TNT1 A 1 A_Explode(50,80,0,0,80)
+		stop
+	}
+}
+
+actor GigaExplosion : BasicExplosion
+{
+	PROJECTILE
+	//Obituary "$OB_SPARKSUPLEX"
+	radius 1
+	height 1
+	States
+	{
+		Spawn:
+		TNT1 A 0
+		TNT1 A 1 A_Explode(60,380,0,0,20)
+		stop
+	}
+}
+
+Actor MegamanXMain_CI : TeamColor_CI
+{
+	States
+	{
+		FireX:
+		TNT1 A 0 A_FireCustomMissile("MegaLemon",0,1,0,0)
+		Goto Done
+		
+		FireB:
+		TNT1 A 0 A_FireCustomMissile("MegaLemonB",0,1,0,0)
+		Goto Done
+		
+		FireR:
+		TNT1 A 0 A_FireCustomMissile("MegaLemonR",0,1,0,0)
+		Goto Done
+		
+		FireO:
+		TNT1 A 0 A_FireCustomMissile("MegaLemonO",0,1,0,0)
+		Goto Done
+		
+		FireP:
+		TNT1 A 0 A_FireCustomMissile("MegaLemonP",0,1,0,0)
+		Goto Done
+	}
+}
+
+Actor MegamanXMain2_CI : TeamColor_CI
+{
+	States
+	{
+		FireX:
+		TNT1 A 0 A_FireCustomMissile("MegaMidLemon",0,1,0,0)
+		Goto Done
+		
+		FireB:
+		TNT1 A 0 A_FireCustomMissile("MegaMidLemonB",0,1,0,0)
+		Goto Done
+		
+		FireR:
+		TNT1 A 0 A_FireCustomMissile("MegaMidLemonR",0,1,0,0)
+		Goto Done
+		
+		FireO:
+		TNT1 A 0 A_FireCustomMissile("MegaMidLemonO",0,1,0,0)
+		Goto Done
+		
+		FireP:
+		TNT1 A 0 A_FireCustomMissile("MegaMidLemonP",0,1,0,0)
+		Goto Done
+	}
+}
+
+Actor MegamanXMain3_CI : TeamColor_CI
+{
+	States
+	{
+		FireX:
+		TNT1 A 0 A_FireCustomMissile("MegaBigLemon",0,1,0,0)
+		Goto Done
+		
+		FireB:
+		TNT1 A 0 A_FireCustomMissile("MegaBigLemonB",0,1,0,0)
+		Goto Done
+		
+		FireR:
+		TNT1 A 0 A_FireCustomMissile("MegaBigLemonR",0,1,0,0)
+		Goto Done
+		
+		FireO:
+		TNT1 A 0 A_FireCustomMissile("MegaBigLemonO",0,1,0,0)
+		Goto Done
+		
+		FireP:
+		TNT1 A 0 A_FireCustomMissile("MegaBigLemonP",0,1,0,0)
+		Goto Done
+	}
+}
+
+Actor X1BusterBoss : BaseMM8BDMWepX
+{
+	Tag "MegamanX1"
+	//Obituary
+	Weapon.ammotype "XDashAmmo"
+	States
+	{
+		Spawn:
+		TNT1 A 1
+		loop
+		
+		Ready:
+		BUST B 0
+		BUST B 0 A_GunFlash
+		goto Ready1
+		
+		Ready1:
+		BUST B 8 A_WeaponReady(WRF_ALLOWRELOAD)
+		BUST B 1
+		loop
+		
+		Deselect:
+		TNT1 AAAAAAAAAAAAAAAAAAAAAA 0 A_Lower
+		DRIA A 1 A_Lower
+		Loop
+		
+		Select:
+		TNT1 AAAAAAAAAAAAAAAAAAAAAA 0 A_Raise
+		DRIA A 1 A_Raise
+		Loop
+		
+		Fire:
+		BUST B 1
+		goto Hold
+		Hold:
+		BUST B 0 A_JumpIfInventory("WeaponCharge",8,"Charge")
+		BUST B 2 A_GiveInventory("WeaponCharge",1)
+		BUST B 0 A_Refire
+		goto MegaShot
+		Charge:
+		BUST B 0 A_JumpIfInventory("WeaponCharge",20,"Charge2")
+		BUST B 1 //ACS_ExecuteAlways(998,0,14981,1)
+		BUST B 2 A_GiveInventory("WeaponCharge",1)
+		BUST B 1 //ACS_ExecuteAlways(998,0,14980,1)
+		BUST B 0 A_Refire
+		Goto MegaShot
+		Charge2:
+		BUST B 0 A_JumpIfInventory("WeaponCharge",30,"Charge3")
+		BUST B 1 //ACS_ExecuteAlways(998,0,14983,1)
+		BUST B 2 A_GiveInventory("WeaponCharge",1)
+		BUST B 1 //ACS_ExecuteAlways(998,0,14980,1)
+		BUST B 0 A_Refire
+		Goto MegaShot
+		Charge3:
+		BUST B 1 //ACS_ExecuteAlways(998,0,14983,1)
+		BUST B 1
+		BUST B 1 //ACS_ExecuteAlways(998,0,14980,1)
+		BUST B 0 A_Refire
+		Goto MegaShot
+		
+		MegaShot:
+		BUST B 3
+		BUST B 0 A_JumpIfInventory("WeaponCharge",30,"BigLemonShootX1")
+		BUST B 0 A_JumpIfInventory("WeaponCharge",20,"BigLemonShoot")
+		BUST B 0 A_JumpIfInventory("WeaponCharge",8,"MidLemonShoot")
+		BUST B 2 A_GiveInventory("MegamanXMain_CI",1)
+		goto Ender
+		MidLemonShoot:
+		BUST B 2 A_GiveInventory("MegamanXMain2_CI",1)
+		goto Ender
+		BigLemonShoot:
+		BUST B 2 A_GiveInventory("MegamanXMain3_CI",1)
+		goto Ender
+		BigLemonShootX1:
+		BUST B 2 A_GiveInventory("MegamanX1Main_CI",1)
+		BUST B 20
+		goto Ender
+		Ender:
+		BUST B 5 A_TakeInventory("WeaponCharge",999)
+		goto Ready1
+		
+		Altfire:
+		BUST B 1 A_JumpIf(floorz-z==0,"DashX1")
+		goto Ready1
+		DashX1:
+		BUST B 0 A_ChangeVelocity(60,0,momz,3)
+		BUST B 0 A_SetArg(3,momy)
+		BUST B 0 A_SetArg(2,momx)
+		BUST B 20
+		goto Ready1
+		
+		Reload:
+		BUST B 0 A_JumpIfInventory("CanGiga",1,"HadokenAttack")
+		goto Ready1
+		HadokenAttack:
+		BUST B 5
+		BUST B 1 A_GiveInventory("MegamanX1Reload_CI",1)
+		BUST B 10
+		BUST B 1 A_TakeInventory("CanGiga",1)
+		goto Ready1
+	}
+}
+
+Actor MegaPissLaserSpawner
+{
+	Translation "204:204=215:215"
+	PROJECTILE
+	+SKYEXPLODE
+	+DONTBLAST
+	+DONTREFLECT
+	+THRUACTORS
+	+NOINTERACTION
+	//damagetype "Buster"
+	radius 1
+	height 1
+	Speed 1
+	scale 2.5
+	States
+	{
+		Spawn:
+		SNAK A 1 A_SpawnItemEx("MegaPissLaser",0,0,0,momx*45,momy*45,momz*45,0,41)
+		SNAK A 1 A_SpawnItemEx("MegaPissLaser",0,0,0,momx*45,momy*45,momz*45,0,41)
+		SNAK A 1 A_SpawnItemEx("MegaPissLaser",0,0,0,momx*45,momy*45,momz*45,0,41)
+		SNAK A 1 A_SpawnItemEx("MegaPissLaser",0,0,0,momx*45,momy*45,momz*45,0,41)
+		SNAK A 1 A_SpawnItemEx("MegaPissLaser",0,0,0,momx*45,momy*45,momz*45,0,41)
+		SNAK A 1 A_SpawnItemEx("MegaPissLaser",0,0,0,momx*45,momy*45,momz*45,0,41)
+		TNT1 A 1 A_SpawnItemEx("MegaPissLaser",0,0,0,momx*45,momy*45,momz*45,0,41)
+		stop
+	}
+}
+
+Actor MegaPissLaser
+{
+	Translation "204:204=215:215"
+	PROJECTILE
+	+RIPPER
+	//damagetype "Buster"
+	//Obituary "$OB_MEGABUSTER"
+	Damage (3)
+	radius 20
+	height 15
+	Speed 40
+	scale 2.5
+	States
+	{
+		Spawn:
+		SNAK A 1
+		Wait
+		
+		Death:
+		TNT1 A 0
+		Stop
+	}
+}			
+	
+Actor MegamanX1Main_CI : TeamColor_CI
+{
+	States
+	{
+		FireX:
+		TNT1 A 0 A_FireCustomMissile("MegaPissLaserSpawner",0,1,0,0)
+		Goto Done
+		
+		FireB:
+		TNT1 A 0 A_FireCustomMissile("MegaPissLaserSpawnerB",0,1,0,0)
+		Goto Done
+		
+		FireR:
+		TNT1 A 0 A_FireCustomMissile("MegaPissLaserSpawnerR",0,1,0,0)
+		Goto Done
+		
+		FireO:
+		TNT1 A 0 A_FireCustomMissile("MegaPissLaserSpawnerO",0,1,0,0)
+		Goto Done
+		
+		FireP:
+		TNT1 A 0 A_FireCustomMissile("MegaPissLaserSpawnerP",0,1,0,0)
+		Goto Done
+	}
+}
+
+Actor MegamanX1Reload_CI : TeamColor_CI
+{
+	States
+	{
+		FireX:
+		TNT1 A 0 A_FireCustomMissile("Hadoken",0,1,0,0)
+		Goto Done
+		
+		FireB:
+		TNT1 A 0 A_FireCustomMissile("HadokenB",0,1,0,0)
+		Goto Done
+		
+		FireR:
+		TNT1 A 0 A_FireCustomMissile("HadokenR",0,1,0,0)
+		Goto Done
+		
+		FireO:
+		TNT1 A 0 A_FireCustomMissile("HadokenO",0,1,0,0)
+		Goto Done
+		
+		FireP:
+		TNT1 A 0 A_FireCustomMissile("HadokenP",0,1,0,0)
+		Goto Done
+	}
+}
+
+Actor X2BusterBoss : BaseMM8BDMWepX
+{
+	Tag "MegamanX2"
+	//Obituary
+	Weapon.ammotype "XDashAmmo"
+	States
+	{
+		Spawn:
+		TNT1 A 1
+		loop
+		
+		Ready:
+		BUST B 0
+		BUST B 0 A_GunFlash
+		goto Ready1
+		
+		Ready1:
+		BUST B 8 A_WeaponReady(WRF_ALLOWRELOAD)
+		BUST B 1
+		loop
+		
+		Deselect:
+		TNT1 AAAAAAAAAAAAAAAAAAAAAA 0 A_Lower
+		DRIA A 1 A_Lower
+		Loop
+		
+		Select:
+		TNT1 AAAAAAAAAAAAAAAAAAAAAA 0 A_Raise
+		DRIA A 1 A_Raise
+		Loop
+		
+		Fire:
+		BUST B 1
+		goto Hold
+		Hold:
+		BUST B 0 A_JumpIfInventory("WeaponCharge",8,"Charge")
+		BUST B 2 A_GiveInventory("WeaponCharge",1)
+		BUST B 0 A_Refire
+		goto MegaShot
+		Charge:
+		BUST B 0 A_JumpIfInventory("WeaponCharge",20,"Charge2")
+		BUST B 1 //ACS_ExecuteAlways(998,0,14981,1)
+		BUST B 2 A_GiveInventory("WeaponCharge",1)
+		BUST B 1 //ACS_ExecuteAlways(998,0,14980,1)
+		BUST B 0 A_Refire
+		Goto MegaShot
+		Charge2:
+		BUST B 0 A_JumpIfInventory("WeaponCharge",30,"Charge3")
+		BUST B 1 //ACS_ExecuteAlways(998,0,14983,1)
+		BUST B 2 A_GiveInventory("WeaponCharge",1)
+		BUST B 1 //ACS_ExecuteAlways(998,0,14980,1)
+		BUST B 0 A_Refire
+		Goto MegaShot
+		Charge3:
+		BUST B 1 //ACS_ExecuteAlways(998,0,14983,1)
+		BUST B 1
+		BUST B 1 //ACS_ExecuteAlways(998,0,14980,1)
+		BUST B 0 A_Refire
+		Goto MegaShot
+		
+		MegaShot:
+		BUST B 3
+		BUST B 0 A_JumpIfInventory("WeaponCharge",30,"BigLemonShootX2")
+		BUST B 0 A_JumpIfInventory("WeaponCharge",20,"BigLemonShoot")
+		BUST B 0 A_JumpIfInventory("WeaponCharge",8,"MidLemonShoot")
+		BUST B 2 A_GiveInventory("MegamanXMain_CI",1)
+		goto Ender
+		MidLemonShoot:
+		BUST B 2 A_GiveInventory("MegamanXMain2_CI",1)
+		goto Ender
+		BigLemonShoot:
+		BUST B 2 A_GiveInventory("MegamanXMain3_CI",1)
+		goto Ender
+		BigLemonShootX2:
+		BUST B 2 A_GiveInventory("MegamanX2Main_CI",1)
+		BUST B 20
+		BUST B 2 A_GiveInventory("MegamanX2Main2_CI",1)
+		goto Ender
+		Ender:
+		BUST B 5 A_TakeInventory("WeaponCharge",999)
+		goto Ready1
+		
+		Altfire:
+		//BUST B 1 A_JumpIfInventory(
+		//goto Ready1
+		DashX2:
+		BUST B 0 A_ChangeVelocity(40,0,momz,3)
+		BUST B 0 A_SetArg(3,momy)
+		BUST B 0 A_SetArg(2,momx)
+		BUST B 20
+		goto Ready1
+		
+		Reload:
+		BUST B 0 A_JumpIfInventory("CanGiga",1,"GigaExplode")
+		goto Ready1
+		GigaExplode:
+		BUST B 0 SetPlayerProperty(0,1,0)
+		BUST B 2 ThrustThingZ(0,5,0,0)
+		BUST B 2 ThrustThingZ(0,5,0,0)
+		BUST B 2 ThrustThingZ(0,5,0,0)
+		BUST B 2 ThrustThingZ(0,5,0,0)
+		BUST B 2 ThrustThingZ(0,5,0,0)
+		BUST B 2 ThrustThingZ(0,6,0,0)
+		BUST B 2 ThrustThingZ(0,6,0,0)
+		BUST B 2 ThrustThingZ(0,6,0,0)
+		BUST B 2 ThrustThingZ(0,7,0,0)
+		BUST B 2 ThrustThingZ(0,7,0,0)
+		BUST B 2 ThrustThingZ(0,7,0,0)
+		BUST B 2 ThrustThingZ(0,8,0,0)
+		BUST B 2 ThrustThingZ(0,8,0,0)
+		BUST B 2 ThrustThingZ(0,8,0,0)
+		BUST B 2 ThrustThingZ(0,9,0,0)
+		BUST B 0 SetPlayerProperty(0,1,3)
+		BUST B 20
+		BUST B 1 A_FireCustomMissile("GigaExplosion",0,1,0,0)
+		BUST B 0 SetPlayerProperty(0,0,0)
+		BUST B 0 SetPlayerProperty(0,0,3)
+		BUST B 1 A_TakeInventory("CanGiga",1)
+		goto Ready1
+	}
+}
+
+Actor MegamanX2Main_CI : TeamColor_CI
+{
+	States
+	{
+		FireX:
+		TNT1 A 0 A_FireCustomMissile("MegaLemonX2",0,1,0,0)
+		Goto Done
+		
+		FireB:
+		TNT1 A 0 A_FireCustomMissile("MegaLemonX2B",0,1,0,0)
+		Goto Done
+		
+		FireR:
+		TNT1 A 0 A_FireCustomMissile("MegaLemonX2R",0,1,0,0)
+		Goto Done
+		
+		FireO:
+		TNT1 A 0 A_FireCustomMissile("MegaLemonX2O",0,1,0,0)
+		Goto Done
+		
+		FireP:
+		TNT1 A 0 A_FireCustomMissile("MegaLemonX2P",0,1,0,0)
+		Goto Done
+	}
+}
+
+Actor MegamanX2Main2_CI : TeamColor_CI
+{
+	States
+	{
+		FireX:
+		TNT1 A 0 A_FireCustomMissile("MegaLemonX2Jr",0,1,0,0)
+		Goto Done
+		
+		FireB:
+		TNT1 A 0 A_FireCustomMissile("MegaLemonX2JrB",0,1,0,0)
+		Goto Done
+		
+		FireR:
+		TNT1 A 0 A_FireCustomMissile("MegaLemonX2JrR",0,1,0,0)
+		Goto Done
+		
+		FireO:
+		TNT1 A 0 A_FireCustomMissile("MegaLemonX2JrO",0,1,0,0)
+		Goto Done
+		
+		FireP:
+		TNT1 A 0 A_FireCustomMissile("MegaLemonX2JrP",0,1,0,0)
+		Goto Done
+	}
+}
+
+Actor X3BusterBoss : BaseMM8BDMWepX
+{
+	Tag "MegamanX3"
+	//Obituary
+	Weapon.ammotype "XDashAmmo"
+	States
+	{
+		Spawn:
+		TNT1 A 1
+		loop
+		
+		Ready:
+		BUST B 0
+		BUST B 0 A_GunFlash
+		goto Ready1
+		
+		Ready1:
+		BUST B 8 A_WeaponReady(WRF_ALLOWRELOAD)
+		BUST B 1
+		loop
+		
+		Deselect:
+		TNT1 AAAAAAAAAAAAAAAAAAAAAA 0 A_Lower
+		DRIA A 1 A_Lower
+		Loop
+		
+		Select:
+		TNT1 AAAAAAAAAAAAAAAAAAAAAA 0 A_Raise
+		DRIA A 1 A_Raise
+		Loop
+		
+		Fire:
+		BUST B 1
+		goto Hold
+		Hold:
+		BUST B 0 A_JumpIfInventory("WeaponCharge",8,"Charge")
+		BUST B 2 A_GiveInventory("WeaponCharge",1)
+		BUST B 0 A_Refire
+		goto MegaShot
+		Charge:
+		BUST B 0 A_JumpIfInventory("WeaponCharge",20,"Charge2")
+		BUST B 1 //ACS_ExecuteAlways(998,0,14981,1)
+		BUST B 2 A_GiveInventory("WeaponCharge",1)
+		BUST B 1 //ACS_ExecuteAlways(998,0,14980,1)
+		BUST B 0 A_Refire
+		Goto MegaShot
+		Charge2:
+		BUST B 0 A_JumpIfInventory("WeaponCharge",30,"Charge3")
+		BUST B 1 //ACS_ExecuteAlways(998,0,14983,1)
+		BUST B 2 A_GiveInventory("WeaponCharge",1)
+		BUST B 1 //ACS_ExecuteAlways(998,0,14980,1)
+		BUST B 0 A_Refire
+		Goto MegaShot
+		Charge3:
+		BUST B 1 //ACS_ExecuteAlways(998,0,14983,1)
+		BUST B 1
+		BUST B 1 //ACS_ExecuteAlways(998,0,14980,1)
+		BUST B 0 A_Refire
+		Goto MegaShot
+		
+		MegaShot:
+		BUST B 3
+		BUST B 0 A_JumpIfInventory("WeaponCharge",30,"BigLemonShootX3")
+		BUST B 0 A_JumpIfInventory("WeaponCharge",20,"BigLemonShoot")
+		BUST B 0 A_JumpIfInventory("WeaponCharge",8,"MidLemonShoot")
+		BUST B 2 A_GiveInventory("MegamanXMain_CI",1)
+		goto Ender
+		MidLemonShoot:
+		BUST B 2 A_GiveInventory("MegamanXMain2_CI",1)
+		goto Ender
+		BigLemonShoot:
+		BUST B 2 A_GiveInventory("MegamanXMain3_CI",1)
+		goto Ender
+		BigLemonShootX3:
+		BUST B 2 A_GiveInventory("MegamanX3Main_CI",1)
+		BUST B 20
+		goto Ender
+		Ender:
+		BUST B 5 A_TakeInventory("WeaponCharge",999)
+		goto Ready1
+		
+		Altfire:
+		BUST B 1 A_JumpIf(floorz-z==0,"DashX3")
+		goto Ready1
+		DashX3:
+		BUST B 0 A_ChangeVelocity(40,0,momz,3)
+		BUST B 0 A_SetArg(3,momy)
+		BUST B 0 A_SetArg(2,momx)
+		BUST B 20
+		goto Ready1
+		
+		Reload:
+		BUST B 0 A_JumpIfInventory("CanGiga",1,"HadokenAttack")
+		goto Ready1
+		HadokenAttack:
+		BUST B 1 A_GunFlash("Flash.ChipTimer")
+		BUST B 1 
+		goto Ready1
+	}
+}
+
+Actor MegamanX3Main1_CI : TeamColor_CI
+{
+	States
+	{
+		FireX:
+		TNT1 A 0 A_FireCustomMissile("SwordSlasher",0,1,0,0)
+		Goto Done
+		
+		FireB:
+		TNT1 A 0 A_FireCustomMissile("SwordSlasherB",0,1,0,0)
+		Goto Done
+		
+		FireR:
+		TNT1 A 0 A_FireCustomMissile("SwordSlasherR",0,1,0,0)
+		Goto Done
+		
+		FireO:
+		TNT1 A 0 A_FireCustomMissile("SwordSlasherO",0,1,0,0)
+		Goto Done
+		
+		FireP:
+		TNT1 A 0 A_FireCustomMissile("SwordSlasherP",0,1,0,0)
+		Goto Done
+	}
+}

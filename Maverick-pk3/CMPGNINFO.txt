@@ -1,0 +1,9 @@
+{
+mapname = TRAINING
+gamemode = deathmatch
+fraglimit = 0
+dmflags = 6967428
+dmflags2 = 2097168
+compatflags = 0
+bot[0] = "Trainer"
+}

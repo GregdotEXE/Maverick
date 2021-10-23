@@ -1,0 +1,120 @@
+=================CREDITS=================
+---V1---
+"Project lead and producer:"
+Amauri
+
+"Coders:"
+Greg.exe
+Slaim.exe
+swarm9999
+
+"Spriters:"
+Frostblue
+Lutmer
+ZDR
+
+"Class Base"
+Greg.exe
+swarm9999
+-Using Jax's class base
+
+---MMX0---
+"Zero"
+Concept:
+-Cassie J.
+Coding:
+-swarm9999
+HUDs:
+-Hansungkee
+Reload Icon:
+-swarm9999
+Item Icon:
+-swarm9999
+Mugshot:
+-Interessant
+
+"Sigma:
+Concept:
+-Cassie J.
+Coding:
+-swarm9999
+
+---MMX1---
+"Boomerang Kuwanger"
+Concept:
+-Hitscan
+Coding:
+-Nightfly
+-swarm9999
+HUDs:
+-ZDR
+Reload Icon:
+-Lutmer
+Mugshot:
+-ZDR
+
+"Storm Eagle"
+Concept:
+-Cassie J.
+Coding:
+-swarm9999
+Mugshot:
+-ZDR
+
+---MMX2---
+"Wheel Gator"
+Concept:
+-Amauri
+Coding:
+-swarm9999
+Mugshot:
+-ZDR
+Reload Icon:
+-swarm9999
+
+
+"Morph Moth"
+Concept:
+-Cassie J.
+Coding:
+-swarm9999
+Mugshot:
+-ZDR
+
+---MMX3---
+"Blast Hornet"
+Concept: 
+-Hitscan
+-Amauri
+Coding:
+-swarm9999
+Skin Sprite:
+-Frostblue
+HUDs:
+-ZDR
+Projectile Sprites:
+-Frostblue
+-swarm9999
+Reload Icon:
+-swarm9999
+Mugshot:
+-ZDR
+
+"Mac"
+Concept:
+-Slaim.exe
+Coding:
+-Slaim.exe
+HUDs:
+-Slaim.exe
+Mugshot:
+-Lutmer
+
+"Special Thanks"
+CBM and CCBM
+-Code and ACS
+Jax
+-Class Bases, PROJTRANS
+All our fans an supporters
+
+If you believe something is missing or should be added notify an admin at the discord. https://discord.gg/f8feynTD4b

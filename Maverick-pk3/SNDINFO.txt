@@ -1,0 +1,21 @@
+weapon/SGALARM SGALARM
+
+$volume weapon/BASH1 1.5
+$volume weapon/BASH2 1.5
+
+weapon/FIRE1 FIRE1
+weapon/BASH1 BASH1
+weapon/BASH2 BASH2
+
+weapon/BKCUTT BKCUTT
+weapon/BKDASH BKDASH
+weapon/BKTELE BKTELE
+weapon/SESTORM SESTORM
+weapon/SEDIVE SEDIVE
+weapon/SEFLAP SEFLAP
+
+weapon/GrenadeBusterShot SHTSON
+
+weapon/BALAMAC MACCC
+weapon/MACSTUN MACSTU
+weapon/MACTELE MSTUN

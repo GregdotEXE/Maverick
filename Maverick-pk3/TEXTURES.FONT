@@ -1,0 +1,39 @@
+graphic STYSCBMA,5,7{XScale 1.5 YScale 1.5 Patch STYS8BD0,0,0}
+graphic STYSCBMB,5,7{XScale 1.5 YScale 1.5 Patch STYS8BD1,0,0}
+graphic STYSCBMC,5,7{XScale 1.5 YScale 1.5 Patch STYS8BD2,0,0}
+graphic STYSCBMD,5,7{XScale 1.5 YScale 1.5 Patch STYS8BD3,0,0}
+graphic STYSCBME,5,7{XScale 1.5 YScale 1.5 Patch STYS8BD4,0,0}
+graphic STYSCBMF,5,7{XScale 1.5 YScale 1.5 Patch STYS8BD5,0,0}
+graphic STYSCBMG,5,7{XScale 1.5 YScale 1.5 Patch STYS8BD6,0,0}
+graphic STYSCBMH,5,7{XScale 1.5 YScale 1.5 Patch STYS8BD7,0,0}
+graphic STYSCBMI,5,7{XScale 1.5 YScale 1.5 Patch STYS8BD8,0,0}
+graphic STYSCBMJ,5,7{XScale 1.5 YScale 1.5 Patch STYS8BD9,0,0}
+
+graphic STYSCBMK,5,7{XScale 1.25 YScale 1.25 Patch STYS8BD0,0,0}
+graphic STYSCBML,5,7{XScale 1.25 YScale 1.25 Patch STYS8BD1,0,0}
+graphic STYSCBMM,5,7{XScale 1.25 YScale 1.25 Patch STYS8BD2,0,0}
+graphic STYSCBMN,5,7{XScale 1.25 YScale 1.25 Patch STYS8BD3,0,0}
+graphic STYSCBMO,5,7{XScale 1.25 YScale 1.25 Patch STYS8BD4,0,0}
+graphic STYSCBMP,5,7{XScale 1.25 YScale 1.25 Patch STYS8BD5,0,0}
+graphic STYSCBMQ,5,7{XScale 1.25 YScale 1.25 Patch STYS8BD6,0,0}
+graphic STYSCBMR,5,7{XScale 1.25 YScale 1.25 Patch STYS8BD7,0,0}
+graphic STYSCBMS,5,7{XScale 1.25 YScale 1.25 Patch STYS8BD8,0,0}
+graphic STYSCBMT,5,7{XScale 1.25 YScale 1.25 Patch STYS8BD9,0,0}
+
+
+graphic STYSCBM_,5,7{Patch STYS8BD0,0,0{Translation"0:255=0:0"}}
+graphic "STYSCBM[",5,7{XScale 1.5 YScale 1.5 Patch STYS8BD0,0,0{Translation"0:255=0:0"}}
+graphic "STYSCBM]",5,7{XScale 1.25 YScale 1.25 Patch STYS8BD0,0,0{Translation"0:255=0:0"}}
+
+graphic STYS_MD0,8,8{XScale 1.35 YScale 1.35 Patch STYS_MN0,0,0}
+graphic STYS_MD1,8,8{XScale 1.35 YScale 1.35 Patch STYS_MN1,0,0}
+graphic STYS_MD2,8,8{XScale 1.35 YScale 1.35 Patch STYS_MN2,0,0}
+graphic STYS_MD3,8,8{XScale 1.35 YScale 1.35 Patch STYS_MN3,0,0}
+graphic STYS_MD4,8,8{XScale 1.35 YScale 1.35 Patch STYS_MN4,0,0}
+graphic STYS_MD5,8,8{XScale 1.35 YScale 1.35 Patch STYS_MN5,0,0}
+graphic STYS_MD6,8,8{XScale 1.35 YScale 1.35 Patch STYS_MN6,0,0}
+graphic STYS_MD7,8,8{XScale 1.35 YScale 1.35 Patch STYS_MN7,0,0}
+graphic STYS_MD8,8,8{XScale 1.35 YScale 1.35 Patch STYS_MN8,0,0}
+graphic STYS_MD9,8,8{XScale 1.35 YScale 1.35 Patch STYS_MN9,0,0}
+graphic "STYS_MD%",8,8{XScale 1.35 YScale 1.35 Patch "STYS_MN%",0,0}
+graphic "STYS_MD_",8,8{XScale 1.35 YScale 1.35 Patch TNT1A0,0,0}

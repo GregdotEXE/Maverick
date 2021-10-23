@@ -1,0 +1,92 @@
+//MegamanX
+texture BARMMX1,8,56{patch BARENERG,0,0{Translation"192:192=202:202","198:198=205:205"}}
+texture VARMMX1,56,8{patch BARMMX1,0,0{rotate 90}}
+
+//Zero
+texture BARZER,8,56{patch B5ENER,0,0{Translation"192:192=180:180","198:198=183:183"}}
+texture VARZER,56,8{patch BARZER,0,0{rotate 90}}
+
+//Sigma
+texture BARSIGA,8,56{patch B_BAR01C,0,0{Translation"192:192=105:105","198:198=110:110"}}
+texture VARSIGA,56,8{patch BARSIGA,0,0{rotate 90}}
+texture BARSIGB,8,56{patch B_BAR01D,0,0{Translation"192:192=105:105","198:198=110:110"}}
+texture VARSIGB,56,8{patch BARSIGB,0,0{rotate 90}}
+texture BARSIGC,8,56{patch B_BAR01C,0,0{Translation"192:192=110:110","198:198=105:105"}}
+texture VARSIGC,56,8{patch BARSIGC,0,0{rotate 90}}
+texture BARSIGD,8,56{patch B_BAR01D,0,0{Translation"192:192=110:110","198:198=105:105"}}
+texture VARSIGD,56,8{patch BARSIGD,0,0{rotate 90}}
+texture BARSIG,8,56{patch TNT1A0,0,0}
+texture VARSIG,56,8{patch TNT1A0,0,0}
+texture BARSIGE,8,56{patch B_BAR01C,0,0{Translation"192:192=110:110","198:198=110:110"}}
+texture VARSIGE,56,8{patch BARSIGE,0,0{rotate 90}}
+texture BARSGM1,8,56{patch B4ENERG,0,0{Translation"192:192=84:84","198:198=89:89"}}
+texture VARSGM1,56,8{patch BARSGM1,0,0{rotate 90}}
+texture BARSGM2,8,56{patch BARENERG,0,0{Translation"192:192=3:3","198:198=5:5"}}
+texture VARSGM2,56,8{patch BARSGM1,0,0{rotate 90}}
+texture BARSGM3,8,56{patch BARENERG,0,0{Translation"192:192=62:62","198:198=63:63"}}
+texture VARSGM3,56,8{patch BARSGM1,0,0{rotate 90}}
+
+//Spark Mandrill
+texture BARMAN,8,56{patch B6ENERA,0,0{Translation"192:192=208:208","198:198=[254,239,193]:[254,239,193]"}}
+texture VARMAN,56,8{patch BARMAN,0,0{rotate 90}}
+//Boomer Kuwanger
+texture 1A_3_BAR,8,56{patch B_3BARSB,0,0{Translation"192:192=177:177","198:198=181:181","202:202=177:177","199:199=181:181","204:204=177:177","195:195=181:181"}}
+texture 1A_3_VAR,56,8{patch 1A_3_BAR,0,0{rotate 90}}
+//StormEagle
+texture BAREAG,8,56{patch B_3BARSB,0,0{Translation"192:192=70:70","198:198=76:76","202:202=70:70","199:199=76:76","204:204=70:70","195:195=76:76"}}
+texture VAREAG,56,8{patch BAREAG,0,0{rotate 90}}
+texture BAREAG2,8,56{patch B6ENER,0,0{Translation"192:192=61:61","198:198=63:63"}}
+texture VAREAG2,56,8{patch BAREAG2,0,0{rotate 90}}
+
+//Wheel Gator
+texture BARWHEA,8,56{patch B_BAR01C,0,0{Translation"192:192=233:233","198:198=164:164"}}
+texture VARWHEA,56,8{patch BARWHEA,0,0{rotate 90}}
+texture BARWHEB,8,56{patch B_BAR01D,0,0{Translation"192:192=233:233","198:198=164:164"}}
+texture VARWHEB,56,8{patch BARWHEB,0,0{rotate 90}}
+texture BARWHEC,8,56{patch B_BAR01C,0,0{Translation"192:192=164:164","198:198=233:233"}}
+texture VARWHEC,56,8{patch BARWHEC,0,0{rotate 90}}
+texture BARWHED,8,56{patch B_BAR01D,0,0{Translation"192:192=164:164","198:198=233:233"}}
+texture VARWHED,56,8{patch BARWHED,0,0{rotate 90}}
+texture BARWHE,8,56{patch TNT1A0,0,0}
+texture VARWHE,56,8{patch TNT1A0,0,0}
+texture BARWHEF,8,56{patch BARENERG,0,0{Translation"192:192=48:48","198:198=45:45"}}
+texture VARWHEF,56,8{patch BARWHEF,0,0{rotate 90}}
+//Morph Moth
+texture BARMOM,8,56{patch BARENERG,0,0{Translation"192:192=4:4","198:198=137:137"}}
+texture VARMOM,56,8{patch BARMOM,0,0{rotate 90}}
+texture BARCOC,8,56{patch BARENERG,0,0{Translation"192:192=4:4","198:198=68:68"}}
+texture VARCOC,56,8{patch BARCOC,0,0{rotate 90}}
+
+texture BARMLA1,8,56{patch B_BAR12B,0,0{Translation "198:198=198:198","192:192=71:71","4:4=68:68"}}
+texture VARMLA1,56,8{patch BARMLA1,0,0{rotate 90}}
+texture BARMLA2,8,56{patch B_BAR12B,0,0{Translation "198:198=110:110","192:192=106:106","4:4=104:104"}}
+texture VARMLA2,56,8{patch BARMLA2,0,0{rotate 90}}
+texture BARMLA3,8,56{patch B_BAR12B,0,0{Translation "198:198=185:185","192:192=181:181","4:4=174:174"}}
+texture VARMLA3,56,8{patch BARMLA3,0,0{rotate 90}}
+texture BARMLA4,8,56{patch B_BAR12B,0,0{Translation "198:198=162:162","192:192=161:161","4:4=160:160"}}
+texture VARMLA4,56,8{patch BARMLA4,0,0{rotate 90}}
+texture BARMLA5,8,56{patch B_BAR12B,0,0{Translation "198:198=75:75","192:192=72:72","4:4=69:69"}}
+texture VARMLA5,56,8{patch BARMLA5,0,0{rotate 90}}
+texture BARMLA6,8,56{patch B_BAR12B,0,0{Translation "198:198=63:63","192:192=60:60","4:4=57:57"}}
+texture VARMLA6,56,8{patch BARMLA6,0,0{rotate 90}}
+texture BARMLA7,8,56{patch B_BAR12B,0,0{Translation "198:198=252:252","192:192=239:239","4:4=237:237"}}
+texture VARMLA7,56,8{patch BARMLA7,0,0{rotate 90}}
+texture BARMLA8,8,56{patch B_BAR12B,0,0{Translation "198:198=86:86","192:192=82:82","4:4=4:4"}}
+texture VARMLA8,56,8{patch BARMLA8,0,0{rotate 90}}
+texture BARMLAS,8,56{}
+texture BARMFL,8,56{patch BARENERG,0,0{Translation"192:192=57:57","198:198=60:60"}}
+texture VARMFL,56,8{patch BARMFL,0,0{rotate 90}}
+
+//Blast Hornet
+texture BARBLH,8,56{patch BARENERG,0,0{Translation"192:192=160:160","198:198=228:228"}}
+texture VARBLH,56,8{patch BARBLH,0,0{rotate 90}}
+texture BARBLH2,8,56{patch B_BAR12B,0,0{Translation "198:198=245:245","192:192=242:242","4:4=76:76"}}
+texture VARBLH2,56,8{patch BARBLH,0,0{rotate 90}}
+
+//Crush Crawfish
+texture BARCRG1,8,56{patch B_BAR12B,0,0{Translation"198:198=190:190","192:192=180:180","4:4=172:172"}}
+texture VARCRG1,56,8{patch BARCRG1,0,0{rotate 90}}
+texture BARCRG2,8,56{patch BARENERG,0,0{Translation"192:192=172:172","198:198=180:180"}}
+texture VARCRG2,56,8{patch BARCRG2,0,0{rotate 90}}
+texture BARCRU,8,56{patch BARENERG,0,0{Translation"192:192=55:55","198:198=221:221"}}
+texture VARCRU,56,8{patch BARCRU,0,0{rotate 90}}

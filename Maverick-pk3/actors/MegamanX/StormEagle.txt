@@ -1,0 +1,38 @@
+actor StormEagle : ClassBase1
+{
+Player.ScoreIcon "C_X1A1X"
+player.displayname "StormEagle"
+player.maxhealth 90
+health 90
+player.startitem "StormTornadoBoss"
+player.startitem "EagleFlightItem"
+player.ForwardMove 0.85, 0.85
+player.SideMove 0.83, 0.83
+player.jumpz 14
++NOSKIN
+States
+{
+Spawn:
+TENG A 0
+TENG B 1
+TENG A 1
+goto Spawn+2
+See:
+TENG BCDE 5
+Goto Spawn
+Missile:
+TENG F 0
+TENG F 1
+TENG G 1
+Goto Spawn
+ClassPain:
+TENG H 0
+goto PainContinue
+DeathFix:
+TENG H 0
+goto DeathContinue
+ClassDeath:
+TENG H 1
+goto MegaDeathEnd
+}
+}

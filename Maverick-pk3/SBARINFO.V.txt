@@ -1,0 +1,125 @@
+//VERTICAL BARS
+height 0;
+
+statusbar fullscreen,forcescaled
+{
+InInventory not NoHud,1
+{
+	DrawImage"EmptIcon",24,64;//Scroll down for rest of Classes stuff, its past the MEGAMAN art
+
+	InInventory not NoHealthBar,1
+	{
+		DrawBar "HPFULL", "HPEMPTY", Health, vertical, 24, 8;
+		DrawImage "HPFRAME", 24, 8;
+		
+		InInventory LightTeamFlag, 1{DrawImage "HCON", 24, 3;}
+		else InInventory WilyTeamFlag, 1{DrawImage "MCON", 24, 3;}
+		else InInventory CossackTeamFlag, 1{DrawImage "RCON", 24, 3;}
+		else InInventory KingTeamFlag, 1{DrawImage "DCON", 24, 3;}
+		else{ DrawImage "BCON", 24, 3;}	
+	}
+	DrawNumber 5,"8BDMAFONT",Untranslated,Health,alignment(left),31,31;
+}
+
+DrawSelectedInventory INDEXFONT,24,64,37,64,white;
+DrawImage weaponicon,16,64;
+
+InInventory not NoHealthBar,1
+{
+	DrawImage playericon,20,0;//24
+	DrawMugShot 1,20,0;
+	
+InInventory StaminaFlag||UnSolid,1{
+	InInventory ForceStaminaFlag{InInventory not StaminaFlag,500{
+		InInventory StaminaFlag,1{DrawImage"ARCSTAM",2,113;}
+		else{DrawImage"ARCSTAMX",2,113;}//94
+		DrawNumber 3,CMBHPFONT,Untranslated,StaminaFlag,alignment(right),fillzeros,30,116;}}
+	else{InInventory not StaminaFlag,250{
+		InInventory StaminaFlag,1{DrawImage"ARCSTAM",2,113;}
+		else{DrawImage"ARCSTAMX",2,113;}
+		DrawNumber 3,CMBHPFONT,Untranslated,StaminaFlag,alignment(right),fillzeros,30,116;}}
+}
+
+InInventory BasicArmor,1{
+	DrawNumber 4,CMBHRFONT,DarkGray,Armor,alignment(left),31,40;
+	DrawNumber 4,CMBHRFONT,DarkGray,SavePercent,alignment(left),31,46;
+	InInventory BossBasicArmorAmount,1{DrawBar"BARAMT31","NOBARB",Armor BossBasicArmorAmount,vertical,24,8;}
+	else{DrawBar"BARAMT31","NOBARB",Armor,vertical,24,8;}
+}
+
+InInventory CanWallJump,1{InInventory CanWallJumpLimit,1{DrawImage"JMPWAL_1",4,103;}
+	else{DrawImage"JMPWAL_2",4,103;}
+	DrawNumber 2,CMBHQFONT,Untranslated,CanWallJumpLimit,alignment(left),12,105;}
+}
+
+//MMX0
+IsSelected XBusterBoss{Drawbar"BARMMX1","BAREMPTY",ammo2,vertical,8,8;
+	InInventory CanGiga,1{DrawImage"MEGAICN1",272,8;}
+	else {DrawImage"MEGAICN0",272,8;}}
+IsSelected X2BusterBoss{Drawbar"BARMMX1","BAREMPTY",ammo1,vertical,16,8;
+	InInventory CanGiga,1{DrawImage"MEGAICN3",272,8;}
+	else {DrawImage"MEGAICN0",272,8;}}
+IsSelected X1BusterBoss{Drawbar"BARMMX1","BAREMPTY",ammo1,vertical,16,8;
+	InInventory CanGiga,1{DrawImage"MEGAICN2",272,8;}
+	else {DrawImage"MEGAICN0",272,8;}}
+
+IsSelected ZeroSaberBoss,ZeroBusterBoss{DrawBar"BARZER","BAREMPTY",ZeroDashAmmo,vertical,16,8;
+	DrawImage"ZEROICON",32,55;
+	InInventory TechniqueCounter,3{DrawImage"ZEROICN4",0,28;}
+	else InInventory TechniqueCounter,2{DrawImage"ZEROICN3",0,28;}
+	else InInventory TechniqueCounter,1{DrawImage"ZEROICN2",0,28;}
+	else {DrawImage"ZEROICN1",0,28;}
+	InInventory TechniqueSwapper,3{DrawImage"ZEARZ",24,64;}
+	else InInventory TechniqueSwapper,2{DrawImage"ZLIGZ",24,64;}
+	else InInventory TechniqueSwapper,1{DrawImage"ZICEZ",24,64;}}
+
+IsSelected SigmaVirusBoss{Drawbar"BARSGM1","BAREMPTY",Ammo1,vertical,16,8;
+InInventory SwapAmmo,56{Drawbar"BARSIG","NOBAR",Ammo2,vertical,16,8;}
+		else InInventory not SwapAmmo,56{DrawBar"BARSIGE","NOBAR",Ammo2,vertical,16,8;}}
+IsSelected SigmaVirusBoss2{Drawbar"BARSGM2","BAREMPTY",Ammo1,vertical,16,8;
+		DrawImage"SIG2ICON",32,55;
+InInventory SwapAmmo,56{Drawbar"BARSIG","NOBAR",Ammo2,vertical,16,8;}
+		else InInventory not SwapAmmo,56{DrawBar"BARSIGE","NOBAR",Ammo2,vertical,16,8;}}
+IsSelected SigmaVirusBoss3{Drawbar"BARSGM3","BAREMPTY",Health,vertical,24,8;}
+
+//MMX1
+IsSelected ElectricSparkBoss{Drawbar"BARMAN","BAREMPTY",ammo1,vertical,16,8;}
+IsSelected BoomerangCutterBoss{Drawbar"1A_3_BAR","BAREMPTY",ammo1,vertical,16,8;
+			DrawImage"BKUWICON",32,55;}
+IsSelected StormTornadoBoss{Drawbar"BAREAG","BAREMPTY",ammo1,vertical,16,8;
+	Drawbar"BAREAG2","BAREMPTY",ammo2,vertical,8,8;
+	InInventory EagleFeatherDelay,1{DrawBar"BARFLS","NOBARB",EagleFeatherDelay,vertical,24,8;}}
+
+//MMX2
+IsSelected SpeedBurnerBoss{Drawbar"BARAMM12", "BAREMPTY",Ammo1,vertical,16,8;}
+IsSelected SpinWheelBoss{Drawbar"BARWHEF","BAREMPTY",Ammo1,vertical,16,8;
+	Drawbar"BARWHE","NOBAR",ammo2,vertical,16,8;
+	DrawImage"WGATICON",32,55;}
+IsSelected SilkShotBoss{Drawbar"BARMOM","BAREMPTY",ammo1,vertical,16,8;
+	Drawbar"BARCOC","BAREMPTY",ammo2,vertical,8,8;}
+IsSelected MothSilkShotBoss{Drawbar"BARMLAS","BAREMPTY",ammo1,vertical,16,8;
+	Drawbar"BARMFL","BAREMPTY",ammo2,vertical,8,8;}
+
+//MMX3
+IsSelected ParasiticBombBoss{Drawbar"BARBLH","BAREMPTY",ammo1,vertical,16,8;
+	Drawbar"BARBLH2","BAREMPTY",ammo2,vertical,8,8;
+	DrawImage"BHORICON",32,55;}
+IsSelected SpinningBladeBoss{Drawbar"BARCRG1","BAREMPTY",ammo1,vertical,16,8;
+	InInventory CrawfishIsGrabbing,1{Drawbar"BARCRG2","BAREMPTY",ammo1,vertical,16,8;}
+	Drawbar"BARCRU","BAREMPTY",ammo2,vertical,8,8;}
+IsSelected MacTeleBoss{Drawbar"BARAMMO8", "BAREMPTY", MacAmmo, vertical, 16, 8;}
+IsSelected MacNetJailBoss{Drawbar"BARAMMO6", "BAREMPTY", MacAmmo, vertical, 16, 8;}
+
+//Inventory
+
+}
+
+mugshot "Normal"{{ST00} -1;}
+mugshot "Pain"{{ST00} -1;}
+mugshot "Ouch"{{ST00} -1;}
+mugshot "Rampage"{{ST00} -1;}
+mugshot "Grin"{{ST00} -1;}
+mugshot "Death"{{ST00} -1;}
+mugshot "XDeath"{{ST00} -1;}
+mugshot "God"{{ST00} -1;}
+mugshot "GodAnimated"{{ST00} -1;}

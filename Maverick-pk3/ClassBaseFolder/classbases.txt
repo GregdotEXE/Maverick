@@ -1,0 +1,2 @@
+#include "classbasefolder/classbase0.txt"
+#include "classbasefolder/classbase1.txt"

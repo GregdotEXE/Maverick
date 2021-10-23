@@ -1,0 +1,230 @@
+//General Base actors for inheriting or use
+
+actor BasicExplosion
+{//Easy way of managing every explosion such as topspin
++MISSILE
+-SOLID
++DONTBLAST
++NOGRAVITY
++RIPPER
++SKYEXPLODE
++NOINTERACTION
++DONTSPLASH
++THRUGHOST
++THRUACTORS
++DONTREFLECT
+Damage 0
+radius 2
+height 2
+//Scale 2.5
+States
+{
+Spawn:
+TNT1 A 0
+TNT1 A 1 A_Explode(10,10,0)
+stop
+}
+}
+
+actor BasicHelper
+{//Used by things like PharaohFX
++MISSILE
+-SOLID
++NOINTERACTION
++NOGRAVITY
++DONTBLAST
++DONTREFLECT
++THRUACTORS
+renderstyle none
+radius 2
+height 2
+States
+{
+Spawn:
+TNT1 A 1
+stop
+Death:
+TNT1 A 1
+stop
+}
+}
+
+actor ShieldWarper_MAV
+{//Used for Warpers
++NOINTERACTION
++CLIENTSIDEONLY
+-SOLID
++MISSILE
++THRUACTORS
++NOGRAVITY
++DONTBLAST
++DONTREFLECT
+Height 2
+Radius 2
+Scale 2.5
+States
+{
+Spawn:
+TNT1 A 0
+TNT1 A 0 ACS_NamedExecuteAlways("mav_clientwarper",0,1)
+TNT1 A 0 A_Jump(256,"Shield")
+Goto Shield
+Shield:
+STAR AABBCCDD 1 A_Warp(AAPTR_TARGET, 0, 0, 16, 0, 24)//WARPF_INTERPOLATE|WARPF_NOCHECKPOSITION
+loop
+}
+}
+
+actor BasicShieldHitbox
+{
+-SOLID
++MISSILE
++DONTSPLASH
++DONTBLAST
++DONTDRAIN
++DONTREFLECT
++DONTRIP
++NOBLOOD
++NOCLIP
++NORADIUSDMG
++GHOST
++SHOOTABLE
++NOTIMEFREEZE
++NOGRAVITY
++NOTARGETSWITCH
+//PainSound "item/protoreflect"
+RenderStyle "None"
+bloodtype ""
+damagefactor "Telefrag",0.0
+painchance 256
+health 99999
+
+Meleerange 28
+Accuracy 0
+Mass 8
+
+Damage 0
+Height 42
+Radius 5
+Speed 0
+scale 2.5
+
+States
+{
+Spawn:
+TNT1 A 0
+TNT1 A 0 A_JumpIf(ACS_NamedExecuteWithResult("C_CHECK_TARGET_OOC")==0,"Death2")
+TNT1 A 0 A_JumpIfInTargetInventory("StopShield",1,"SpawnStop")
+TNT1 A 1 A_Warp(2,Meleerange,Accuracy,Mass,0,24)
+loop
+SpawnStop:
+TNT1 A 0 //A_Log("SpawnStop")
+TNT1 A 1
+stop
+Pain:
+TNT1 A 0 A_PlaySound("item/protoreflect")//A_Pain
+TNT1 A 0 A_SpawnItemEx("ProtoShieldDeahthFX")
+goto Spawn
+Death:
+TNT1 A 0 //A_PlaySound("item/protoreflect")
+TNT1 A 1
+stop
+Death2:
+TNT1 A 0 //A_Log("Death2")
+TNT1 A 1
+stop
+}
+}
+
+actor BasicCustomInventory : CustomInventory
+{
+inventory.amount 1
+inventory.maxamount 1
+inventory.icon "NULLICON"
+Inventory.PickupSound "item/1up"
++INVBAR
++COUNTITEM
+scale 2.0
+}
+
+actor BasicClientSide
+{//Works well for actors spawned from projectiles
++CLIENTSIDEONLY
++NOINTERACTION
++NOGRAVITY
+-SOLID
+radius 2
+height 2
+scale 2.5
+}
+
+actor BasicPowerupGiver : PowerupGiver
+{
++INVENTORY.AUTOACTIVATE
++INVENTORY.ALWAYSPICKUP
+Inventory.PickupSound ""
+Inventory.MaxAmount 0
+States
+{
+Spawn:
+TNT1 A 1
+stop
+}
+}
+
+
+
+//General actors used by classes
+
+actor BasicCollideSlam : BasicExplosion
+{
+damagetype "GravityB2"
+Obituary "$OB_GRAVITYBALL"
+Mass 1
+Meleerange 30
+renderstyle none
+states
+{
+Spawn:
+TNT1 A 0
+TNT1 A 0 //A_LOG("Mass")
+TNT1 A 0 //A_LOGINT(Mass)
+TNT1 A 0 //A_LOG("Meleerange")
+TNT1 A 0 //A_LOGINT(Meleerange)
+TNT1 A 0 //A_LOG("ScaleX AND Dam Calc")
+TNT1 A 0 //A_LOGINT(ScaleX)
+TNT1 A 0 //A_LOG("Total")
+TNT1 A 0 //A_LOGINT(Mass*(Meleerange*0.01)*ScaleX)
+TNT1 A 0 A_Explode(Mass*(Meleerange*0.01)*ScaleX+1,15,0,0,15)
+TNT1 A 3
+stop
+}
+}
+
+actor BasicHardQuakeFX : BasicClientSide
+{
+States
+{
+Spawn:
+SMFX XYZ 3
+stop
+}
+}
+
+actor YMFXBooster2
+{
++MISSILE
++THRUACTORS
++CLIENTSIDEONLY
+damage 0
+Radius 2
+Height 2
+scale 2.5
+States
+{
+Spawn:
+VMFX QRS 1
+SMFX D 1
+stop
+}
+}

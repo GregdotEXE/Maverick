@@ -1,0 +1,12 @@
+//core edit:
+//1. no first frame skipped actions
+//2. no native translations
+//2a. black hole bomb
+//2b. beat support
+//2c. sakugarne debris
+//2d. explosions (effects.txt & megaman.txt)
+//3. wire transfer translation
+//4. rush marine & rush jet don't jump back to spawn
+//5. SXF_TRANSFERTRANSLATION on all attack fx
+//misc core edit:
+//1. rain flush

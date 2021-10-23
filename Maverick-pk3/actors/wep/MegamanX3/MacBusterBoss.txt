@@ -1,0 +1,479 @@
+actor MacTeleBoss : BaseMM8BDMWepX
+{
+	Weapon.AmmoUse 7
+	Weapon.AmmoGive 28
+	Weapon.SlotNumber 1
+	Inventory.Pickupmessage "Picked up MacOS Buster"	
+	Obituary "%o was deteled be %k Mac Buster"
+	Tag "Mac-Buster"
+	weapon.ammotype "MacAmmo"
+	inventory.icon "GRAVSI"
+	States
+	{
+		Spawn:
+		C_X3 I 1
+		loop
+		
+		Ready:
+		MHUD H 0 ACS_ExecuteAlways(998,0,0)
+		MHUD B 0 A_TakeInventory("WeaponCharge",999)
+		MHUD B 1 A_WeaponReady
+		goto Ready1
+		
+		Ready1:
+		MHUD B 0 A_JumpIfInventory("MacAmmo",4,"Ready2")
+		MHUD B 6 A_WeaponReady(12)
+		MHUD B 0 A_TakeInventory("WeaponCharge",999)
+		MHUD B 6 A_GiveInventory("MacAmmo",1)
+		loop
+		
+		Ready2:
+		MHUD B 0 A_TakeInventory("WeaponCharge",999)
+		MHUD B 4 A_WeaponReady
+		MHUD B 6 A_GiveInventory("MacAmmo",1)
+		goto Ready+1
+		
+		Deselect:
+		TNT1 AAAAAAAAAAAAAAAAAAAAAA 0 A_Lower
+		MHUD B 1 A_Lower
+		Loop
+		
+		Select:
+		TNT1 AAAAAAAAAAAAAAAAAAAAAA 0 A_Raise
+		MHUD B 1 A_Raise
+		Loop
+		
+		Altfire:
+		MHU2 B 1 A_JumpIfNoAmmo("NoAmmo")
+		MHU2 C 1 A_TakeInventory("MacAmmo", 7)
+		MHU2 DE 1 A_PlaySoundEx("weapon/MACSTUN","Weapon")
+		TNT1 A 0 A_SetTranslucent(0,0)
+		TNT1 A 0 SetPlayerProperty(0,1,4)
+		TNT1 A 0 A_ChangeFlag("SOLID",false)
+		goto FireCheck
+		FireCheck:
+		TRBI A 0 A_SpawnItemEx("MACTeleportFX", -1, 0, 0, 0, 0, 0, 0, SXF_NOCHECKPOSITION, 0)
+		MHUD B 4 ACS_NamedExecuteAlways("core_flyplayer",0,0,1)
+		MHUD B 4 ACS_NamedExecuteAlways("core_freezeplayer",0,0,1)
+		TNT1 A 0 A_ChangeVelocity(Cos(pitch)*190,0,-sin(pitch)*190,1)
+		TNT1 A 2 A_SpawnItemEx("MacWallCheck",0,0,momx*1.05,momy*1.05,momz*1.2,0,8,0)
+		goto TeleportComplete
+		TeleportComplete:
+		TRBI A 0 A_SpawnItemEx("MACTELEPORTFX2", -1, 0, 0, 0, 0, 0, 0, SXF_NOCHECKPOSITION, 0)
+		TNT1 A 8 A_Stop
+		TNT1 A 0 A_ChangeFlag("SOLID",TRUE)
+		MHU2 ED 1 ACS_NamedExecuteAlways("core_flyplayer",0,0,0)
+		MHU2 C 1 ACS_NamedExecuteAlways("core_freezeplayer",0,0,0)
+		MHUD B 2 SetPlayerProperty(0,0,4)
+		MHU2 E 1 A_SetTranslucent(1,0)
+		MHU2 DCB 1
+		Goto Ready+1
+		
+		Fire:
+		MHUD B 0 A_PlaySoundEx("weapon/BALAMAC","Weapon")
+		MHUD C 4 A_FireCustomMissile("MACShot",0,1,0,0)
+		MHUD D 5 A_TakeInventory("WeaponCharge",999)
+		MHUD C 3
+		MHUD B 2
+		MHUD B 2
+		MHUD B 0 A_JumpIfNoAmmo("Hold")
+		MHUD B 0 A_Refire 
+		goto Ready+1
+		Fire2:
+		MHUD B 5 A_TakeInventory("WeaponCharge",999)
+		MHUD B 1 ACS_ExecuteAlways(991,0,0)
+		MHUD C 0 A_PlaySoundEx("weapon/BALAMAC","Weapon")
+		MHUD BC 1 A_FireCustomMissile("MACShot",6,0,2,0)
+		MHUD C 0 A_PlaySoundEx("weapon/BALAMAC","Weapon")
+		MHUD BC 1 A_FireCustomMissile("MACShot",4,0,2,0)
+		MHUD C 0 A_PlaySoundEx("weapon/BALAMAC","Weapon")
+		MHUD BC 1 A_FireCustomMissile("MACShot",2,0,2,0)
+		MHUD C 0 A_PlaySoundEx("weapon/BALAMAC","Weapon")
+		MHUD BC 1 A_FireCustomMissile("MACShot",-2,0,-2,0)
+		MHUD C 0 A_PlaySoundEx("weapon/BALAMAC","Weapon")
+		MHUD BC 1 A_FireCustomMissile("MACShot",-4,0,-2,0)
+		MHUD C 0 A_PlaySoundEx("weapon/BALAMAC","Weapon")
+		MHUD BC 1 A_FireCustomMissile("MACShot",-6,0,-2,0)
+		MHUD DC 15
+		MHUD CB 2 A_Refire
+		goto Ready+1
+		Fire3:
+		MHUD B 2 A_TakeInventory("WeaponCharge",999)
+		TNT1 A 0 A_StopSoundEx("SoundSlot5")
+		MHUD B 0 A_PlaySoundEx("weapon/Plugball","Weapon")
+		MHUD C 0 ACS_ExecuteAlways(991,0,0)
+		MHUD C 0 A_FireCustomMissile("MACStun",0,0,8,0)
+		MHUD DD 9 
+		MHUD C 5
+		MHUD B 0 A_Refire
+		goto Ready+1
+		
+		Hold:
+		//BUST B 0 A_JumpIfInventory("WeaponCharge",34,"Charge2Start")
+		MHUD B 0 A_JumpIfInventory("WeaponCharge",18,"Charge")
+		MHUD B 1 A_GiveInventory("WeaponCharge",1)
+		MHUD B 0 A_Refire
+		goto Ready+1
+		Charge:
+		//BUST B 0 A_JumpIfInventory("WeaponCharge",34,"Charge2Start")
+		MHUD B 0 A_JumpIfInventory("WeaponCharge",19,"Charge1")
+		MHUD B 0 A_PlaySoundEx("weapon/coilstart","Weapon")
+		Goto Charge1
+		Charge1:
+		MHUD B 0 A_JumpIfInventory("WeaponCharge",35,"Charge2Start")
+		MHUD E 1 ACS_ExecuteAlways(991,0,106)
+		MHUD E 0 A_Refire("Charge1.a")
+		Goto Fire2
+		Charge1.a:
+		MHUD B 1 ACS_ExecuteAlways(991,0,0)
+		MHUD B 0 A_GiveInventory("WeaponCharge",1)
+		MHUD F 0 A_Refire("Charge")
+		Goto Fire2
+		BotFire:
+		MHUD B 0 A_Jump(16, "Fire3")
+		MHUD F 0 A_Refire
+		Goto Fire3
+		Charge2Start:
+		MHUD B 3 A_GunFlash("Sound.BusterCharge", GFF_NOEXTCHANGE)
+		Goto Charge2
+		Charge2:
+		MHUD E 1 ACS_ExecuteAlways(991,0,107)
+		MHUD F 0 A_Refire("Charge2.a")
+		Goto Fire3
+		Charge2.a:
+		MHUD B 1 ACS_ExecuteAlways(991,0,0)
+		MHUD B 0 A_JumpIfInventory("IsBot", 1, "BotFire")
+		MHUD E 0 A_Refire("Charge2")
+		MHUD B 0 A_JumpIfInventory("WeaponCharge", 35, 2)
+		MHUD B 0 A_GiveInventory("WeaponCharge",1)
+		MHUD B 0 A_Refire
+		Goto Fire3
+
+		NoAmmo:
+		MHUD MCN 1 ACS_Execute(979,0)
+		Goto Ready+1
+	}
+}
+
+actor MacAmmo : Ammo
+{
+	inventory.amount 1
+	inventory.maxamount 21
+	+INVENTORY.IGNORESKILL
+}
+
+actor MACStun
+{
+	PROJECTILE
+	+BRIGHT
+	damagetype "ChargeBuster"
+	Obituary "%o was deteled be %k Mac Buster"
+	Speed 26
+	Damage (5)
+	radius 20
+	height 20
+	scale 2.5
+	States
+	{
+		Spawn:
+		MACS B 0
+		MACS B 4 
+		MACS B 4 A_SpawnItemEx("FreezeCrackerFX", -8, Random(-22, 22), random(-20, 20))
+		Goto Spawn+2
+		Death:
+		MACS B 0 A_SpawnItemEx("MAK")
+		STOP
+	}
+}
+
+actor MACShot
+{
+	PROJECTILE
+	+FORCEXYBILLBOARD
+	+BRIGHT
+	damagetype "ArrowBuster"
+	Obituary "%o was deteled be %k Mac Buster"
+	Speed 54
+	Damage (3)
+	radius 8
+	height 6
+	scale 2.5
+	States
+	{
+		Spawn:
+		TNT1 A 1
+		MACS C 2
+		wait
+	}
+}
+
+actor MAK
+{
+	PROJECTILE
+	+NOINTERACTION
+	+FORCEXYBILLBOARD
+	+RIPPER
+	+BRIGHT
+	damage (5)
+	Obituary "%o was deteled be %k Mac Electro-Stun"
+	Height 1
+	Radius 1
+	damagetype "BlackHoleBomb"
+	reactiontime 4
+	Scale 3.0
+	States
+	{
+		Spawn:
+		MACS D 0
+		TNT1 A 0 A_SPAWNITEMEX("MACSloW")
+		MACS E 0 A_GiveToTarget("MACD", 1)
+		MACS D 2 ACS_ExecuteAlways(247, 0, 8, 256)
+		MACS E 0 A_PlaySoundEx("weapon/MACTELE", "body", 1)
+		TNT1 A 0 A_SPAWNITEMEX("MACSloW")
+		MACS D 7 ACS_ExecuteAlways(247, 0, 8, 256)
+		MACS ED 4
+		MACS E 4 ACS_ExecuteAlways(247, 0, 8, 256)
+		MACS D 0 A_Countdown
+		goto Spawn+3
+		Death:
+		TNT1 A 3
+		TNT1 A 0 A_StopSound
+		stop
+	}
+}
+
+actor MACD : Powerup
+{
+	powerup.duration 932
+}
+
+actor MACSloW
+{
+	-SOLID
+	+NOGRAVITY
+	+DONTBLAST
+	PROJECTILE
+	+BRIGHT
+	damage 0
+	radius 1
+	height 1
+	damagetype "TimeSlow"
+	Obituary "%o was deteled be %k Mac Electro-Stun"
+	Scale 4.1
+	+FORCEXYBILLBOARD
+	States
+	{
+		Spawn:
+		BALA A 0 A_Stop
+		BALA A 0 A_Explode(15, 40, 0)
+		stop
+	}
+}
+
+actor MACTeleportFX
+{
+	Radius 12
+	Height 8
+	scale 2.5
+	+NOINTERACTION
+	PROJECTILE
+	+SKYEXPLODE
+	+DONTBLAST
+	ReactionTime 69
+	States
+	{
+		Spawn:
+		MTEL A 5
+		MTEL A 0 A_ChangeFlag("NOINTERACTION", 0)
+		MTEL BBCC 1 A_CheckFloor("Next")
+		Goto Next
+		Next:
+		MTEL DD 0 A_ChangeFlag("NOGRAVITY", 0)
+		Goto Death
+		Death:
+		TNT1 A 0 
+		stop
+	}
+}
+
+
+ACTOR MACTELEPORTFX2 : MACTeleportFX 
+{
+	States
+	{
+		SPAWN:
+		MTEL D 5
+		MTEL D 0 A_ChangeFlag("NOINTERACTION", 0)
+		MTEL DCCCBBB 1 A_CheckFloor("Next")
+		Goto Next
+		Next:
+		MTEL AAA 0 A_ChangeFlag("NOGRAVITY", 0)
+		Goto Death
+		Death:
+		TNT1 A 0 
+		stop
+	}
+}
+
+
+actor MacWallCheck
+{
+	PROJECTILE
+	-SHOOTABLE
+	+NOGRAVITY
+	+SKYEXPLODE
+	+DONTSPLASH
+	+DONTBLAST
+	+THRUGHOST
+	+DONTREFLECT
+	damage (0)
+	Height 26
+	Radius 9
+	States
+	{
+		Spawn:
+		TNT1 A 1
+		TNT1 A 1
+		TNT1 A 0
+		stop
+		Death:
+		XDeath:
+		TNT1 A 1
+		Stop
+		Crash:
+		TNT1 A 0
+		stop
+	}
+}
+
+
+actor MacNetJailBoss : BaseMM8BDMWepX
+{
+	Weapon.AmmoUse 21
+	Weapon.AmmoGive 28
+	Weapon.SlotNumber 1
+	Inventory.Pickupmessage "Picked up MacOS Buster"	
+	Obituary "%o was deteled be %k Mac Buster"
+	Tag "Mac-M.E.P."
+	weapon.ammotype "MacAmmo"
+	inventory.icon "ITEM1"
+	States
+	{
+		Spawn:
+		C_X3 I 1
+		loop
+		
+		Ready:
+		MHUD B 0 ACS_ExecuteAlways(998,0,0)
+		MHUD B 0 A_TakeInventory("WeaponCharge",999)
+		MHUD B 0 A_WeaponReady
+		goto Ready1
+		
+		Ready1:
+		MHUD B 0 A_JumpIfInventory("MacAmmo",4,"Ready2")
+		MHUD B 5 A_WeaponReady
+		MHUD B 0 A_TakeInventory("WeaponCharge",999)
+		MHUD B 8 A_GiveInventory("MacAmmo",1)
+		loop
+		
+		Ready2:
+		MHUD B 0 A_TakeInventory("WeaponCharge",999)
+		MHUD B 6 A_WeaponReady
+		MHUD B 6 A_GiveInventory("MacAmmo",1)
+		goto Ready+1
+		
+		Deselect:
+		TNT1 AAAAAAAAAAAAAAAAAAAAAA 0 A_Lower
+		MHUD B 1 A_Lower
+		Loop
+		
+		Select:
+		TNT1 AAAAAAAAAAAAAAAAAAAAAA 0 A_Raise
+		MHUD B 1 A_Raise
+		Loop
+		
+		Altfire:
+		MHUD C 0 A_JumpIfNoAmmo("NoAmmo")
+		MHUD LKJIH 1 A_TakeInventory("MacAmmo", 21)
+		MHUD GHIJK 1
+		MHUD L 4 A_FireCustomMissile("ItemPlatform",0,1,0,60)
+		Goto Ready+1
+		
+		Fire:
+		MHUD B 0 A_PlaySoundEx("weapon/BALAMAC","Weapon")
+		MHUD B 0 A_FireCustomMissile("MACShot",random(-2,2),0,4,0,0,frandom(-2,2))
+		MHUD CD 3
+		MHUD B 3
+		goto Ready+1
+
+		NoAmmo:
+		MHUD MCN 1 ACS_Execute(979,0)
+		Goto Ready+1
+	}
+}
+
+actor ItemPlatform
+{
+	//$Category MM8BDM-Interactive Props
+	//$Arg0 Moving?
+	//$Arg0Enum { 0 = "Yes"; 1 = "No"; }
+	//$Arg0Type 11
+	//$Arg1 Movement Speed
+	+SOLID
+	+NOGRAVITY
+	+MISSILE
+	+COUNTITEM
+	+DONTBLAST
+	-NOCLIP
+	+FRIENDLY
+	+SKYEXPLODE
+	speed 0
+	scale 2.0
+	Radius 10
+	Height 10
+	Obituary "%o crashed by %k MacNetJail"
+	gravity 0.48
+	health 15
+	MONSTER
+	reactiontime 24
+	States
+	{
+		Spawn:
+		TFOG A 0
+		TFOG CB 0 A_PlaySoundEx("misc/teleport", "Voice", 0, 1)
+		MPLA A 0 A_CountDown
+		MPLA B 0 ACS_NamedExecuteAlways("core_stickyLifts",0,STICKYMODE_GUTSLIFT)
+		MPLA A 0 A_PlaySoundEx("weapon/superboost", "weapon")
+		MPLA B 3 A_ChangeVelocity(7, 0, 0, CVF_REPLACE|CVF_RELATIVE)
+		MPLA B 3 A_ChangeVelocity(21, 0, 0, CVF_REPLACE|CVF_RELATIVE)
+		MPLA A 0 ACS_NamedExecuteAlways("core_stickyLifts",0,STICKYMODE_MAGFLY)
+		MPLA A 0 A_JumpIf(Args[0] >= 100, "SpeedCheck")
+		Goto Spawn2
+		Spawn2:
+		MPLA AB 3 A_SpawnItemEx("MagParticleSpawner", -30, 0, -(z-floorz), momx, momy, momz, 0, SXF_ABSOLUTEMOMENTUM)
+		MPLA A 0 A_CountDown
+		loop
+		SpeedCheck:
+		MPLA A 0 A_JumpIf(-Args[0] <= 100, "Move1")
+		Goto Move1
+		Move1:
+		MPLA AB 3 A_SpawnItemEx("MagParticleSpawner", -30, 0, -(z-floorz), momx, momy, momz, 0, SXF_ABSOLUTEMOMENTUM)
+		MPLA A 0 A_CountDown
+		MPLA A 0 A_Stop
+		MPLA A 0 A_Recoil(-1)
+		Goto Move2
+		Move2:
+		MPLA AB 3 A_SpawnItemEx("MagParticleSpawner", -30, 0, -(z-floorz), momx, momy, momz, 0, SXF_ABSOLUTEMOMENTUM)
+		MPLA A 0 A_CountDown
+		MPLA A 0 A_Stop
+		MPLA A 0 A_Recoil(-Args[1])
+		Loop
+		Death:
+		TNT1 A 0 A_PlaySoundEx("weapon/wrapexplode", "Weapon")
+		HARD B 3 A_Explode(18,64,0)
+		HARD CDE  3
+		TNT1 A 0 A_Stop
+		stop
+	}
+}
+

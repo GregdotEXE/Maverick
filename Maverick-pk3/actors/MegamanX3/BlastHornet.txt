@@ -1,0 +1,46 @@
+actor BlastHornet : ClassBase1
+{
+Player.ScoreIcon "C_X3A0X"
+player.displayname "BlastHornet"
+player.maxhealth 90
+health 90
+player.startitem "ParasiticBombBoss"
+player.startitem "HornetFlightItem", 1
+player.ForwardMove 0.8, 0.8
+player.SideMove 0.78, 0.78
+player.jumpz 14
+scale 1.5
++NOSKIN
+States
+{
+Spawn:
+BLAS A 0
+BLAS A 3
+BLAS B 3
+BLAS C 3
+BLAS B 3
+Goto Spawn+1
+See:
+BLAS AAABBBCCCBBB 1
+Goto Spawn
+Missile:
+HORM F 0
+HORM F 1
+HORM F 4
+HORM G 4 
+goto Spawn
+Missile2:
+HORM M 8
+HORM M 0
+goto Spawn+2
+ClassPain:
+HORM H 0
+goto PainContinue
+DeathFix:
+HORM H 0
+goto DeathContinue
+ClassDeath:
+HORM H 1
+goto MegaDeathEnd
+}
+}

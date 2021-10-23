@@ -1,0 +1,37 @@
+Actor MorphMoth : ClassBase1
+{
+player.ScoreIcon "C_X2A0X"
+player.DisplayName "MorphMoth"
+player.maxhealth 100
+health 100
+player.StartItem "SilkShotBoss"
+player.StartItem "MetamorphosisItem"
+player.ForwardMove 0.66, 0.66
+player.SideMove 0.64, 0.64
+player.Jumpz 10
++NOSKIN
+States
+{
+Spawn:
+WODM A 0
+WODM B 1
+WODM A 1
+goto Spawn+2
+See:
+WODM BCDE 5
+Goto Spawn
+Missile:
+WODM F 5
+WODM G 4
+goto Spawn+2
+ClassPain:
+WODM H 0
+goto PainContinue
+DeathFix:
+WODM H 0
+goto DeathContinue
+ClassDeath:
+WODM H 1
+goto MegaDeathEnd
+}
+}

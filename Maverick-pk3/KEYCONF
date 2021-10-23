@@ -1,0 +1,14 @@
+clearplayerclasses
+//addplayerclass TrainingBot2000 nomenu
+addplayerclass MegamanX nomenu
+addplayerclass Zero nomenu
+addplayerclass Sigma nomenu
+addplayerclass SparkMandrill nomenu
+addplayerclass BoomerKuwanger nomenu
+addplayerclass StormEagle nomenu
+addplayerclass FlameStag nomenu
+addplayerclass WheelGator nomenu
+addplayerclass MorphMoth nomenu
+addplayerclass BlastHornet nomenu
+addplayerclass CrushCrawfish nomenu
+addplayerclass Mac nomenu

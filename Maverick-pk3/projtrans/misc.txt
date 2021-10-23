@@ -1,0 +1,14 @@
+//a clientside thing spawning a non-clientside weapon thing >_>
+
+Actor Kamikamin2 :  Kamikamin replaces Kamikamin
+{
+States
+{
+Bubbles:
+PCST A 0 A_JumpIf(args[0]==1, "Open")
+PCST AAAAA 1 A_SpawnItemEx("WaveBurnerBubbleFX2", 0, 0, Random(16, 24), Random(0, 2), 0, 0, random(-3,3))
+Goto Open+1
+}
+}
+
+Actor WaveBurnerBubbleFX2 :  WaveBurnerBubbleFX {}

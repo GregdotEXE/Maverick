@@ -1,0 +1,95 @@
+actor ThunderWoolArc_O : ThunderWoolArc replaces ThunderWoolArc { +CLIENTSIDEONLY states { Spawn: TNT1 AA 0 A_GiveInventory("ProjectileFXCode",1) goto "Super::Spawn" } }
+actor LightningStartFX1_O : LightningStartFX1_C replaces LightningStartFX1 { -NONETID }
+actor LightningStartFX2_O : LightningStartFX2_C replaces LightningStartFX2 { -NONETID }
+actor LightningBoltFX_O : LightningBoltFX_C replaces LightningBoltFX { -NONETID }
+actor WrapExplosion_O : WrapExplosion replaces WrapExplosion { states { Spawn: TNT1 AA 0 A_GiveInventory("ProjectileCode",1) goto "Super::Spawn" } }
+actor PhotonMissileExplosion_O : PhotonMissileExplosion replaces PhotonMissileExplosion { states { Spawn: TNT1 AA 0 A_GiveInventory("ProjectileCode",1) goto "Super::Spawn" } }
+
+actor HomingSniperLockon_O : HomingSniperLockon replaces HomingSniperLockon
+{
+    States
+    {
+    Spawn:
+		TNT1 A 0
+		TNT1 A 0 A_GiveInventory("ProjectileCode",1)
+        goto "Super::Spawn"
+    XDeath:
+		//TNT1 A 0 A_SpawnItemEx("HomingCrosshair",8,0,8,momx,momy,momz,0,SXF_ABSOLUTEMOMENTUM|SXF_WEPFXTRANS)
+		TNT1 A 1 A_GiveInventory("ProjectileDCode",1)
+        TNT1 A 1 A_SpawnItemEx("HomingCrosshair",8,0,8,momx,momy,momz,0,SXF_ABSOLUTEMOMENTUM|SXF_WEPFXTRANS)
+        stop
+    }
+}
+
+actor ThunderClaw_O : ThunderClaw replaces ThunderClaw
+{
+States
+{
+Spawn:
+TNT1 A 0
+TNT1 A 1 A_GiveInventory("ProjectileCode",1)
+goto "Super::Spawn"
+}
+}
+
+actor ThunderClaw_OFX : ThunderClawFX  {}
+
+actor ThunderWoolLightning_O : ThunderWoolLightning replaces ThunderWoolLightning
+{
+	States
+	{
+	Spawn:
+		TNT1 A 0
+		TNT1 A 0 A_GiveInventory("ProjectileCode",1)
+        TNT1 A 0 A_JumpIf(z-floorz < 64, "FloorCheck")
+		TNT1 A 0 A_SpawnItemEx("ThunderWoolLightning", 0, 0, -64)
+        goto SpawnWait
+    FloorCheck:
+        TNT1 A 0 A_JumpIf(z-floorz < 8, "SpawnWait")
+        TNT1 A 0 A_SpawnItemEx("ThunderWoolLightning", 0, 0, -(z-floorz))
+        goto SpawnWait
+    SpawnWait:
+        //TNT1 A 0 A_SpawnItemEx("ThunderWoolLightningFX", 0, 0, 0, 0, 0, 0, 0, SXF_WEPFXTRANS)
+		//TNT1 A 2
+		TNT1 A 1
+        TNT1 A 0 A_SpawnItemEx("ThunderWoolLightningFX", 0, 0, 0, 0, 0, 0, 0, SXF_WEPFXTRANS)
+		TNT1 A 1
+		stop
+	}
+}
+
+actor WheelCutterWallCheck_O : WheelCutterWallCheck replaces WheelCutterWallCheck
+{
+States
+{
+Spawn:
+TNT1 A 0
+TNT1 A 0 A_GiveInventory("ProjectileCode",1)
+goto "Super::Spawn"
+Death:
+//TNT1 A 0 A_SpawnItemEx("WheelCutterClimbFX", 16, 0, frandom(-16, 16), 5, 0, 1, 180+frandom(-8, 8), SXF_WEPFXTRANS)
+TNT1 A 0 A_GiveInventory("ProjectileDCode",1)
+TNT1 A 0 A_PlaySoundEx("weapon/wheelclimb", "body")
+TNT1 A 0 A_GiveToTarget("WheelThruster",1)
+TNT1 A 1
+TNT1 A 0 A_SpawnItemEx("WheelCutterClimbFX", 16, 0, frandom(-16, 16), 5, 0, 1, 180+frandom(-8, 8), SXF_WEPFXTRANS)
+TNT1 A 10
+stop
+}
+}
+
+actor WheelBounceSpawner_O : WheelBounceSpawner replaces WheelBounceSpawner
+{
+    States
+    {
+    Spawn:
+		TNT1 A 0
+		TNT1 A 0 A_GiveInventory("ProjectileCode",1)
+        goto "Super::Spawn"
+    Death:
+		//TNT1 A 0 A_SpawnItemEx("ExplosionEffect1", 0, 0, 20, 0, 0, 0, 0, SXF_WEPFXTRANS)
+		TNT1 A 1 A_GiveInventory("ProjectileDCode",1)
+        TNT1 A 1 A_SpawnItemEx("ExplosionEffect1", 0, 0, 20, 0, 0, 0, 0, SXF_WEPFXTRANS)
+        stop
+    }
+}

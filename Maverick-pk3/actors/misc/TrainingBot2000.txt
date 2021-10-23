@@ -1,0 +1,58 @@
+actor TrainingBot2000 : ClassBase1
+{
+player.maxhealth 100
+health 100
+player.ForwardMove 0.8, 0.8
+player.SideMove 0.78, 0.78
+player.jumpz 10
++NOSKIN
+
+player.startitem "TrainingGun"
+States
+{
+Spawn:
+EMEG A 0
+EMEG B 1
+EMEG A 1
+Goto Spawn+2
+See:
+EMEG BCDE 5
+Goto Spawn
+Missile:
+EMEG F 5
+EMEG G 4
+goto Spawn
+ClassPain:
+EMEG H 0
+goto PainContinue
+}
+}
+
+Actor TrainingGun : BaseMM8BDMWepX
+{
+Tag "TrainingGun"
+States
+{
+Spawn:
+TNT1 A 1
+loop
+Ready:
+BUST B 1 A_WeaponReady
+Goto Ready
+Deselect:
+TNT1 AAAAAAAAAAAAAAAAAAAAAA 0 A_Lower
+BUST B 1 A_Lower
+Loop
+Select:
+TNT1 AAAAAAAAAAAAAAAAAAAAAA 0 A_Raise
+BUST B 1 A_Raise
+Loop
+Fire:
+BUST B 0 A_PlaySoundEx("weapon/mbuster","Weapon")
+BUST B 0 A_FireCustomMissile("MegaShot",0,0,8,0)
+BUST CD 3
+BUST B 2
+BUST B 0 A_Refire
+goto Ready
+}
+}

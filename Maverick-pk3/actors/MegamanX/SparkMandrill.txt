@@ -1,0 +1,38 @@
+actor SparkMandrill : ClassBase1
+{
+player.maxhealth 155
+health 155
+player.DisplayName "SparkMandrill"
+player.StartItem "ElectricSparkBoss"
+player.StartItem "MandrillRecharger"
+player.StartItem "MandrillAmmo",30
+player.ForwardMove 0.68, 0.68
+player.SideMove 0.66, 0.66
+player.Jumpz 14.0
++NOSKIN
+States
+{
+Spawn:
+BRGZ A 0
+BRGZ B 1
+BRGZ A 1
+goto Spawn+2
+See:
+BRGZ BCDE 5
+Goto Spawn
+Missile:
+BRGZ F 0
+BRGZ F 1
+BRGZ G 1
+Goto Spawn
+ClassPain:
+BRGZ H 0
+goto PainContinue
+DeathFix:
+BRGZ H 0
+goto DeathContinue
+ClassDeath:
+BRGZ H 1
+goto MegaDeathEnd
+}
+}

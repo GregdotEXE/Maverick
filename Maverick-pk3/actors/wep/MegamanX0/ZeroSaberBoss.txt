@@ -1,0 +1,869 @@
+Actor ZeroSaberBoss : BaseMM8BDMWepX
+{
+	Tag "ZeroSword"
+	//Obituary
+	weapon.ammotype "TechniqueCounter"
+	weapon.ammotype2 "ZeroDashAmmo"
+	States
+	{
+		Spawn:
+		TNT1 A 1
+		loop
+		
+		Ready:
+		ZSWO A 0 ACS_ExecuteAlways(998,0,14980,1)
+		ZSWO A 0
+		ZSWO A 0 A_GunFlash
+		goto Ready1
+		
+		Ready1:
+		ZSWO A 8 A_WeaponReady(WRF_ALLOWRELOAD)
+		ZSWO A 1 A_GiveInventory("ZeroDashAmmo",4)
+		loop
+		
+		Deselect:
+		TNT1 AAAAAAAAAAAAAAAAAAAAAA 0 A_Lower
+		DRIA A 1 A_Lower
+		Loop
+		
+		Select:
+		TNT1 AAAAAAAAAAAAAAAAAAAAAA 0 A_Raise
+		DRIA A 1 A_Raise
+		Loop
+		
+		Fire:
+		ZSWO B 1 A_JumpIf(floorz-z==0,"Fire1")
+		goto AirSpin
+		Fire1:
+		ZSWO B 1
+		ZSWO B 1 Offset(5,2)
+		ZSWO B 1 Offset(10,5)
+		ZSWO B 1 Offset(15,7)
+		ZSWO B 1 Offset(20,20)
+		ZSWO C 1
+		ZSWO C 1 A_GiveInventory("ZeroSaberMain_CI",1)
+		ZSWO C 1 Offset(0,30)
+		ZSWO C 1 Offset(5,35)
+		ZSWO D 1 
+		ZSWO D 1 Offset(5,35)
+		ZSWO D 1 Offset(10,40)
+		ZSWO E 1
+		ZSWO E 1 Offset(5,35)
+		ZSWO E 1 Offset(10,40)
+		ZSWO E 1 A_Refire("Fire2")
+		goto Ready1
+		Fire2:
+		ZSWO F 1
+		ZSWO F 1 Offset(10,35)
+		ZSWO F 1 Offset(20,38)
+		ZSWO G 1 A_GiveInventory("ZeroSaberMain_CI",1)
+		ZSWO G 1 Offset(10,35)
+		ZSWO G 1 Offset(30,35)
+		ZSWO G 1 Offset(60,37)
+		ZSWO G 1 Offset(100,37)
+		ZSWO G 1 Offset(150,38)
+		ZSWO G 1 Offset(190,38)
+		ZSWO H 2
+		ZSWO G 1 A_Refire("Fire3")
+		goto Ready1
+		Fire3:
+		CUTA A 3
+		CUTA A 1 A_GiveInventory("ZeroSaberMain_CI",1)
+		CUTA A 20
+		goto Ready1
+		AirSpin:
+		CUTA A 4
+		CUTA A 1 A_SpawnItemEx("SwordSlashAir",0,0,28,momx,momy,momz,0,0,0)
+		CUTA A 10
+		goto Ready1
+		
+		Altfire:
+		CUTA A 0 A_JumpIfInventory("CanAirJumpLimit",1,"Slide1")
+		goto Ready1
+		Slide1:
+		CUTA A 0 A_JumpIfInventory("ZeroDashAmmo",20,"Slide2")
+		goto Ready1
+		Slide2:
+		CUTA A 0 A_ChangeVelocity(40,0,momz,3)
+		CUTA A 0 A_SetArg(3,momy)
+		CUTA A 0 A_SetArg(2,momx)
+		CUTA A 10
+		CUTA A 1 A_ChangeVelocity(momx*0.75,momy*0.75,momz,2)
+		CUTA A 4 A_TakeInventory("ZeroDashAmmo",20)
+		goto Ready1
+		
+		Reload:
+		ZBUS A 0 A_JumpIfInventory("TechniqueCounter",3,"TechniqueChecker")
+		goto Ready1
+		TechniqueChecker:
+		ZBUS A 0 A_JumpIfInventory("TechniqueSwapper",3,"EarthTechnique")
+		ZBUS A 0 A_JumpIfInventory("TechniqueSwapper",2,"ThunderTechnique")
+		ZBUS A 0 A_JumpIfInventory("TechniqueSwapper",1,"IceTechnique")
+		FireTechnique:
+		ZBUS A 7
+		ZBUS A 1 A_Recoil(-10)
+		ZBUS A 1 ThrustThingZ(0,40,0,0)
+		ZBUS A 1 A_GiveInventory("ZeroFire_CI",1)
+		ZBUS A 1 ThrustThingZ(0,40,0,0)
+		ZBUS A 1 A_GiveInventory("ZeroFire_CI",1)
+		ZBUS A 1 ThrustThingZ(0,40,0,0)
+		ZBUS A 1 A_GiveInventory("ZeroFire_CI",1)
+		TNT1 A 0 A_TakeInventory("TechniqueCounter",3)
+		goto Ready1
+		ThunderTechnique:
+		TNT1 A 0 SetPlayerProperty(0,1,4)
+		ZBUS A 10
+		TNT1 A 0 A_SetTranslucent(0.0,0)
+		TNT1 A 0 A_ChangeFlag("SOLID",0)
+		ZBUS A 0 A_ChangeVelocity(80,0,momz,3)
+		ZBUS A 0 A_SetArg(3,momy)
+		ZBUS A 0 A_SetArg(2,momx)
+		ZBUS A 10
+		ZBUS A 1 A_ChangeVelocity(momx*0.75,momy*0.75,momz,2)
+		ZBUS A 4 
+		TNT1 A 0 A_SetTranslucent(1.0,0)
+		TNT1 A 0 A_SpawnItemEx("Resolidifier",1)
+		TNT1 A 0 A_GiveInventory("ZeroThunder_CI",1)
+		TNT1 A 0 SetPlayerProperty(0,0,4)
+		TNT1 A 0 A_TakeInventory("TechniqueCounter",3)
+		goto Ready1
+		IceTechnique:
+		ZBUS A 0 A_JumpIf(floorz-z==0,"IceLeap")
+		goto HyouretsuzanLoop
+		IceLeap:
+		TNT1 A 0 ThrustThingZ(0,60,0,0)
+		TNT1 A 0 A_Recoil(-10)
+		ZBUS A 10
+		ZBUS A 3 A_Stop
+		goto HyouretsuzanLoop
+		HyouretsuzanLoop:
+		ZBUS A 1 A_JumpIf(floorz-z==0,"Hyouretsuzan")
+		TNT1 A 0 A_JumpIf(momz==0,"Hyouretsuzan")
+		TNT1 A 0 ThrustThingZ(0,80,1,0)
+		loop
+		Hyouretsuzan:
+		TNT1 A 0 A_GiveInventory("ZeroIce_CI",1)
+		ZBUS A 15
+		TNT1 A 0 A_TakeInventory("TechniqueCounter",3)
+		goto Ready1
+		EarthTechnique:
+		ZBUS A 1 A_JumpIf(floorz-z==0,"Rakuhouha")
+		Rakuhouha:
+		TNT1 A 0 SetPlayerProperty(0,1,0)
+		ZBUS A 18
+		TNT1 A 0 A_GiveInventory("ZeroEarth_CI",1)
+		ZBUS A 10
+		TNT1 A 0 A_TakeInventory("TechniqueCounter",3)
+		TNT1 A 0 SetPlayerProperty(0,0,0)
+		goto Ready1
+	}
+}
+
+Actor ZeroBusterBoss : BaseMM8BDMWepX
+{
+	Tag "ZeroBuster"
+	//Obituary
+	weapon.ammotype "TechniqueCounter"
+	weapon.ammotype2 "ZeroDashAmmo"
+	States
+	{
+		Spawn:
+		TNT1 A 1
+		loop
+		
+		Ready:
+		ZBUS A 0 ACS_ExecuteAlways(998,0,14980,1)
+		ZBUS A 0
+		ZBUS A 0 A_GunFlash
+		goto Ready1
+		
+		Ready1:
+		ZBUS A 8 A_WeaponReady(WRF_ALLOWRELOAD)
+		ZBUS A 1 A_GiveInventory("ZeroDashAmmo",4)
+		loop
+		
+		Deselect:
+		TNT1 AAAAAAAAAAAAAAAAAAAAAA 0 A_Lower
+		DRIA A 1 A_Lower
+		Loop
+		
+		Select:
+		TNT1 AAAAAAAAAAAAAAAAAAAAAA 0 A_Raise
+		DRIA A 1 A_Raise
+		Loop
+		
+		Fire:
+		ZBUS A 1
+		goto Hold
+		Hold:
+		ZBUS A 0 A_JumpIfInventory("WeaponCharge",12,"Charge")
+		ZBUS A 2 A_GiveInventory("WeaponCharge",1)
+		ZBUS A 0 A_Refire
+		goto ZeroShot
+		Charge:
+		BKUW A 0 A_JumpIfInventory("WeaponCharge",26,"Charge2")
+		BKUW A 1 ACS_ExecuteAlways(998,0,14981,1)
+		BKUW A 2 A_GiveInventory("WeaponCharge",1)
+		BKUW A 1 ACS_ExecuteAlways(998,0,14980,1)
+		BKUW A 0 A_Refire
+		Goto ZeroShot
+		Charge2:
+		MHUD B 0 A_JumpIfInventory("WeaponCharge",38,"Charge3")
+		MHUD B 1 ACS_ExecuteAlways(998,0,14982,1)
+		MHUD B 2 A_GiveInventory("WeaponCharge",1)
+		MHUD B 1 ACS_ExecuteAlways(998,0,14980,1)
+		MHUD B 0 A_Refire
+		Goto ZeroShot
+		Charge3:
+		ZBUS A 1 ACS_ExecuteAlways(998,0,14983,1)
+		ZBUS A 1
+		ZBUS A 1 ACS_ExecuteAlways(998,0,14980,1)
+		ZBUS A 0 A_Refire
+		Goto ZeroShot
+		
+		ZeroShot:
+		ZBUS A 0 ACS_ExecuteAlways(998,0,14980,1)
+		ZBUS A 0 A_JumpIfInventory("WeaponCharge",38,14)
+		ZBUS A 0 A_JumpIfInventory("WeaponCharge",26,8)
+		ZBUS A 0 A_JumpIfInventory("WeaponCharge",12,4)
+		ZBUS B 0 A_TakeInventory("WeaponCharge",999)
+		ZBUS B 0 A_GiveInventory("ZeroBusterMain_CI",1)
+		ZBUS B 0 A_Jump(256,"End")
+		ZBUS B 0 A_TakeInventory("WeaponCharge",999)
+		ZBUS B 0 A_GiveInventory("ZeroBusterMain2_CI",1)
+		ZBUS B 0 A_Jump(256,"End")
+		ZBUS B 0 A_TakeInventory("WeaponCharge",999)
+		ZBUS B 0 A_GiveInventory("ZeroBusterMain2_CI",1)
+		ZBUS B 7
+		ZBUS B 0 A_GiveInventory("ZeroBusterMain2_CI",1)
+		ZBUS B 0 A_Jump(256,"End")
+		ZBUS B 0 A_TakeInventory("WeaponCharge",999)
+		ZBUS B 0 A_GiveInventory("ZeroBusterMain2_CI",1)
+		ZBUS B 7
+		ZBUS B 0 A_GiveInventory("ZeroBusterMain2_CI",1)
+		ZBUS B 7
+		ZBUS B 0 A_GiveInventory("ZeroBusterMain3_CI",1)
+		End:
+		ZBUS B 1
+		ZBUS C 3
+		ZBUS B 2
+		goto Ready1
+		
+		Altfire:
+		ZBUS A 0 A_JumpIfInventory("CanAirJumpLimit",1,"Slide1")
+		goto Ready1
+		Slide1:
+		ZBUS A 0 A_JumpIfInventory("ZeroDashAmmo",20,"Slide2")
+		goto Ready1
+		Slide2:
+		ZBUS A 0 A_ChangeVelocity(40,0,momz,3)
+		ZBUS A 0 A_SetArg(3,momy)
+		ZBUS A 0 A_SetArg(2,momx)
+		ZBUS A 10
+		ZBUS A 1 A_ChangeVelocity(momx*0.75,momy*0.75,momz,2)
+		ZBUS A 4 A_TakeInventory("ZeroDashAmmo",20)
+		goto Ready1
+		
+		Reload:
+		ZBUS A 0 A_JumpIfInventory("TechniqueCounter",3,"TechniqueChecker")
+		goto Ready1
+		TechniqueChecker:
+		ZBUS A 0 A_JumpIfInventory("TechniqueSwapper",3,"EarthTechnique")
+		ZBUS A 0 A_JumpIfInventory("TechniqueSwapper",2,"ThunderTechnique")
+		ZBUS A 0 A_JumpIfInventory("TechniqueSwapper",1,"IceTechnique")
+		FireTechnique:
+		ZBUS A 7
+		ZBUS A 1 A_Recoil(-10)
+		ZBUS A 1 ThrustThingZ(0,40,0,0)
+		ZBUS A 1 A_GiveInventory("ZeroFire_CI",1)
+		ZBUS A 1 ThrustThingZ(0,40,0,0)
+		ZBUS A 1 A_GiveInventory("ZeroFire_CI",1)
+		ZBUS A 1 ThrustThingZ(0,40,0,0)
+		ZBUS A 1 A_GiveInventory("ZeroFire_CI",1)
+		TNT1 A 0 A_TakeInventory("TechniqueCounter",3)
+		goto Ready1
+		ThunderTechnique:
+		TNT1 A 0 SetPlayerProperty(0,1,4)
+		ZBUS A 10
+		TNT1 A 0 A_SetTranslucent(0.0,0)
+		TNT1 A 0 A_ChangeFlag("SOLID",0)
+		ZBUS A 0 A_ChangeVelocity(80,0,momz,3)
+		ZBUS A 0 A_SetArg(3,momy)
+		ZBUS A 0 A_SetArg(2,momx)
+		ZBUS A 10
+		ZBUS A 1 A_ChangeVelocity(momx*0.75,momy*0.75,momz,2)
+		ZBUS A 4 
+		TNT1 A 0 A_SetTranslucent(1.0,0)
+		TNT1 A 0 A_SpawnItemEx("Resolidifier",1)
+		TNT1 A 0 A_GiveInventory("ZeroThunder_CI",1)
+		TNT1 A 0 SetPlayerProperty(0,0,4)
+		TNT1 A 0 A_TakeInventory("TechniqueCounter",3)
+		goto Ready1
+		IceTechnique:
+		ZBUS A 0 A_JumpIf(floorz-z==0,"IceLeap")
+		goto HyouretsuzanLoop
+		IceLeap:
+		TNT1 A 0 ThrustThingZ(0,60,0,0)
+		TNT1 A 0 A_Recoil(-10)
+		ZBUS A 10
+		ZBUS A 3 A_Stop
+		goto HyouretsuzanLoop
+		HyouretsuzanLoop:
+		ZBUS A 1 A_JumpIf(floorz-z==0,"Hyouretsuzan")
+		TNT1 A 0 A_JumpIf(momz==0,"Hyouretsuzan")
+		TNT1 A 0 ThrustThingZ(0,80,1,0)
+		loop
+		Hyouretsuzan:
+		TNT1 A 0 A_GiveInventory("ZeroIce_CI",1)
+		ZBUS A 15
+		TNT1 A 0 A_TakeInventory("TechniqueCounter",3)
+		goto Ready1
+		EarthTechnique:
+		ZBUS A 1 A_JumpIf(floorz-z==0,"Rakuhouha")
+		Rakuhouha:
+		TNT1 A 0 SetPlayerProperty(0,1,0)
+		ZBUS A 18
+		TNT1 A 0 A_GiveInventory("ZeroEarth_CI",1)
+		ZBUS A 10
+		TNT1 A 0 A_TakeInventory("TechniqueCounter",3)
+		TNT1 A 0 SetPlayerProperty(0,1,0)
+		goto Ready1
+	}
+}
+
+/////////////////////
+/*----Inventory----*/
+/////////////////////
+actor TechniqueSwapperItem : CustomInventory
+{
+	inventory.amount 1
+	inventory.maxamount 1
+	inventory.icon "ZFIRZ"
+	scale 2.0
+	+INVBAR
+	states
+	{
+		Spawn:
+		ZFIR Z 1
+		loop
+		Use:
+		TNT1 A 0 A_JumpIfInventory("TechniqueSwapper",3,"Reset")
+		TNT1 A 0 A_GiveInventory("TechniqueSwapper",1)
+		fail
+		Reset:
+		TNT1 A 0 A_TakeInventory("TechniqueSwapper",3)
+		No:
+		TNT1 A 0
+		fail
+	}
+}
+
+actor ZeroDashAmmo : Ammo
+{
+	inventory.amount 1
+	inventory.maxamount 100
+	+INVENTORY.IGNORESKILL
+}
+
+actor TechniqueCounter : Ammo
+{
+	inventory.amount 1
+	inventory.maxamount 3
+	+INVENTORY.IGNORESKILL
+}
+
+actor TechniqueSwapper : Inventory
+{
+	inventory.amount 1
+	inventory.maxamount 3
+}
+
+actor RailFXLoop : Inventory
+{
+	inventory.amount 1
+	inventory.maxamount 60
+}
+
+///////////////////
+/*----Weapons----*/
+///////////////////
+Actor SwordSlash
+{
+	Translation "204:204=210:210"
+	PROJECTILE
+	damagetype "ZeroSword"
+	//Obituary "$OB_ALIENBOOBEAM"
+	+DONTBLAST
+	+DONTSPLASH
+	Damage (10)
+	Radius 16
+	Height 16
+	speed 30
+	scale 4.5
+	States
+	{
+		Spawn:
+		SCLA H 1
+		SCLA I 1
+		SCLA J 1
+		SCLA K 1
+		SCLA L 1
+		stop
+	}
+}
+
+Actor SwordSlashAir : BasicExplosion
+{
+	//damagetype "ZeroSword"
+	//Obituary "$OB_ALIENBOOBEAM"
+	scale 4.5
+	States
+	{
+		Spawn:
+		TNT1 A 0
+		TNT1 A 1 A_Explode(14,180,0)
+		stop
+	}
+}
+
+actor ZeroLemon
+{
+	Translation "204:204=215:215"
+	PROJECTILE
+	//damagetype "Buster"
+	//Obituary "$OB_MEGABUSTER"
+	Damage (8)
+	radius 5
+	height 5
+	Speed 32
+	scale 2.5
+	States
+	{
+		Spawn:
+		BUST A 1
+		wait
+		
+		Death:
+		BUST A 1
+		stop
+	}
+}
+
+actor ZeroMidLemon
+{
+	Translation "204:204=215:215"
+	PROJECTILE
+	//damagetype "Buster"
+	//Obituary "$OB_MEGABUSTER"
+	Damage (13)
+	radius 5
+	height 5
+	Speed 35
+	scale 2.5
+	States
+	{
+		Spawn:
+		BUST A 1
+		wait
+		
+		Death:
+		BUST A 1
+		stop
+	}
+}
+
+actor ZeroSwordBeam
+{
+	Translation "204:204=215:215"
+	PROJECTILE
+	damagetype "ZeroSword"
+	//Obituary "$OB_MEGABUSTER"
+	Damage (10)
+	radius 5
+	height 5
+	Speed 40
+	scale 4.5
+	States
+	{
+		Spawn:
+		SCLA H 1
+		SCLA I 1
+		SCLA J 1
+		SCLA K 1
+		SCLA L 1
+		wait
+		
+		Death:
+		SCLA L 1
+		stop
+	}
+}
+
+Actor Ryuenjin : BasicExplosion
+{
+	//damagetype "ZeroSword"
+	//Obituary "$OB_ALIENBOOBEAM"
+	scale 4.5
+	States
+	{
+		Spawn:
+		TNT1 A 0
+		TNT1 A 1 A_Explode(8,60,0,60)
+		TNT1 A 3
+		TNT1 A 1 A_Explode(8,60,0,60)
+		TNT1 A 3
+		stop
+	}
+}
+
+actor Raikousen
+{
+Translation "192:192=68:68","198:198=75:75"
+Damagetype "Raikousen"
++NOINTERACTION
++NOGRAVITY
++THRUGHOST
++NOGRAVITY
+Damage 5
+Speed -1
+scale 1.25 
+States
+{
+		Spawn:
+		TNT1 A 0
+		Stop
+	}
+}
+
+actor RaikousenRailPuff
+{
+Translation "192:192=68:68","198:198=75:75"
+Damagetype "Raikousen"
+//Obituary "$OB_DARK3RAIL"
++NOINTERACTION
++NOGRAVITY
++THRUGHOST
++NOGRAVITY
+scale 1.25 
+States
+{
+		Spawn:
+		TNT1 A 0
+		//TNT1 A 0 A_SpawnItemEx("StupidRailOnlineSound")
+		Stop
+	}
+}
+
+actor RaikousenRailFX : BasicClientSide
+{
+	Translation "192:192=68:68","198:198=75:75"
+	Damagetype "Raikousen"
+	+FORCEXYBILLBOARD
+	+ALWAYSPUFF
+	Radius 10
+	Height 10
+	RenderStyle "translucent"
+	Alpha 1.0
+	Scale 1.5
+	States
+	{
+		Spawn:
+		MLAS A 1
+		MLAS AAAAAA 1 A_SetScale(scaleX+0.125)
+		MLAS A 1
+		MLAS AAAAAAA 1 A_SetScale(scaleX-0.0625)
+		stop
+	}
+}
+
+Actor Hyouretsuzan : BasicExplosion
+{
+	//damagetype "ZeroSword"
+	//Obituary "$OB_ALIENBOOBEAM"
+	scale 4.5
+	States
+	{
+		Spawn:
+		TNT1 A 0
+		TNT1 A 1 A_Explode(20,120,0,100)
+		stop
+	}
+}
+
+Actor Rakuhouha
+{
+	Translation "204:204=210:210"
+	PROJECTILE
+	//damagetype "Buster"
+	//Obituary "$OB_ALIENBOOBEAM"
+	Damage (12)
+	radius 12
+	height 12
+	Speed 65
+	scale 2.5
+	States
+	{
+		Spawn:
+		BURX W 20
+		goto death
+		
+		Death:
+		TNT1 A 0
+		stop
+	}
+}
+
+actor RakuhouhaSpawner
+{
+	PROJECTILE
+	Damage (0)
+	Radius 1
+	Height 1
+	Speed 1
+	States
+	{
+		Spawn:
+		TNT1 A 1
+		TNT1 A 0 A_Explode(40,120,0,60)
+		TNT1 A 0 A_SpawnItemEx("Rakuhouha",4,4,4,0,40,0,0)
+		TNT1 A 0 A_SpawnItemEx("Rakuhouha",4,4,4,40,0,0,0)
+		TNT1 A 0 A_SpawnItemEx("Rakuhouha",4,4,4,0,0,40,0)
+		TNT1 A 0 A_SpawnItemEx("Rakuhouha",4,4,4,0,-40,0,0)
+		TNT1 A 0 A_SpawnItemEx("Rakuhouha",4,4,4,-40,0,0,0)
+		stop
+	}
+}
+
+Actor ZeroSaberMain_CI : TeamColor_CI
+{
+	States
+	{
+		FireX:
+		TNT1 A 0 A_FireCustomMissile("SwordSlash",0,1,0,0)
+		Goto Done
+		
+		FireB:
+		TNT1 A 0 A_FireCustomMissile("SwordSlashB",0,1,0,0)
+		Goto Done
+		
+		FireR:
+		TNT1 A 0 A_FireCustomMissile("SwordSlashR",0,1,0,0)
+		Goto Done
+		
+		FireO:
+		TNT1 A 0 A_FireCustomMissile("SwordSlashO",0,1,0,0)
+		Goto Done
+		
+		FireP:
+		TNT1 A 0 A_FireCustomMissile("SwordSlashP",0,1,0,0)
+		Goto Done
+	}
+}
+
+Actor ZeroBusterMain_CI : TeamColor_CI
+{
+	States
+	{
+		FireX:
+		TNT1 A 0 A_FireCustomMissile("ZeroLemon",0,1,0,0)
+		Goto Done
+		
+		FireB:
+		TNT1 A 0 A_FireCustomMissile("ZeroLemonB",0,1,0,0)
+		Goto Done
+		
+		FireR:
+		TNT1 A 0 A_FireCustomMissile("ZeroLemonR",0,1,0,0)
+		Goto Done
+		
+		FireO:
+		TNT1 A 0 A_FireCustomMissile("ZeroLemonO",0,1,0,0)
+		Goto Done
+		
+		FireP:
+		TNT1 A 0 A_FireCustomMissile("ZeroLemonP",0,1,0,0)
+		Goto Done
+	}
+}
+
+Actor ZeroBusterMain2_CI : TeamColor_CI
+{
+	States
+	{
+		FireX:
+		TNT1 A 0 A_FireCustomMissile("ZeroMidLemon",0,1,0,0)
+		Goto Done
+		
+		FireB:
+		TNT1 A 0 A_FireCustomMissile("ZeroMidLemonB",0,1,0,0)
+		Goto Done
+		
+		FireR:
+		TNT1 A 0 A_FireCustomMissile("ZeroMidLemonR",0,1,0,0)
+		Goto Done
+		
+		FireO:
+		TNT1 A 0 A_FireCustomMissile("ZeroMidLemonO",0,1,0,0)
+		Goto Done
+		
+		FireP:
+		TNT1 A 0 A_FireCustomMissile("ZeroMidLemonP",0,1,0,0)
+		Goto Done
+	}
+}
+
+Actor ZeroBusterMain3_CI : TeamColor_CI
+{
+	States
+	{
+		FireX:
+		TNT1 A 0 A_FireCustomMissile("ZeroSwordBeam",0,1,0,0)
+		Goto Done
+		
+		FireB:
+		TNT1 A 0 A_FireCustomMissile("ZeroSwordBeamB",0,1,0,0)
+		Goto Done
+		
+		FireR:
+		TNT1 A 0 A_FireCustomMissile("ZeroSwordBeamR",0,1,0,0)
+		Goto Done
+		
+		FireO:
+		TNT1 A 0 A_FireCustomMissile("ZeroSwordBeamO",0,1,0,0)
+		Goto Done
+		
+		FireP:
+		TNT1 A 0 A_FireCustomMissile("ZeroSwordBeamP",0,1,0,0)
+		Goto Done
+	}
+}
+
+Actor ZeroFire_CI : TeamColor_CI
+{
+	States
+	{
+		FireX:
+		TNT1 A 0 A_FireCustomMissile("Ryuenjin",0,1,8,0)
+		Goto Done
+		
+		FireB:
+		TNT1 A 0 A_FireCustomMissile("RyuenjinB",0,1,8,0)
+		Goto Done
+		
+		FireR:
+		TNT1 A 0 A_FireCustomMissile("RyuenjinR",0,1,8,0)
+		Goto Done
+		
+		FireO:
+		TNT1 A 0 A_FireCustomMissile("RyuenjinO",0,1,8,0)
+		Goto Done
+		
+		FireP:
+		TNT1 A 0 A_FireCustomMissile("RyuenjinP",0,1,8,0)
+		Goto Done
+	}
+}
+
+Actor ZeroThunder_CI : TeamColor_CI
+{
+	States
+	{
+		FireX:
+		//TNT1 A 0 A_RailAttack(15,0,0,"8aa5ff","577bf2",RGF_CENTERZ,0,"RaikousenRailPuff",0,0,-600.0,10,0.0,0.0,"RaikousenRailFX",0)
+		TNT1 A 0 A_FireBullets(0,0,1,15,"RaikousenRailFX",FBF_NOPITCH|FBF_NORANDOM,-600)
+		FXLoop:
+		TNT1 A 0 A_FireBullets(0,0,1,0,"RaikousenRailFX",FBF_NOPITCH,-575)
+		TNT1 A 0 A_FireBullets(0,0,1,0,"RaikousenRailFX",FBF_NOPITCH,-550)
+		TNT1 A 0 A_FireBullets(0,0,1,0,"RaikousenRailFX",FBF_NOPITCH,-525)
+		TNT1 A 0 A_FireBullets(0,0,1,0,"RaikousenRailFX",FBF_NOPITCH,-500)
+		TNT1 A 0 A_FireBullets(0,0,1,0,"RaikousenRailFX",FBF_NOPITCH,-475)
+		TNT1 A 0 A_FireBullets(0,0,1,0,"RaikousenRailFX",FBF_NOPITCH,-450)
+		TNT1 A 0 A_FireBullets(0,0,1,0,"RaikousenRailFX",FBF_NOPITCH,-425)
+		TNT1 A 0 A_FireBullets(0,0,1,0,"RaikousenRailFX",FBF_NOPITCH,-400)
+		TNT1 A 0 A_FireBullets(0,0,1,0,"RaikousenRailFX",FBF_NOPITCH,-375)
+		TNT1 A 0 A_FireBullets(0,0,1,0,"RaikousenRailFX",FBF_NOPITCH,-350)
+		TNT1 A 0 A_FireBullets(0,0,1,0,"RaikousenRailFX",FBF_NOPITCH,-325)
+		TNT1 A 0 A_FireBullets(0,0,1,0,"RaikousenRailFX",FBF_NOPITCH,-300)
+		TNT1 A 0 A_FireBullets(0,0,1,0,"RaikousenRailFX",FBF_NOPITCH,-275)
+		TNT1 A 0 A_FireBullets(0,0,1,0,"RaikousenRailFX",FBF_NOPITCH,-250)
+		TNT1 A 0 A_FireBullets(0,0,1,0,"RaikousenRailFX",FBF_NOPITCH,-225)
+		TNT1 A 0 A_FireBullets(0,0,1,0,"RaikousenRailFX",FBF_NOPITCH,-200)
+		TNT1 A 0 A_FireBullets(0,0,1,0,"RaikousenRailFX",FBF_NOPITCH,-175)
+		TNT1 A 0 A_FireBullets(0,0,1,0,"RaikousenRailFX",FBF_NOPITCH,-150)
+		TNT1 A 0 A_FireBullets(0,0,1,0,"RaikousenRailFX",FBF_NOPITCH,-125)
+		TNT1 A 0 A_FireBullets(0,0,1,0,"RaikousenRailFX",FBF_NOPITCH,-100)
+		TNT1 A 0 A_FireBullets(0,0,1,0,"RaikousenRailFX",FBF_NOPITCH,-75)
+		TNT1 A 0 A_FireBullets(0,0,1,0,"RaikousenRailFX",FBF_NOPITCH,-50)
+		TNT1 A 0 A_FireBullets(0,0,1,0,"RaikousenRailFX",FBF_NOPITCH,-25)
+		TNT1 A 0 A_FireBullets(0,0,1,0,"RaikousenRailFX",FBF_NOPITCH,-1)
+		Goto Done
+		
+		FireB:
+		TNT1 A 0 A_FireCustomMissile("RaikousenB",0,1,0,0)
+		Goto Done
+		
+		FireR:
+		TNT1 A 0 A_FireCustomMissile("RaikousenR",0,1,0,0)
+		Goto Done
+		
+		FireO:
+		TNT1 A 0 A_FireCustomMissile("RaikousenO",0,1,0,0)
+		Goto Done
+		
+		FireP:
+		TNT1 A 0 A_FireCustomMissile("RaikousenP",0,1,0,0)
+		Goto Done
+	}
+}
+
+Actor ZeroIce_CI : TeamColor_CI
+{
+	States
+	{
+		FireX:
+		TNT1 A 0 A_FireCustomMissile("Hyouretsuzan",0,1,4,0)
+		Goto Done
+		
+		FireB:
+		TNT1 A 0 A_FireCustomMissile("HyouretsuzanB",0,1,4,0)
+		Goto Done
+		
+		FireR:
+		TNT1 A 0 A_FireCustomMissile("HyouretsuzanR",0,1,4,0)
+		Goto Done
+		
+		FireO:
+		TNT1 A 0 A_FireCustomMissile("HyouretsuzanO",0,1,4,0)
+		Goto Done
+		
+		FireP:
+		TNT1 A 0 A_FireCustomMissile("HyouretsuzanP",0,1,4,0)
+		Goto Done
+	}
+}
+
+Actor ZeroEarth_CI : TeamColor_CI
+{
+	States
+	{
+		FireX:
+		TNT1 A 0 A_FireCustomMissile("RakuhouhaSpawner",0,1,0,-15)
+		Goto Done
+		
+		FireB:
+		TNT1 A 0 A_FireCustomMissile("RakuhouhaSpawnerB",0,1,0,-15)
+		Goto Done
+		
+		FireR:
+		TNT1 A 0 A_FireCustomMissile("RakuhouhaSpawnerR",0,1,0,-15)
+		Goto Done
+		
+		FireO:
+		TNT1 A 0 A_FireCustomMissile("RakuhouhaSpawnerO",0,1,0,-15)
+		Goto Done
+		
+		FireP:
+		TNT1 A 0 A_FireCustomMissile("RakuhouhaSpawnerP",0,1,0,-15)
+		Goto Done
+	}
+}

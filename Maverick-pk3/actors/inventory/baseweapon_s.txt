@@ -1,0 +1,10 @@
+actor BaseMM8BDMWep : BaseMM8BDMWepX
+{
++WEAPON.ALT_USES_BOTH
+
+States
+{
+	TNT1 A 1
+}
+}
+

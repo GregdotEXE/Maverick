@@ -1,0 +1,5 @@
+actor RushJetWarper_C : RushJetWarper replaces RushJetWarper { states { Spawn: TNT1 AA 0 A_GiveInventory("ProjectileFXCode",1) goto "Super::Spawn" } }
+actor RushMarineWarper_C : RushMarineWarper replaces RushMarineWarper { states { Spawn: TNT1 AA 0 A_GiveInventory("ProjectileFXCode",1) goto "Super::Spawn" } }
+actor BeatTakeoffFX_C : BeatTakeoffFX replaces BeatTakeoffFX { states { Spawn: TNT1 AA 0 A_GiveInventory("ProjectileFXCode",1) goto "Super::Spawn" } }
+actor BeatBoostWarper_C : BeatBoostWarper replaces BeatBoostWarper { states { Spawn: TNT1 AA 0 A_GiveInventory("ProjectileFXCode",1) goto "Super::Spawn" } }
+actor BeatSupportWarper_C : BeatSupportWarper replaces BeatSupportWarper { states { Spawn: TNT1 AA 0 A_GiveInventory("ProjectileFXCode",1) goto "Super::Spawn" } }

@@ -1,0 +1,26 @@
+actor MegamanX : ClassBase1
+{
+player.maxhealth 85
+health 85
+player.DisplayName "MegamanX"
+player.StartItem "XBusterBoss"
+player.StartItem "ArmorUpItem",1
+player.StartItem "CanGiga",1
++NOSKIN
+
+States
+{
+Spawn:
+MEGA A 0
+MEGA B 1
+MEGA A 1
+Goto Spawn+2
+See:
+MEGA BCDE 5
+Goto Spawn
+Missile:
+MEGA F 5
+MEGA G 4
+goto Spawn
+}
+}

@@ -1,0 +1,441 @@
+Actor SpinWheelBoss : BaseMM8BDMWepX
+{
+	Tag "SpinWheel"
+	weapon.ammotype "DrillerAmmo"
+	weapon.ammotype2 "EatenShot"
+	Inventory.PickupMessage "Ready to ride."
+	
+	States
+	{
+		Spawn:
+		C_X2 B 1
+		loop
+		
+		Ready:
+		WHGA A 0
+		WHGA A 0 A_GunFlash
+		goto Ready1
+		
+		Ready1:
+		WHGA A 8 A_WeaponReady(WRF_ALLOWRELOAD)
+		WHGA A 1 A_GiveInventory("DrillerAmmo",1)
+		loop
+		
+		Deselect:
+		TNT1 AAAAAAAAAAAAAAAAAAAAAA 0 A_Lower
+		DRIA A 1 A_Lower
+		Loop
+		
+		Select:
+		TNT1 AAAAAAAAAAAAAAAAAAAAAA 0 A_Raise
+		DRIA A 1 A_Raise
+		Loop
+		
+		Fire:
+		WHGA A 9
+		WHGA A 0 A_GiveInventory("WheelGatorMain_CI",1)
+		WHGA A 15
+		goto Ready1
+		
+		Altfire:
+		WHGA A 0 A_JumpIfInventory("DrillerAmmo",28,"DrillActivate")
+		goto Ready1
+		DrillActivate:
+		WHGA A 1 SetPlayerProperty(0,1,4)
+		WHGA A 32
+		WHGA A 1 A_ChangeFlag("THRUSPECIES",1)
+		WHGA A 1 A_ChangeFlag("NOGRAVITY",1)
+		WHGA A 0 A_GiveInventory("WheelGatorArmor",1)
+		DrillStart:
+		WHGA A 0 A_FireCustomMissile("DrillExplosion",0,1,0,0)
+		WHGA A 0 A_FireCustomMissile("GatorWallCheck",0,1,0,0)
+		WHGA A 0 A_GiveInventory("DrillTimer",1)
+		WHGA A 0 A_ChangeVelocity(35,0,momz,3)
+		WHGA A 1 A_JumpIfInventory("DrillWallHit",1,"WallSpin")
+		WHGA A 1 A_JumpIfInventory("DrillTimer",40,"DrillEnd")
+		loop
+		WallSpin:
+		WHGA A 0 A_FireCustomMissile("DrillWallExplosion",0,1,0,0)
+		WHGA A 0 A_GiveInventory("DrillTimer",1)
+		WHGA A 1 A_JumpIfInventory("DrillTimer",40,"DrillEnd")
+		loop
+		DrillEnd:
+		WHGA A 0 A_TakeInventory("BasicArmor",999)
+		WHGA A 0 A_TakeInventory("DrillTimer",40)
+		WHGA A 0 A_TakeInventory("DrillWallHit",1)
+		WHGA A 0 A_TakeInventory("DrillerAmmo",28)
+		WHGA A 1 SetPlayerProperty(0,0,4)
+		WHGA A 1 A_ChangeFlag("THRUSPECIES",0)
+		WHGA A 1 A_ChangeFlag("NOGRAVITY",0)
+		goto Ready1
+		
+		Reload:
+		WHGA A 0 A_JumpIfInventory("EatenShot",10,"FireBullets")
+		WHGA A 0 A_JumpIfInventory("EatenShot",1,"FullMouth")
+		EmptyMouth:
+		WHGA A 6
+		WHGA A 0 A_FireCustomMissile("AttackEater",0,1,0,0)
+		WHGA A 10
+		goto Ready1
+		FullMouth:
+		WHGA A 6
+		WHGA A 0 A_GiveInventory("WheelGatorReload_CI",1)
+		WHGA A 2 A_JumpIf(ACS_NamedExecuteWithResult("Get_Button_M") == 1, "FireBullets")
+		WHGA A 2 A_JumpIf(ACS_NamedExecuteWithResult("Get_Button_M") == 1, "FireBullets")
+		WHGA A 2 A_JumpIf(ACS_NamedExecuteWithResult("Get_Button_M") == 1, "FireBullets")
+		WHGA A 2 A_JumpIf(ACS_NamedExecuteWithResult("Get_Button_M") == 1, "FireBullets")
+		WHGA A 2 A_JumpIf(ACS_NamedExecuteWithResult("Get_Button_M") == 1, "FireBullets")
+		WHGA A 2 A_JumpIf(ACS_NamedExecuteWithResult("Get_Button_M") == 1, "FireBullets")
+		WHGA A 2 A_JumpIf(ACS_NamedExecuteWithResult("Get_Button_M") == 1, "FireBullets")
+		WHGA A 2 A_JumpIf(ACS_NamedExecuteWithResult("Get_Button_M") == 1, "FireBullets")
+		WHGA A 2 A_JumpIf(ACS_NamedExecuteWithResult("Get_Button_M") == 1, "FireBullets")
+		WHGA A 2 A_JumpIf(ACS_NamedExecuteWithResult("Get_Button_M") == 1, "FireBullets")
+		goto Ready1
+		FireBullets:
+		WHGA A 6
+		WHGA A 0 A_GiveInventory("WheelGatorReload2_CI",1)
+		WHGA A 0 A_TakeInventory("EatenShot",1)
+		WHGA A 0 A_JumpIfInventory("EatenShot",1,"FireBullets")
+		goto Ready1
+	}
+}
+
+Actor WheelGatorArmor : BasicArmorPickup
+{
+    Armor.Savepercent 31.00
+	Armor.Saveamount 50
+}
+
+Actor DrillTimer : Inventory
+{
+	Inventory.amount 1
+	Inventory.maxamount 40
+}
+
+Actor DrillerAmmo : Ammo
+{
+	Inventory.amount 1
+	Inventory.maxamount 28
+	+INVENTORY.IGNORESKILL
+}
+
+Actor EatenShot : Ammo
+{
+	Inventory.amount 1
+	Inventory.maxamount 10
+	+INVENTORY.IGNORESKILL
+}
+
+Actor DrillWallHit : OnceC{}
+
+Actor SpinWheel
+{
+    PROJECTILE
+	//DamageType
+    //Obituary
+	-NOGRAVITY
+	+CANBOUNCEWATER
+	Speed 50
+	Damage (7)
+	Radius 12
+    Height 14
+	Gravity 1.5
+	Scale 2.5
+	States
+	{
+		Spawn:
+		WHEE B 1
+		loop
+		
+		Death:
+		TNT1 A 0
+		TNT1 A 0 A_SpawnItemEX("SpinWheelRipper",0,0,0,cos(pitch)*20,0,-sin(pitch)*20,0,0)
+		stop
+		
+		XDeath:
+		TNT1 A 0
+		TNT1 A 0 A_SpawnItemEX("SpinWheelRipper",0,0,0,cos(pitch)*20,0,-sin(pitch)*20,0,0)
+		stop
+	}
+}
+
+Actor SpinWheelRipper : SpinWheel
+{
+    Projectile
+	//DamageType
+    //Obituary
+	+RIPPER
+	+FLOORHUGGER
+	Damage (7)
+	States
+	{
+		Spawn:
+		WHEE B 1
+		loop
+		
+		Death:
+		TNT1 A 0 A_SpawnItemEx("SpinWheelClimber",-1,0,16,0,0,20,0,1)
+		stop
+	}
+}
+
+Actor SpinWheelClimber : SpinWheel
+{
+    Projectile
+	//DamageType
+    //Obituary
+	+RIPPER
+	Damage (7)
+	States
+	{
+		Spawn:
+		WHEE B 1 A_JumpIf(CeilingZ - (Z + Height) < 24,"Derail")
+		loop
+		Derail:
+		WHEE B 1 A_SpawnItemEX("SpinWheelEnder",0,0,0,-cos(pitch)*20,0,sin(pitch)*20-10,0,0)
+		goto Death
+		
+		Death:
+		TNT1 A 0
+		stop
+	}
+}
+
+Actor SpinWheelEnder : SpinWheel
+{
+	var int user_Thrust;
+    Projectile
+	//DamageType
+    //Obituary
+	+RIPPER
+	Damage (7)
+	States
+	{
+		Spawn:
+		WHEE B 0 A_SetUserVar("user_Thrust",30)
+		Thruster:
+		WHEE B 3 ThrustThingZ(0,user_Thrust,1,0)
+		WHEE B 0 A_SetUserVar("user_Thrust",user_Thrust+10)
+		loop
+		
+		Death:
+		TNT1 A 0
+		stop
+	}
+}
+
+Actor DrillExplosion : BasicExplosion
+{
+	PROJECTILE
+	States
+	{
+		Spawn:
+		TNT1 A 1
+		TNT1 A 0 A_Explode(2,68,0,0,68)
+		Stop
+	}
+}
+
+Actor DrillWallExplosion : BasicExplosion
+{
+	PROJECTILE
+	States
+	{
+		Spawn:
+		TNT1 A 1
+		TNT1 A 0 A_Explode(4,68,0,0,68)
+		Stop
+	}
+}
+
+actor GatorWallCheck
+{
+	PROJECTILE
+	+DONTSPLASH
+	+DONTBLAST
+	+DONTREFLECT
+	+NOEXPLODEFLOOR
+	+THRUGHOST
+	+DONTREFLECT
+	+SKYEXPLODE
+	+STEPMISSILE
+	maxstepheight 22
+	Damage (0)
+	radius 14
+	height 48
+	Speed 2
+	scale 2.5
+	States
+	{
+		Spawn:
+		TNT1 A 0
+		TNT1 A 1
+		stop
+		Crash:
+		XDeath:
+		TNT1 A 1
+		stop
+		Death:
+		TNT1 A 1 A_GiveToTarget("DrillWallHit",1)
+		stop
+	}
+}
+
+actor AttackEater
+{
+	 var int user_USER;
+	-SOLID
+	+NOGRAVITY
+	+DONTDRAIN
+	-NOBLOCKMAP
+	+SHOOTABLE
+	+DONTRIP
+	+NOBLOOD
+	+THRUSPECIES
+	Species "Gator"
+	Health 1
+	Radius 50
+	Height 50
+	Speed 20
+	States
+	{
+		Spawn:
+		TNT1 A 0
+		TNT1 A 0 A_SetUserVar("user_USER",ACS_ExecuteWithResult(257,0))
+		MLAS A 5 ACS_ExecuteAlways(213,0,1,user_USER,ACS_ExecuteWithResult(147,0))
+		Stop
+		
+		Death:
+		TNT1 A 0
+		TNT1 A 1 ACS_ExecuteAlways(213,0,1,user_USER,ACS_ExecuteWithResult(147,0))
+		TNT1 A 1 A_SpawnItemEx("AttackEater2",0,0,0,0,0,0,0,32)
+		Stop
+	}
+}
+
+Actor AttackEater2
+{
+	Projectile
+	//DamageType "GrabBuster"
+	//Obituary "$OB_MERCURYSWIPE"
+	+DONTBLAST
+	+DONTREFLECT
+	+DONTDRAIN
+	+NOGRAVITY
+	-NOBLOCKMAP
+	+SHOOTABLE
+	+INVULNERABLE
+	+NORADIUSDMG
+	+DONTRIP
+	+NOBLOOD
+	+THRUSPECIES
+	Species "Gator"
+	Damage (0)
+	Radius 28
+	Height 32
+	Speed 0
+	States
+	{
+		Spawn:
+		TNT1 A 1
+		Stop
+	}
+}
+
+Actor PukeBullet
+{
+	Translation "204:204=210:210"
+	PROJECTILE
+	//damagetype "Buster"
+	//Obituary "$OB_ALIENBOOBEAM"
+	Species "Gator"
+	Damage (4)
+	radius 12
+	height 12
+	Speed 60
+	scale 2.5
+	States
+	{
+		Spawn:
+		BURX W 1
+		wait
+	}
+}
+
+Actor WheelGatorMain_CI : TeamColor_CI
+{
+	States
+	{
+		FireX:
+		TNT1 A 0 A_FireCustomMissile("SpinWheel",0,1,0,0)
+		Goto Done
+		
+		FireB:
+		TNT1 A 0 A_FireCustomMissile("SpinWheelB",0,1,0,0)
+		Goto Done
+		
+		FireR:
+		TNT1 A 0 A_FireCustomMissile("SpinWheelR",0,1,0,0)
+		Goto Done
+		
+		FireO:
+		TNT1 A 0 A_FireCustomMissile("SpinWheelO",0,1,0,0)
+		Goto Done
+		
+		FireP:
+		TNT1 A 0 A_FireCustomMissile("SpinWheelP",0,1,0,0)
+		Goto Done
+	}
+}
+
+Actor WheelGatorReload_CI : TeamColor_CI
+{
+	States
+	{
+		FireX:
+		TNT1 A 0 A_FireCustomMissile("AttackEater",0,1,0,0)
+		Goto Done
+		
+		FireB:
+		TNT1 A 0 A_FireCustomMissile("AttackEaterB",0,1,0,0)
+		Goto Done
+		
+		FireR:
+		TNT1 A 0 A_FireCustomMissile("AttackEaterR",0,1,0,0)
+		Goto Done
+		
+		FireO:
+		TNT1 A 0 A_FireCustomMissile("AttackEaterO",0,1,0,0)
+		Goto Done
+		
+		FireP:
+		TNT1 A 0 A_FireCustomMissile("AttackEaterP",0,1,0,0)
+		Goto Done
+	}
+}
+
+Actor WheelGatorReload2_CI : TeamColor_CI
+{
+	States
+	{
+		FireX:
+		TNT1 A 0 A_FireCustomMissile("PukeBullet",random(-2,2),1,0,0)
+		Goto Done
+		
+		FireB:
+		TNT1 A 0 A_FireCustomMissile("PukeBulletB",random(-2,2),1,0,0)
+		Goto Done
+		
+		FireR:
+		TNT1 A 0 A_FireCustomMissile("PukeBulletR",random(-2,2),1,0,0)
+		Goto Done
+		
+		FireO:
+		TNT1 A 0 A_FireCustomMissile("PukeBulletO",random(-2,2),1,0,0)
+		Goto Done
+		
+		FireP:
+		TNT1 A 0 A_FireCustomMissile("PukeBulletP",random(-2,2),1,0,0)
+		Goto Done
+	}
+}

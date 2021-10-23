@@ -1,0 +1,17 @@
+actor FlightDisable : CustomInventory
+{
+States
+{
+Pickup:
+TNT1 A 0 A_GiveInventory("FlightDisableFlag",1)
+TNT1 A 0 SetPlayerProperty(0,0,3)
+TNT1 A 0 A_ChangeFlag("NOGRAVITY",0)
+stop
+}
+}
+
+actor FlightDisableFlag : Inventory
+{
+inventory.amount 1
+inventory.maxamount 1
+}

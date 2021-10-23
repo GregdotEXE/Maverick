@@ -1,0 +1,32 @@
+//clientside fx not covered by SXF_TRANSFERTRANSLATION
+actor BoosterFX_C : BoosterFX replaces BoosterFX { states { Spawn: TNT1 AA 0 A_GiveInventory("ProjectileFXCode",1) goto "Super::Spawn" } }
+actor TrebleBoostTrail_C : TrebleBoostTrail replaces TrebleBoostTrail { states { Spawn: TNT1 AA 0 A_GiveInventory("ProjectileFXCode",1) goto "Super::Spawn" } }
+actor TimeStopGFX_C : TimeStopGFX replaces TimeStopGFX { states { Spawn: TNT1 AA 0 A_GiveInventory("ProjectileFXCode",1) goto "Super::Spawn" } }
+actor HardKnuckleFX_C : HardKnuckleFX replaces HardKnuckleFX { states { Spawn: TNT1 AA 0 A_GiveInventory("ProjectileFXCode",1) goto "Super::Spawn" } }
+actor CentaurFlashFX_C : CentaurFlashFX replaces CentaurFlashFX { states { Spawn: TNT1 AA 0 A_GiveInventory("ProjectileFXCode",1) goto "Super::Spawn" } }
+actor JunkSpawnFX_C : JunkSpawnFX replaces JunkSpawnFX { states { Spawn: TNT1 AA 0 A_GiveInventory("ProjectileFXCode",1) goto "Super::Spawn" } }
+actor HomingCrosshair_C : HomingCrosshair replaces HomingCrosshair { states { Spawn: TNT1 AA 0 A_GiveInventory("ProjectileFXCode",1) goto "Super::Spawn" } }
+actor BreakDashFX_C : BreakDashFX replaces BreakDashFX { states { Spawn: TNT1 AA 0 A_GiveInventory("ProjectileFXCode",1) goto "Super::Spawn" } }
+actor PhotonMissileHold1_C : PhotonMissileHold1 replaces PhotonMissileHold1 { states { Spawn: TNT1 AA 0 A_GiveInventory("ProjectileFXCode",1) goto "Super::Spawn" } }
+actor PhotonMissileHold2_C : PhotonMissileHold2 replaces PhotonMissileHold2 { states { Spawn: TNT1 AA 0 A_GiveInventory("ProjectileFXCode",1) goto "Super::Spawn" } }
+actor PhotonMissileHold3_C : PhotonMissileHold3 replaces PhotonMissileHold3 { states { Spawn: TNT1 AA 0 A_GiveInventory("ProjectileFXCode",1) goto "Super::Spawn" } }
+actor PhotonMissileHold4_C : PhotonMissileHold4 replaces PhotonMissileHold4 { states { Spawn: TNT1 AA 0 A_GiveInventory("ProjectileFXCode",1) goto "Super::Spawn" } }
+actor PhotonMissileHold5_C : PhotonMissileHold5 replaces PhotonMissileHold5 { states { Spawn: TNT1 AA 0 A_GiveInventory("ProjectileFXCode",1) goto "Super::Spawn" } }
+actor TempDeepDigger_C : TempDeepDigger replaces TempDeepDigger { states { Spawn: TNT1 AA 0 A_GiveInventory("ProjectileFXCode",1) goto "Super::Spawn" } }
+actor WheelCutterClimbFX_C : WheelCutterClimbFX replaces WheelCutterClimbFX { states { Spawn: TNT1 AA 0 A_GiveInventory("ProjectileFXCode",1) goto "Super::Spawn" } }
+
+actor BreakDashSparkFX_C : BreakDashSparkFX replaces BreakDashSparkFX { states {
+Spawn: TNT1 AA 0 A_GiveInventory("ProjectileFXCode",1) goto "Super::Spawn"
+Death: TNT1 A 0 A_GiveInventory("ProjectileDFXCode",1) goto "Super::Death"
+} }
+
+//things that spawn these can do so before translating
+actor ExplosionEffect1_C : ExplosionEffect1 replaces ExplosionEffect1 { states { Spawn: TNT1 AA 0 A_GiveInventory("ProjectileFXCode",1) goto "Super::Spawn" } }
+actor ExplosionEffect2_C : ExplosionEffect2 replaces ExplosionEffect2 { states { Spawn: TNT1 AA 0 A_GiveInventory("ProjectileFXCode",1) goto "Super::Spawn" } }
+actor ExplosionEffect3_C : ExplosionEffect3 replaces ExplosionEffect3 { states { Spawn: TNT1 AA 0 A_GiveInventory("ProjectileFXCode",1) goto "Super::Spawn" } }
+
+actor SaltWaterSplash_C : SaltWaterSplash replaces SaltWaterSplash { states { Spawn: TNT1 AA 0 A_GiveInventory("ProjectileFXCode",1) goto "Super::Spawn" } }
+actor SaltWaterWallSplash_C : SaltWaterWallSplash replaces SaltWaterWallSplash { states { Spawn: TNT1 AA 0 A_GiveInventory("ProjectileFXCode",1) goto "Super::Spawn" } }
+actor SaltWaterBitDie_C : SaltWaterBitDie replaces SaltWaterBitDie { states { Spawn: TNT1 AA 0 A_GiveInventory("ProjectileFXCode",1) goto "Super::Spawn" } }
+actor ScorchBit_C : ScorchBit replaces ScorchBit { states { Spawn: TNT1 AA 0 A_GiveInventory("ProjectileFXCode",1) goto "Super::Spawn" } }
+actor DeepDiggerBreakFX_C : DeepDiggerBreakFX replaces DeepDiggerBreakFX { states { Spawn: TNT1 AA 0 A_GiveInventory("ProjectileFXCode",1) goto "Super::Spawn" } }

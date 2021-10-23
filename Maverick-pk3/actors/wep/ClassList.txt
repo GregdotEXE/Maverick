@@ -1,0 +1,34 @@
+//Misc.
+#include "actors/misc/TrainingBot2000.txt"
+
+//MMX0
+#include "actors/MegamanX0/MegamanX.txt"
+#include "actors/wep/MegamanX0/XBusterBoss.txt"
+#include "actors/MegamanX0/Zero.txt"
+#include "actors/wep/MegamanX0/ZeroSaberBoss.txt"
+#include "actors/MegamanX0/Sigma.txt"
+#include "actors/wep/MegamanX0/SigmaVirusBoss.txt"
+
+//MMX1
+#include "actors/MegamanX/SparkMandrill.txt"
+#include "actors/wep/MegamanX/ElectricSparkBoss.txt"
+#include "actors/MegamanX/BoomerKuwanger.txt"
+#include "actors/wep/MegamanX/BoomerangCutterBoss.txt"
+#include "actors/MegamanX/StormEagle.txt"
+#include "actors/wep/MegamanX/StormTornadoBoss.txt"
+
+//MMX2
+#include "actors/MegamanX2/FlameStag.txt"
+#include "actors/wep/MegamanX2/SpeedBurnerBoss.txt"
+#include "actors/MegamanX2/WheelGator.txt"
+#include "actors/wep/MegamanX2/SpinWheelBoss.txt"
+#include "actors/MegamanX2/MorphMoth.txt"
+#include "actors/wep/MegamanX2/SilkShotBoss.txt"
+
+//MMX3
+#include "actors/MegamanX3/CrushCrawfish.txt"
+#include "actors/wep/MegamanX3/SpinningBladeBoss.txt"
+#include "actors/MegamanX3/BlastHornet.txt"
+#include "actors/wep/MegamanX3/ParasiticBombBoss.txt"
+#include "actors/MegamanX3/Mac.txt"
+#include "actors/wep/MegamanX3/MacBusterBoss.txt"

@@ -1,0 +1,24 @@
+#include "classbasefolder/classbases.txt"
+
+//Steplog 5: Inclusions done in the Boomer Kuwanger step.
+#include "actors/wep/BasicActors.txt"
+#include "actors/wep/GeneralThings.txt"
+#include "actors/wep/General-inator.txt"
+#include "actors/wep/ClassList.txt"
+
+//Jax's projtrans inclusion.
+#include "projtrans/projectilecode.txt"
+#include "projtrans/translationitem.txt"
+#include "projtrans/projectiletranslation.txt"
+#include "projtrans/projectiletranslationfx.txt"
+#include "projtrans/projectiletranslation2.txt"
+#include "projtrans/projectiletranslationonline.txt"
+
+#include "projtrans/shieldtranslation.txt"
+
+#include "projtrans/assisttranslation.txt"
+#include "projtrans/assisttranslationfx.txt"
+
+#include "projtrans/voxel.txt"
+
+#include "projtrans/misc.txt"

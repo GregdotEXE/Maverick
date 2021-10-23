@@ -1,0 +1,357 @@
+Actor SpinningBladeBoss : BaseMM8BDMWepX
+{
+	Tag "CrushCrawfish"
+	weapon.ammotype "GrabAmmo"
+	weapon.ammotype2 "NetAmmo"
+	States
+	{
+		Spawn:
+		C_X3 B 1
+		loop
+		
+		Ready:
+		CUTA A 0
+		CUTA A 0 A_GunFlash
+		goto Ready1
+		
+		Ready1:
+		CUTA A 8 A_WeaponReady(WRF_ALLOWRELOAD)
+		CUTA A 0 A_GiveInventory("GrabAmmo",2)
+		CUTA A 0 A_GiveInventory("NetAmmo",2)
+		loop
+		
+		Deselect:
+		TNT1 AAAAAAAAAAAAAAAAAAAAAA 0 A_Lower
+		DRIA A 1 A_Lower
+		Loop
+		
+		Select:
+		TNT1 AAAAAAAAAAAAAAAAAAAAAA 0 A_Raise
+		DRIA A 1 A_Raise
+		Loop
+		
+		Fire:
+		CUTA A 8
+		CUTA A 1 A_GiveInventory("CrushCrawfishMain_CI",1)
+		CUTA A 19
+		goto Ready1
+		
+		Altfire:
+		CUTA A 0 A_JumpIfInventory("GrabAmmo",56,"GrabStart")
+		goto Ready1
+		GrabStart:
+		CUTA A 0 A_Recoil(-35)
+		CUTA A 1 A_SpawnItemEx("GrabCheck",8,0,-8,momx,momy,momz,0,8)
+		CUTA A 0 A_JumpIfInventory("SuplexID",1,"CrushGrab")
+		CUTA A 1 A_SpawnItemEx("GrabCheck",8,0,-8,momx,momy,momz,0,8)
+		CUTA A 0 A_JumpIfInventory("SuplexID",1,"CrushGrab")
+		CUTA A 1 A_SpawnItemEx("GrabCheck",8,0,-8,momx,momy,momz,0,8)
+		CUTA A 0 A_JumpIfInventory("SuplexID",1,"CrushGrab")
+		CUTA A 1 A_SpawnItemEx("GrabCheck",8,0,-8,momx,momy,momz,0,8)
+		CUTA A 0 A_JumpIfInventory("SuplexID",1,"CrushGrab")
+		CUTA A 1 A_SpawnItemEx("GrabCheck",8,0,-8,momx,momy,momz,0,8)
+		CUTA A 0 A_JumpIfInventory("SuplexID",1,"CrushGrab")
+		CUTA A 1 A_SpawnItemEx("GrabCheck",8,0,-8,momx,momy,momz,0,8)
+		CUTA A 0 A_JumpIfInventory("SuplexID",1,"CrushGrab")
+		CUTA A 1 A_SpawnItemEx("GrabCheck",8,0,-8,momx,momy,momz,0,8)
+		CUTA A 0 A_JumpIfInventory("SuplexID",1,"CrushGrab")
+		CUTA A 1 A_SpawnItemEx("GrabCheck",8,0,-8,momx,momy,momz,0,8)
+		CUTA A 0 A_JumpIfInventory("SuplexID",1,"CrushGrab")
+		CUTA A 1 A_SpawnItemEx("GrabCheck",8,0,-8,momx,momy,momz,0,8)
+		CUTA A 0 A_JumpIfInventory("SuplexID",1,"CrushGrab")
+		CUTA A 1 A_SpawnItemEx("GrabCheck",8,0,-8,momx,momy,momz,0,8)
+		CUTA A 0 A_JumpIfInventory("SuplexID",1,"CrushGrab")
+		CUTA A 1 A_SpawnItemEx("GrabCheck",8,0,-8,momx,momy,momz,0,8)
+		CUTA A 0 A_JumpIfInventory("SuplexID",1,"CrushGrab")
+		goto CrushGrabEnd
+		CrushGrab:
+		CUTA A 0 A_GiveInventory("IsPerformingSuplex",1)
+		CUTA A 0 A_GiveInventory("CrawfishIsGrabbing",1)
+		CUTA A 1 ACS_NamedExecuteAlways("mav_ZangiefStartGrab",0,CallACS("mav_ZangiefCountInv",2)+999)
+		CUTA A 1 A_JumpIf(CallACS("mav_ZangiefGrab",350,angle*256/360,70)==0,"CrushGrabEnd")
+		CUTA A 1 A_JumpIf(CallACS("mav_ZangiefGrab",345,angle*256/360,70)==0,"CrushGrabEnd")
+		CUTA A 1 A_JumpIf(CallACS("mav_ZangiefGrab",340,angle*256/360,70)==0,"CrushGrabEnd")
+		CUTA A 1 A_JumpIf(CallACS("mav_ZangiefGrab",335,angle*256/360,70)==0,"CrushGrabEnd")
+		CUTA A 1 A_JumpIf(CallACS("mav_ZangiefGrab",330,angle*256/360,70)==0,"CrushGrabEnd")
+		CUTA A 1 A_JumpIf(CallACS("mav_ZangiefGrab",310,angle*256/360,78)==0,"CrushGrabEnd")
+		CUTA A 1 A_JumpIf(CallACS("mav_ZangiefGrab",290,angle*256/360,86)==0,"CrushGrabEnd")
+		CrushGrabLoop:
+		TNT1 A 0 ACS_ExecuteAlways(191,0,APROP_Speed,6,10)
+		CUTA A 1 A_JumpIf(CallACS("mav_ZangiefGrab",270,angle*256/360,86)==0,"CrushGrabEnd")
+		CUTA A 0 A_TakeInventory("GrabAmmo",1)
+		CUTA A 0 A_JumpIf(ACS_NamedExecuteWithResult("Get_Button_R") == 1, "CrushThrow")
+		CUTA A 0 A_JumpIf(ACS_NamedExecuteWithResult("Get_Button_M") == 1, "CrushPinch")
+		CUTA A 0 A_JumpIf(ACS_NamedExecuteWithResult("Get_Button_A") == 1, "CrushSlam")
+		CUTA A 0 A_JumpIfInventory("GrabAmmo",1,"CrushGrabLoop")
+		goto CrushGrabEnd
+		CrushPinch:
+		CUTA A 1 A_JumpIf(CallACS("mav_ZangiefGrab",270,angle*256/360,86)==0,"CrushGrabEnd")
+		CUTA A 1 A_FireCustomMissile("CrushClawPinch",0,1,0,50)
+		CUTA A 1 A_JumpIf(CallACS("mav_ZangiefGrab",270,angle*256/360,86)==0,"CrushGrabEnd")
+		CUTA A 0 A_TakeInventory("GrabAmmo",1)
+		CUTA A 1 A_JumpIf(CallACS("mav_ZangiefGrab",270,angle*256/360,86)==0,"CrushGrabEnd")
+		CUTA A 0 A_TakeInventory("GrabAmmo",1)
+		CUTA A 1 A_JumpIf(CallACS("mav_ZangiefGrab",270,angle*256/360,86)==0,"CrushGrabEnd")
+		CUTA A 0 A_TakeInventory("GrabAmmo",1)
+		CUTA A 1 A_JumpIf(CallACS("mav_ZangiefGrab",270,angle*256/360,86)==0,"CrushGrabEnd")
+		CUTA A 0 A_TakeInventory("GrabAmmo",1)
+		CUTA A 1 A_JumpIf(CallACS("mav_ZangiefGrab",270,angle*256/360,86)==0,"CrushGrabEnd")
+		CUTA A 0 A_TakeInventory("GrabAmmo",1)
+		CUTA A 1 A_JumpIf(CallACS("mav_ZangiefGrab",270,angle*256/360,86)==0,"CrushGrabEnd")
+		CUTA A 0 A_TakeInventory("GrabAmmo",1)
+		CUTA A 1 A_JumpIf(CallACS("mav_ZangiefGrab",270,angle*256/360,86)==0,"CrushGrabEnd")
+		CUTA A 0 A_TakeInventory("GrabAmmo",1)
+		CUTA A 1 A_JumpIf(CallACS("mav_ZangiefGrab",270,angle*256/360,86)==0,"CrushGrabEnd")
+		CUTA A 0 A_TakeInventory("GrabAmmo",1)
+		CUTA A 1 A_JumpIf(CallACS("mav_ZangiefGrab",270,angle*256/360,86)==0,"CrushGrabEnd")
+		CUTA A 0 A_TakeInventory("GrabAmmo",1)
+		CUTA A 1 A_JumpIf(CallACS("mav_ZangiefGrab",270,angle*256/360,86)==0,"CrushGrabEnd")
+		CUTA A 0 A_TakeInventory("GrabAmmo",1)
+		CUTA A 1 A_JumpIf(CallACS("mav_ZangiefGrab",270,angle*256/360,86)==0,"CrushGrabEnd")
+		CUTA A 0 A_TakeInventory("GrabAmmo",1)
+		CUTA A 0 A_JumpIfInventory("GrabAmmo",1,"CrushGrabLoop")
+		goto CrushGrabEnd
+		CrushSlam:
+		CUTA A 1 A_JumpIf(CallACS("mav_ZangiefGrab",310,angle*256/360,86)==0,"CrushGrabEnd")
+		CUTA A 1 A_JumpIf(CallACS("mav_ZangiefGrab",335,angle*256/360,86)==0,"CrushGrabEnd")
+		CUTA A 1 A_JumpIf(CallACS("mav_ZangiefGrab",350,angle*256/360,86)==0,"CrushGrabEnd")
+		CUTA A 10 ACS_NamedExecuteAlways("mav_ZangiefSetThrow",0,CallACS("mav_ZangiefCountInv",2)+999,5,-800)
+		CUTA A 0 A_FireCustomMissile("CrushClawSlam",0,1,0,0)
+		goto CrushGrabEnd
+		CrushThrow:
+		CUTA A 10 ACS_NamedExecuteAlways("mav_ZangiefSetThrow",0,CallACS("mav_ZangiefCountInv",2)+999,38,18)
+		CUTA A 0 A_FireCustomMissile("CrushClawThrow",0,1,0,0)
+		goto CrushGrabEnd
+		
+		CrushGrabEnd:
+		TNT1 A 0 A_TakeInventory("IsPerformingSuplex",999)
+		TNT1 A 0 A_TakeInventory("GrabAmmo",56)
+		TNT1 A 0 A_TakeInventory("CrawfishIsGrabbing",1)
+		TNT1 A 0 ACS_ExecuteAlways(191,0,APROP_Speed,10,10)
+		goto Ready1
+		
+		Reload:
+		CUTA A 0 A_JumpIfInventory("NetAmmo",28,"NetShoot")
+		goto Ready1
+		NetShoot:
+		CUTA A 8
+		CUTA A 1 A_GiveInventory("CrushCrawfishReload_CI",1)
+		CUTA A 10
+		TNT1 A 0 A_TakeInventory("NetAmmo",28)
+		goto Ready1
+	}
+}
+
+Actor GrabAmmo : Ammo
+{
+	inventory.amount 1
+	inventory.maxamount 56
+	+IGNORESKILL
+}
+
+Actor NetAmmo : Ammo
+{
+	inventory.amount 1
+	inventory.maxamount 28
+	+IGNORESKILL
+}
+
+Actor CrawfishIsGrabbing : OnceC{}
+
+Actor NetSlow : PowerSpeed
+{
+	+POWERSPEED.NOTRAIL
+	powerup.duration 84
+	Speed 0.5
+}
+
+Actor ClawLaunch
+{
+	Translation "204:204=210:210"
+	PROJECTILE
+	//damagetype "Buster"
+	//Obituary "$OB_ALIENBOOBEAM"
+	species "Crawfish"
+	Damage (20)
+	radius 12
+	height 14
+	Speed 20
+	scale 2.5
+	States
+	{
+		Spawn:
+		RCTC A 1
+		wait
+	}
+}
+
+Actor NetAttack
+{
+	Translation "204:204=210:210"
+	PROJECTILE
+	damagetype "CrawfishNet"
+	//Obituary "$OB_ALIENBOOBEAM"
+	species "Crawfish"
+	Damage (3)
+	radius 12
+	height 12
+	Speed 50
+	scale 2.5
+	States
+	{
+		Spawn:
+		BURX W 1
+		Wait
+	}
+}
+
+Actor GrabCheck
+{
+	+MISSILE
+	+NOBLOCKMAP
+	+NOGRAVITY
+	+NOEXPLODEFLOOR
+	+DONTBLAST
+	+DONTREFLECT
+	+HITTRACER
+	+THRUGHOST
+	+THRUSPECIES
+	species "Crawfish"
+	height 54
+	radius 54
+	renderstyle none
+	States
+	{
+		Spawn:
+		TNT1 A 0
+		TNT1 A 1
+		stop
+		Crash:
+		TNT1 A 0 A_JumpIfInTargetInventory("SuplexID",1,"Death")
+		TNT1 A 0 A_JumpIfInventory("IsPerformingSuplex",1,"Death",8)
+		TNT1 A 0 A_JumpIfInventory("NoPushFlag",1,"Death",8)
+		TNT1 A 1 A_JumpIf(ACS_NamedExecuteWithResult("mav_istracerenemy")==1,"GiveGrab")
+		stop
+		GiveGrab:
+		TNT1 A 0 A_JumpIfInTargetInventory("SuplexID",1,"Death")
+		TNT1 A 0 A_JumpIfInventory("IsPerformingSuplex",1,"Death",8)
+		TNT1 A 0 A_JumpIfInventory("NoPushFlag",1,"Death",8)
+		TNT1 A 0 A_GiveToTarget("SuplexID",(ACS_ExecuteWithResult(147,1)-1000)+1)
+		TNT1 A 1 A_GiveInventory("TempPitProtect",1,8)
+		Carry:
+		TNT1 A 0 A_JumpIf(ACS_ExecuteWithResult(649)==0,"Death")
+		TNT1 A 1 A_JumpIfInTargetInventory("CrawfishIsGrabbing",1,"Carry")
+		StopCarry:
+		TNT1 A 1
+		stop
+		
+		Death:
+		TNT1 A 1
+		stop
+	}
+}
+
+actor CrushClawPinch
+{
+	PROJECTILE
+	//Obituary "$OB_SPARKSUPLEX"
+	-SOLID
+	+NOGRAVITY
+	+DONTBLAST
+	+NOINTERACTION
+	Damage 0
+	radius 1
+	height 1
+	States
+	{
+		Spawn:
+		TNT1 A 0
+		TNT1 A 1 A_Explode(5,80,0,0,80)
+		stop
+	}
+}
+
+actor CrushClawThrow : BasicExplosion
+{
+	//Obituary "$OB_RATHOR5"
+	//damagetype "RaThor_Toss"
+	+NOCLIP
+	+NOTARGETSWITCH
+	States
+	{
+		Spawn:
+		TNT1 A 0
+		TNT1 A 0 Thing_Move(0,CallACS("mav_ZangiefCountInv",2,2)+999,1)
+		TNT1 A 4 A_Explode(10,15,0,1,15)
+		stop
+	}
+}
+
+actor CrushClawSlam : BasicExplosion
+{
+	//Obituary "$OB_RATHOR5"
+	//damagetype "RaThor_Toss"
+	+NOCLIP
+	+NOTARGETSWITCH
+	States
+	{
+		Spawn:
+		TNT1 A 0
+		TNT1 A 0 Thing_Move(0,CallACS("mav_ZangiefCountInv",2,2)+999,1)
+		TNT1 A 4 A_Explode(20,15,0,1,15)
+		stop
+	}
+}
+		
+
+Actor CrushCrawfishMain_CI : TeamColor_CI
+{
+	States
+	{
+		FireX:
+		TNT1 A 0 A_FireCustomMissile("ClawLaunch",0,1,0,0)
+		Goto Done
+		
+		FireB:
+		TNT1 A 0 A_FireCustomMissile("ClawLaunchB",0,1,0,0)
+		Goto Done
+		
+		FireR:
+		TNT1 A 0 A_FireCustomMissile("ClawLaunchR",0,1,0,0)
+		Goto Done
+		
+		FireO:
+		TNT1 A 0 A_FireCustomMissile("ClawLaunchO",0,1,0,0)
+		Goto Done
+		
+		FireP:
+		TNT1 A 0 A_FireCustomMissile("ClawLaunchP",0,1,0,0)
+		Goto Done
+	}
+}
+
+Actor CrushCrawfishReload_CI : TeamColor_CI
+{
+	States
+	{
+		FireX:
+		TNT1 A 0 A_FireCustomMissile("NetAttack",0,1,0,0)
+		Goto Done
+		
+		FireB:
+		TNT1 A 0 A_FireCustomMissile("NetAttackB",0,1,0,0)
+		Goto Done
+		
+		FireR:
+		TNT1 A 0 A_FireCustomMissile("NetAttackR",0,1,0,0)
+		Goto Done
+		
+		FireO:
+		TNT1 A 0 A_FireCustomMissile("NetAttackO",0,1,0,0)
+		Goto Done
+		
+		FireP:
+		TNT1 A 0 A_FireCustomMissile("NetAttackP",0,1,0,0)
+		Goto Done
+	}
+}

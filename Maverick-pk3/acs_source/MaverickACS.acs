@@ -1,0 +1,485 @@
+#library "MaverickACS"
+#include "zcommon.acs"
+#include "8bdmlib.acs"
+
+#DEFINE C_SET_POINTER 5001
+
+//General ACS	
+script "mav_IsPlayerAlive" (int TID)
+{
+	SetActivator(TID);
+	if(PlayerNumber() == -1 || CheckInventory("IsDead") || !PlayerInGame(PlayerNumber())){
+		SetResultValue(0);
+	}
+	else{
+		SetResultValue(1);
+	}
+}
+
+Script "Get_Button_M" (void)
+{
+	int Button = GetPlayerInput(-1, Input_Buttons);
+	
+	if(Button & (BT_ATTACK))
+		SetResultValue(1);
+	else
+		SetResultValue(0);
+}
+
+Script "Get_Button_A" (void)
+{
+	int Button = GetPlayerInput(-1, Input_Buttons);
+	
+	if(Button & (BT_ALTATTACK))
+		SetResultValue(1);
+	else
+		SetResultValue(0);
+}
+
+Script "Get_Button_R" (void)
+{
+	int Button = GetPlayerInput(-1, Input_Buttons);
+	
+	if(Button & (BT_RELOAD))
+		SetResultValue(1);
+	else
+		SetResultValue(0);
+}
+
+script "tempJumpChanger" (int classJump, int newJump,int delayTics)
+{
+	SetActorProperty(0,APROP_JumpZ,((1.0)*newJump)/1);
+	delay(delayTics);
+	SetActorProperty(0,APROP_JumpZ,((1.0)*classJump)/1);
+}
+
+int PlayerTranslation[64];
+
+script 998 (int weap, int nosound) //$CBM
+{
+	if(nosound==0){LocalAmbientSound("menu/cursor",127);} //Play weapon switch noise
+
+	if(CheckInventory("NoWeaponTranslation")>0){
+	terminate;
+	}
+
+	If(IsTeamGame==1 && nosound<=9 && CheckInventory("NoTeamTranslation")==0)
+		{//If team game, set team colors and don't use weapon translations
+		Switch(PlayerTeam())
+			{
+			Case 0:
+			Switch(nosound)
+				{
+				default:
+				weap = 10600;//Team color
+				break;
+				Case 3:
+				weap = 10603;//Darkened color
+				break;
+				Case 5:
+				weap = 10605;//Team charge 1
+				break;
+				Case 6:
+				weap = 10606;//Team charge 2
+				break;
+				Case 7:
+				weap = 10607;//Team charge 3
+				break;
+				}
+			break;
+			Case 1:
+			Switch(nosound)
+				{
+				default:
+				weap = 10610;
+				break;
+				Case 3:
+				weap = 10613;
+				break;
+				Case 5:
+				weap = 10615;
+				break;
+				Case 6:
+				weap = 10616;
+				break;
+				Case 7:
+				weap = 10617;
+				break;
+				}
+			break;
+			Case 2:
+			Switch(nosound)
+				{
+				default:
+				weap = 10620;
+				break;
+				Case 3:
+				weap = 10623;
+				break;
+				Case 5:
+				weap = 10625;
+				break;
+				Case 6:
+				weap = 10626;
+				break;
+				Case 7:
+				weap = 10627;
+				break;
+				}
+			break;
+			Case 3:
+			Switch(nosound)
+				{
+				default:
+				weap = 10630;
+				break;
+				Case 3:
+				weap = 10633;
+				break;
+				Case 5:
+				weap = 10635;
+				break;
+				Case 6:
+				weap = 10636;
+				break;
+				Case 7:
+				weap = 10637;
+				break;
+				}
+			break;
+			}
+		}
+	Thing_SetTranslation(0, weap);
+	PlayerTranslation[PlayerNumber()] = weap;
+}
+
+script "WallJumpGiver" (void)
+{
+	int jumpTotal = 5;
+	
+	int missingJumps = 5-checkInventory("CanWallJumpLimit");
+	if(missingJumps> 3)
+		GiveInventory("CanWallJumpLimit",3);
+	else
+		GiveInventory("CanWallJumpLimit",missingJumps);
+}
+
+#DEFINE MAX_PLAYERS 64
+#DEFINE MAX_STRENGTH 256
+#define TEAM_NONE -1
+
+script 347 (int distRange, int fullDistRange, int strength)
+{
+	distRange <<= 16;
+	fullDistRange <<= 16;
+	int ownerNumber = ACS_ExecuteWithResult(257, 1);
+	int team = getTeam(ownerNumber);
+	int x = GetActorX(0);
+	int y = GetActorY(0);
+	int z = GetActorZ(0);
+	int velX = GetActorVelX(0)*strength/MAX_STRENGTH;
+	int velY = GetActorVelY(0)*strength/MAX_STRENGTH;
+	
+	int i;
+	if(team==TEAM_NONE) {
+		for(i=0;i<ownerNumber;i++) {
+			ShockPull(x, y, z, velX, velY, i, distRange, fullDistRange);
+			
+		}
+		for(i=ownerNumber+1;i<MAX_PLAYERS;i++) {
+			ShockPull(x, y, z, velX, velY, i, distRange, fullDistRange);
+		}
+	} else {
+		for(i=0;i<ownerNumber;i++) {
+			ShockPullTeam(team, x, y, z, velX, velY, i, distRange, fullDistRange);
+		}
+		for(i=ownerNumber+1;i<MAX_PLAYERS;i++) {
+			ShockPullTeam(team, x, y, z, velX, velY, i, distRange, fullDistRange);
+		}
+	}
+	
+}
+
+function void ShockPullTeam(int team,
+int x, int y, int z, int velX, int velY, int i, int distRange, int fullDistRange)
+{
+	if(team != GetPlayerInfo(i, PLAYERINFO_TEAM)) {
+		ShockPull(x, y, z, velX, velY, i, distRange, fullDistRange);
+	}
+}
+
+function void ShockPull(
+int x, int y, int z, int velX, int velY, int i, int distRange, int fullDistRange)
+{
+	int target = i+1000;
+	int dist = fDistanceValTarget(x,y,z,target);
+	//if (i == 1) print(f:dist, s:" ", f:distRange);
+	if(dist<distRange) {
+		//if(dist<=fullDistRange) print(f:1.0);
+		if(dist>fullDistRange) {
+			int scale = 1.0-fixedDiv(dist-fullDistRange,distRange-fullDistRange);
+			//print(f:scale);
+			velX = fixedMul(velX,scale);
+			velY = fixedMul(velY,scale);
+		}
+		//Log(s:"X = ",f:velX,s:" /\/\/\ Y = ",f:velY);
+		SetActorVelocity(target, velX, velY, 0, 1, 0);
+		GiveActorInventory(target,"TempPitProtect",1);
+	}
+}
+
+
+function int getTeam(int pNumber)
+{
+if(GetCVar("teamlms")==1||GetCVar("ctf")==1||GetCVar("teamplay")==1
+||GetCVar("oneflagctf")==1||GetCVar("teampossession")==1 ){
+	Return GetPlayerInfo(pNumber,PLAYERINFO_TEAM);
+}
+Return TEAM_NONE;
+}
+
+function int fDistanceValTarget(int x, int y, int z, int target)
+{
+	return fDistanceVal(getactorx(target)-x,getactory(target)-y,getactorz(target)-z);
+}
+
+function int fDistanceVal(int x, int y, int z)
+{
+	int len;
+	
+	int ang = vectorangle(x,y);
+	if(((ang+0.125)%0.5) > 0.25) len = fixeddiv(y, sin(ang));
+	else len = fixeddiv(x, cos(ang));
+
+	ang = vectorangle(len, z);
+	if(((ang+0.125)%0.5) > 0.25) len = fixeddiv(z, sin(ang));
+	else len = fixeddiv(len, cos(ang));
+	
+	//print(f:len);
+	return len;
+}
+
+script "HORNETLOCKDISPLAY" (void)// CLIENTSIDE
+{
+	int TID = CheckInventory("SuplexID")+999;
+	while(CheckInventory("SuplexID")>0)
+	{
+		hudmessageonactor(TID,PlayerNumber()+4000,640,480,0,-24,9028,"BHORLCK","",0.1,CR_UNTRANSLATED,0);
+		Delay(1);
+	}
+}
+
+function void hudmessageonactor(int tid, int msgID, int hudX, int hudY, int xOffset, int yOffset, int range, str sprite, str text, int holdTime, str colour, int swap)
+{
+	int dist, angle, vang, pitch, x, y;
+
+	if (hudX == 0) { hudX = 640; }
+	if (hudY == 0) { hudY = 480; }
+
+	if(sprite != -1)
+	{
+		SetFont(sprite);
+		text = "A";
+		//offset = 0.1;
+	}
+
+	SetHudSize(hudX, hudY, 1);
+	x = GetActorX(tid) - GetActorX(0);
+	y = GetActorY(tid) - GetActorY(0);
+
+	vang = VectorAngle(x,y);
+	angle = (vang - GetActorAngle(0) + 1.0) % 1.0;
+
+	if(((vang+0.125)%0.5) > 0.25) dist = FixedDiv(y, sin(vang));
+	else dist = FixedDiv(x, cos(vang));
+
+	if ((angle < 0.2 || angle > 0.8) && (dist >> 16) < range)
+	{
+		if (GetActorPitch(0) >= -0.25 && GetActorPitch(0) <= 0.25)
+		{
+			pitch = VectorAngle(dist, GetActorZ(tid) - (GetActorZ(0) + 41.0));
+			pitch = (pitch + GetActorPitch(0) + 1.0) % 1.0;
+			if ((hudX/2) * sin(angle) != 0 && cos(angle) != 0 && (hudX/2) * sin(pitch) != 0 && cos(pitch) != 0) //    Fixes divide by zero
+			{
+				x = hudX/2 - ((hudX/2) * sin(angle) / cos(angle));
+				y = hudY/2 - ((HUDX/2) * sin(pitch) / cos(pitch));
+
+				x+=xOffset;
+				y+=yOffset;
+				if(swap){HudMessage(i:dist >> 16; HUDMSG_PLAIN, msgID, colour, (x << 16), (y << 16), holdTime);}
+				else{HudMessage(s:text; HUDMSG_PLAIN, msgID, colour, (x << 16), (y << 16), holdTime);}
+			}
+		}
+	}
+}
+
+script "mav_istracerenemy" (void)
+{
+	int targetTID = ACS_ExecuteWithResult(147,0);
+	//int tracerTID = ACS_ExecuteWithResult(147,1);
+	bool result = 0;
+
+	SetActivator(0, AAPTR_TRACER);
+
+	if(!(ClassifyActor(0) & ACTOR_PLAYER)){
+		//Log(s:"Not a player");
+		result = 0;
+	}
+	else if(IsTeamGame && GetPlayerInfo(targetTID - 1000, PLAYERINFO_TEAM) == GetPlayerInfo(PlayerNumber(), PLAYERINFO_TEAM)){
+		result = 0;
+		//Log(s:"Not different teams");
+	}
+	else{
+		//Log(s:"SUCCESS");
+		result = 1;
+	}
+	SetResultValue(result);
+}
+
+script C_SET_POINTER (int Point, int TID)
+{
+	if(TID==0){terminate;}
+	//Log(s:"C_SET_POINTER >> ",i:Point,s:" with TID >> ",i:TID);
+	SetPointer(Point,TID);
+}
+
+Script 989 (int AimTarget, int HeightAdjust)
+{
+if(AimTarget <= 0){Terminate;}
+If(!ThingCount(T_NONE, AimTarget)){terminate;}
+
+int AimX = GetActorX(0);
+int AimY = GetActorY(0);
+int TargetX = GetActorX(AimTarget);
+int TargetY = GetActorY(AimTarget);
+SetActorAngle(0, VectorAngle(TargetX - AimX, TargetY - AimY));
+SetActorPitch(ActivatorTID(),VectorPitch(ActivatorTID(), AimTarget, HeightAdjust));
+}
+
+Script "mav_clientwarper" (int Object) CLIENTSIDE
+{
+	int Player = ACS_NamedExecuteWithResult("core_gettarget",0);
+	//Log(s:"Player = ",i:Player);
+	str TheString = "Honk";
+	bool Check = true;
+	Switch(Object)
+	{
+		Default:
+			Check = false;
+			break;
+		Case 1:
+			TheString = "ShieldCheck";
+			break;
+		Case 73:
+			TheString = "DangerFly";
+			break;
+	}
+	//Log(s:TheString);
+	if(Check){
+		while(GetActorProperty(Player, APROP_HEALTH)>0){
+			//Log(i:CheckActorInventory(Player, TheString));
+			if(CheckActorInventory(Player, TheString) == 0){
+				break;
+			}
+			Delay(1);
+		}
+	}
+	else{
+		while(GetActorProperty(Player, APROP_HEALTH)>0){
+			Delay(1);
+		}
+	}
+	Thing_Remove(0);
+}
+
+script "mav_istargetclient" (void) CLIENTSIDE
+{
+	SetActivatorToTarget(0);
+	if(consoleplayernumber() == playernumber()){
+		SetResultValue(1);
+	}
+	else
+	{
+		SetResultValue(0);
+	}
+}
+
+//ZANGIEF
+
+#define GRAB_DISTANCE 100 //how far to position the grabbed away from zangief
+#define GRAB_DISTANCE_LIMIT 100000 //how far away to give up on the grabbed, squared
+
+str ZangiefItems[3] = 
+{
+"WalrusSlideAngle",
+"ZangiefAngle",
+"SuplexID",
+};
+
+script 401 (int i)
+{
+	SetResultValue(CheckInventory(ZangiefItems[i]));
+}
+
+script 414 (int i)
+{
+	setActivatorToTarget(0);
+	setResultValue(ACS_ExecuteWithResult(401,i));
+}
+
+script "mav_ZangiefStartGrab" (int target)
+{
+	if (target==999) { SetResultValue(1); terminate; }
+	int angle = getActorAngle(0);
+	int xDiff = (getActorX(0)+GRAB_DISTANCE*cos(angle)) - getActorX(target);
+	int yDiff = (getActorY(0)+GRAB_DISTANCE*sin(angle)) - getActorY(target);
+	int zDiff = getActorZ(0) - getActorZ(target);
+	
+	int xDiffI = xDiff>>16;
+	int yDiffI = yDiff>>16;
+	int zDiffI = zDiff>>16;
+	
+	if (xDiffI*xDiffI+yDiffI*yDiffI+zDiffI*zDiffI < GRAB_DISTANCE_LIMIT) {
+		SetActorVelocity(target, xDiff, yDiff, zDiff, 0, 0);
+		setResultValue(1);
+	} else {
+		setResultValue(0);
+	}
+}
+
+script "mav_ZangiefCountInv" (int Item, int ThePointer)
+{
+	if(ThePointer>0){
+		SetActivator(0,ThePointer);
+	}
+	SetResultValue(CheckInventory(ZangiefItems[Item]));
+}
+
+script "mav_ZangiefSetThrow" (int target, int force, int zforce)
+{
+	Thing_Stop(target);
+	ThrustThing(GetActorAngle(0) >> 8, force, 1, target);
+	ThrustThingZ(target,zforce,0,0);
+}
+
+script "mav_ZangiefGrab" (int pitch, int angle, int Grab_D) //Pitch is given as x/360, Angle is given as x/255
+{
+	int target = ACS_NamedExecuteWithResult("mav_ZangiefCountInv",2)+999;
+	if (target==999) { SetResultValue(1); terminate; }
+	angle = angle<<8;
+	pitch = (pitch-360)*1.0/360;
+	int xDiff = (getActorX(0)+fixedMul(Grab_D*cos(angle),cos(pitch))) - getActorX(target);
+	int yDiff = (getActorY(0)+fixedMul(Grab_D*sin(angle),cos(pitch))) - getActorY(target);
+	int zDiff = (getActorZ(0)-Grab_D*sin(pitch)) - getActorZ(target);
+	
+	int xDiffI = xDiff>>16;
+	int yDiffI = yDiff>>16;
+	int zDiffI = zDiff>>16;
+
+	if (xDiffI*xDiffI+yDiffI*yDiffI+zDiffI*zDiffI < GRAB_DISTANCE_LIMIT) {
+		SetActorVelocity(target, xDiff, yDiff, zDiff, 0, 0);
+		setResultValue(1);
+	} else {
+		setResultValue(0);
+	}
+}

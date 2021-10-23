@@ -1,0 +1,53 @@
+actor BoomerKuwanger : ClassBase1
+{
+player.ScoreIcon "C_X1A0X"
+player.DisplayName "BoomerKuwanger"
+player.StartItem "BoomerangCutterBoss"
+player.maxhealth 85
+health 85
+player.ForwardMove 1.0, 1.0
+player.SideMove 0.98, 0.98
+player.Jumpz 12.5
++NOSKIN
+States
+{
+Spawn:
+CUTM A 0
+CUTM B 1
+goto Spawn
+
+See:
+CUTM BCDE 5
+Goto Spawn
+SeeC:
+CUTM RSTS 5
+Goto Spawn
+
+Melee:
+CUTM GF 6
+goto Spawn
+
+Missile:
+CUTM F 4
+CUTM G 6
+goto Spawn
+Missile2:
+CUTM G 7
+goto Spawn
+ClassPain:
+CUTM H 0 A_JumpIfInventory("BoomerNoCutterF",1,1)
+goto MegamanPain	
+CUTM U 0
+goto MegamanPain
+DeathFix:
+CUTM H 0 A_JumpIfInventory("BoomerNoCutterF",1,1)
+goto MegamanDeath
+CUTM U 0
+goto MegamanDeath
+ClassDeath:
+CUTM H 1
+goto MegaDeathEnd
+}
+}
+
+actor BoomerNoCutterF : Once{}

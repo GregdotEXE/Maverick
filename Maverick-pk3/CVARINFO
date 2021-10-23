@@ -1,0 +1,2 @@
+server bool mm8bdm_sv_projteamcolor = true; // Disable projectile team colors for all players.
+user bool mm8bdm_projteamcolor = true; // Disable projectile team colors locally. 

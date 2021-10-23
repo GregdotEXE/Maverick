@@ -1,0 +1,8 @@
+{
+name = "\cvTrainer"
+accuracy=6 intellect=6 evade=6 anticipation=6 reactiontime=6 perception=6
+class = "MegamanX"
+script = "humanbot"
+revealed = true
+revealed = false
+}

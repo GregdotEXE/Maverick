@@ -1,0 +1,664 @@
+const int SXF_TRANSVEL = (SXF_TRANSFERTRANSLATION|SXF_ABSOLUTEVELOCITY);
+
+actor ExplosionEffect1T : ExplosionEffect1 {}
+
+actor VoxelSpawned : Inventory
+{
+inventory.amount 1
+inventory.maxamount 1
+}
+
+actor VoxelVisual
+{
+PROJECTILE
++NOINTERACTION
++NOCLIP
+scale 2.5
++CLIENTSIDEONLY
+height 0
+radius 0
+states
+{
+Spawn:
+TNT1 A 0
+TNT1 A 0 A_JumpIf(CallACS("OpenGLCheck"),"OpenGL")
+TNT1 A 0 A_JumpIf(!CallACS("OpenGLCheck"),"Software")
+TNT1 A 1
+stop
+}
+}
+
+actor VoxelVisualYBillboard : VoxelVisual { +FORCEYBILLBOARD }
+
+actor Item1Platform_V : Item1Platform replaces Item1Platform
+{
+translation "0:255=0:255"
+States
+{
+Spawn:
+TNT1 A 0
+TNT1 A 0 A_GiveInventory("VoxelSpawned",1)
+TNT1 A 0 A_GiveInventory("ProjectileCode",1)
+TNT1 A 1 A_SpawnItemEx("Item1PlatformVoxelA",0,0,0,momx,momy,momz,0,SXF_TRANSVEL)
+ITEM A 0 A_Stop
+ITEM A 0 A_ChangeFlag(MISSILE,0)
+ITEM A 0 A_ChangeFlag(THRUGHOST,0)
+//ITEM ABABABABABABABAB 3
+//ITEM AZBZAZBZAZ 3
+
+TNT1 AAA 1 A_SpawnItemEx("Item1PlatformVoxelA",0,0,0,momx,momy,momz,0,SXF_TRANSVEL)
+TNT1 AAA 1 A_SpawnItemEx("Item1PlatformVoxelB",0,0,0,momx,momy,momz,0,SXF_TRANSVEL)
+TNT1 AAA 1 A_SpawnItemEx("Item1PlatformVoxelA",0,0,0,momx,momy,momz,0,SXF_TRANSVEL)
+TNT1 AAA 1 A_SpawnItemEx("Item1PlatformVoxelB",0,0,0,momx,momy,momz,0,SXF_TRANSVEL)
+TNT1 AAA 1 A_SpawnItemEx("Item1PlatformVoxelA",0,0,0,momx,momy,momz,0,SXF_TRANSVEL)
+TNT1 AAA 1 A_SpawnItemEx("Item1PlatformVoxelB",0,0,0,momx,momy,momz,0,SXF_TRANSVEL)
+TNT1 AAA 1 A_SpawnItemEx("Item1PlatformVoxelA",0,0,0,momx,momy,momz,0,SXF_TRANSVEL)
+TNT1 AAA 1 A_SpawnItemEx("Item1PlatformVoxelB",0,0,0,momx,momy,momz,0,SXF_TRANSVEL)
+TNT1 AAA 1 A_SpawnItemEx("Item1PlatformVoxelA",0,0,0,momx,momy,momz,0,SXF_TRANSVEL)
+TNT1 AAA 1 A_SpawnItemEx("Item1PlatformVoxelB",0,0,0,momx,momy,momz,0,SXF_TRANSVEL)
+TNT1 AAA 1 A_SpawnItemEx("Item1PlatformVoxelA",0,0,0,momx,momy,momz,0,SXF_TRANSVEL)
+TNT1 AAA 1 A_SpawnItemEx("Item1PlatformVoxelB",0,0,0,momx,momy,momz,0,SXF_TRANSVEL)
+TNT1 AAA 1 A_SpawnItemEx("Item1PlatformVoxelA",0,0,0,momx,momy,momz,0,SXF_TRANSVEL)
+TNT1 AAA 1 A_SpawnItemEx("Item1PlatformVoxelB",0,0,0,momx,momy,momz,0,SXF_TRANSVEL)
+TNT1 AAA 1 A_SpawnItemEx("Item1PlatformVoxelA",0,0,0,momx,momy,momz,0,SXF_TRANSVEL)
+TNT1 AAA 1 A_SpawnItemEx("Item1PlatformVoxelB",0,0,0,momx,momy,momz,0,SXF_TRANSVEL)
+
+TNT1 AAA 1 A_SpawnItemEx("Item1PlatformVoxelA",0,0,0,momx,momy,momz,0,SXF_TRANSVEL)
+TNT1 AAA 1
+TNT1 AAA 1 A_SpawnItemEx("Item1PlatformVoxelB",0,0,0,momx,momy,momz,0,SXF_TRANSVEL)
+TNT1 AAA 1
+TNT1 AAA 1 A_SpawnItemEx("Item1PlatformVoxelA",0,0,0,momx,momy,momz,0,SXF_TRANSVEL)
+TNT1 AAA 1
+TNT1 AAA 1 A_SpawnItemEx("Item1PlatformVoxelB",0,0,0,momx,momy,momz,0,SXF_TRANSVEL)
+TNT1 AAA 1
+TNT1 AAA 1 A_SpawnItemEx("Item1PlatformVoxelA",0,0,0,momx,momy,momz,0,SXF_TRANSVEL)
+TNT1 AAA 1
+Goto Death
+Death:
+TNT1 A 0 A_JumpIfInventory("VoxelSpawned",1,"Death2")
+TNT1 A 1 A_GiveInventory("ProjectileDCode",1)
+Death2:
+TNT1 A 0 A_SpawnItemEx("ExplosionEffect1T",0,0,0,0,0,0,0,SXF_TRANSFERTRANSLATION)
+stop
+}
+}
+
+actor Item1PlatformVoxelA : VoxelVisualYBillboard
+{
+states
+{
+OpenGL:
+ITE0 A 1
+stop
+Software:
+ITEM A 1
+stop
+}
+}
+
+actor Item1PlatformVoxelB : VoxelVisualYBillboard
+{
+states
+{
+OpenGL:
+ITE0 B 1
+stop
+Software:
+ITEM B 1
+stop
+}
+}
+
+actor Item2Platform_V : Item2Platform replaces Item2Platform
+{
+translation "0:255=0:255"
+States
+{
+Spawn:
+TNT1 A 0
+TNT1 A 0 A_GiveInventory("VoxelSpawned",1)
+TNT1 A 0 A_GiveInventory("ProjectileCode",1)
+TNT1 A 1 A_SpawnItemEx("Item2PlatformVoxelC",0,0,0,momx,momy,momz,0,SXF_TRANSVEL)
+ITEM C 0 A_Stop
+ITEM C 0 A_ChangeFlag(RIPPER,1)
+ITEM C 0 A_Cleartarget
+Waiting:
+ITEM C 0 A_SpawnItemEx("Item2Detect", 0, 0, 32)
+//ITEM C 3 A_SetUserVar("user_countdown", user_countdown + 1)
+TNT1 A 0 A_SetUserVar("user_countdown", user_countdown + 1)
+TNT1 AAA 1 A_SpawnItemEx("Item2PlatformVoxelC",0,0,0,momx,momy,momz,0,SXF_TRANSVEL)
+ITEM C 0 A_JumpIf(user_countdown == 50, "Death")
+ITEM C 0 A_JumpIfInventory("Item2Flag", 1, "MoveStart")
+Loop
+MoveStart:
+ITEM D 0 ACS_NamedExecuteAlways("core_stickyLifts",0,STICKYMODE_GUTSLIFT)
+ITEM D 0 A_PlaySoundEx("weapon/superboost", "weapon")
+//ITEM D 3 A_ChangeVelocity(2, 0, 0, CVF_REPLACE|CVF_RELATIVE)
+//ITEM E 3 A_ChangeVelocity(10, 0, 0, CVF_REPLACE|CVF_RELATIVE)
+//ITEM D 3 A_ChangeVelocity(18, 0, 0, CVF_REPLACE|CVF_RELATIVE)
+TNT1 A 0 A_ChangeVelocity(2, 0, 0, CVF_REPLACE|CVF_RELATIVE)
+TNT1 AAA 1 A_SpawnItemEx("Item2PlatformVoxelD",0,0,0,momx,momy,momz,0,SXF_TRANSVEL)
+TNT1 A 0 A_ChangeVelocity(10, 0, 0, CVF_REPLACE|CVF_RELATIVE)
+TNT1 AAA 1 A_SpawnItemEx("Item2PlatformVoxelE",0,0,0,momx,momy,momz,0,SXF_TRANSVEL)
+TNT1 A 0 A_ChangeVelocity(18, 0, 0, CVF_REPLACE|CVF_RELATIVE)
+TNT1 AAA 1 A_SpawnItemEx("Item2PlatformVoxelD",0,0,0,momx,momy,momz,0,SXF_TRANSVEL)
+Spawn2:
+//ITEM ED 3
+TNT1 AAA 1 A_SpawnItemEx("Item2PlatformVoxelE",0,0,0,momx,momy,momz,0,SXF_TRANSVEL)
+TNT1 AAA 1 A_SpawnItemEx("Item2PlatformVoxelD",0,0,0,momx,momy,momz,0,SXF_TRANSVEL)
+ITEM D 0 A_ChangeVelocity(20, 0, 0, CVF_REPLACE|CVF_RELATIVE)
+goto Spawn2
+Death:
+TNT1 A 0 A_JumpIfInventory("VoxelSpawned",1,"Death2")
+TNT1 A 1 A_GiveInventory("ProjectileDCode",1)
+Death2:
+TNT1 A 0 A_SpawnItemEx("ExplosionEffect1T",0,0,0,0,0,0,0,SXF_TRANSFERTRANSLATION)
+stop
+}
+}
+
+actor Item2PlatformVoxelC : VoxelVisualYBillboard
+{
+states
+{
+OpenGL:
+ITE0 C 1
+stop
+Software:
+ITEM C 1
+stop
+}
+}
+
+actor Item2PlatformVoxelD : VoxelVisualYBillboard
+{
+states
+{
+OpenGL:
+ITE0 D 1
+stop
+Software:
+ITEM D 1
+stop
+}
+}
+
+actor Item2PlatformVoxelE : VoxelVisualYBillboard
+{
+states
+{
+OpenGL:
+ITE0 E 1
+stop
+Software:
+ITEM E 1
+stop
+}
+}
+
+actor Item3Platform_V : Item3Platform replaces Item3Platform
+{
+    States
+    {
+    Spawn:
+		TNT1 A 0
+		TNT1 A 0 A_GiveInventory("VoxelSpawned",1)
+		TNT1 A 0 A_GiveInventory("ProjectileCode",1)
+        //ITEM F 1
+		TNT1 A 1 A_SpawnItemEx("Item3PlatformVoxelF",0,0,0,momx,momy,momz,0,SXF_TRANSVEL)
+        ITEM F 0 A_Stop
+        ITEM F 0 A_Cleartarget
+    SpawnLoop:
+        ITEM F 0 A_SpawnItemEx("Item3DetectE", 0, 1, 0, 1, 0, 0, 0, SXF_ABSOLUTEANGLE|SXF_MULTIPLYSPEED)
+        ITEM F 0 A_SpawnItemEx("Item3DetectN", 0, 1, 0, 1, 0, 0, 90, SXF_ABSOLUTEANGLE|SXF_MULTIPLYSPEED)
+        ITEM F 0 A_SpawnItemEx("Item3DetectW", 0, 1, 0, 1, 0, 0, 180, SXF_ABSOLUTEANGLE|SXF_MULTIPLYSPEED)
+        ITEM F 0 A_SpawnItemEx("Item3DetectS", 0, 1, 0, 1, 0, 0, 270, SXF_ABSOLUTEANGLE|SXF_MULTIPLYSPEED)
+        //ITEM F 4
+		TNT1 AAAA 1 A_SpawnItemEx("Item3PlatformVoxelF",0,0,0,momx,momy,momz,0,SXF_TRANSVEL)
+        ITEM F 0 A_JumpIfInventory("Item3Flag", 1, "RiseStart")
+        //ITEM G 1 A_JumpIf(true, "Death")
+        //wait
+		SpawnLoopWait:
+		TNT1 A 0 A_JumpIf(true, "Death")
+		TNT1 A 1 A_SpawnItemEx("Item3PlatformVoxelF",0,0,0,momx,momy,momz,0,SXF_TRANSVEL)
+		loop
+    RiseStart:
+        ITEM F 0 A_JumpIfInventory("Item3FlagN", 1, "RiseStartN")
+        ITEM F 0 A_JumpIfInventory("Item3FlagS", 1, "RiseStartS")
+        ITEM F 0 A_JumpIfInventory("Item3FlagW", 1, "RiseStartW")
+        ITEM F 0 A_JumpIfInventory("Item3FlagE", 1, "RiseStartE")
+        //ITEM F 1 A_JumpIf(true, "Death")
+        //wait
+		RistStartWait:
+		TNT1 A 0 A_JumpIf(true, "Death")
+		TNT1 A 1 A_SpawnItemEx("Item3PlatformVoxelF",0,0,0,momx,momy,momz,0,SXF_TRANSVEL)
+		loop
+    RiseStartE:
+        ITEM F 0 A_SetAngle(0)
+        goto Rise1
+    RiseStartW:
+        ITEM F 0 A_SetAngle(180)
+        goto Rise1
+    RiseStartN:
+        ITEM F 0 A_JumpIfInventory("Item3FlagW", 1, "RiseStartNW")
+        ITEM F 0 A_JumpIfInventory("Item3FlagE", 1, "RiseStartNE")
+        ITEM F 0 A_SetAngle(90)
+        //ITEM F 1 A_JumpIf(true, "Rise1")
+        //wait
+		RiseStartNWait:
+		TNT1 A 0 A_JumpIf(true, "Rise1")
+		TNT1 A 1 A_SpawnItemEx("Item3PlatformVoxelF",0,0,0,momx,momy,momz,0,SXF_TRANSVEL)
+		loop
+    RiseStartNW:
+        ITEM F 0 A_SetAngle(135)
+        goto Rise1
+    RiseStartNE:
+        ITEM F 0 A_SetAngle(45)
+        goto Rise1
+    RiseStartS:
+        ITEM F 0 A_JumpIfInventory("Item3FlagW", 1, "RiseStartSW")
+        ITEM F 0 A_JumpIfInventory("Item3FlagE", 1, "RiseStartSE")
+        ITEM F 0 A_SetAngle(270)
+        //ITEM F 1 A_JumpIf(true, "Rise1")
+        //wait
+		RiseStartSWait:
+		TNT1 A 0 A_JumpIf(true, "Rise1")
+		TNT1 A 1 A_SpawnItemEx("Item3PlatformVoxelF",0,0,0,momx,momy,momz,0,SXF_TRANSVEL)
+		loop
+    RiseStartSW:
+        ITEM F 0 A_SetAngle(225)
+        goto Rise1
+    RiseStartSE:
+        ITEM F 0 A_SetAngle(315)
+        goto Rise1
+    
+    Rise1:
+        ITEM F 0 ThrustThingZ(0, 24, 0, 0)
+    RiseF1:
+        ITEM F 0 A_PlaySoundEx("item/item3climb", "voice")
+        ITEM F 0 A_TakeInventory("Item3Flag", 1)
+        //ITEM F 2 A_SpawnItemEx("Item3Detect", 0, 1, 0, 1, 0, 0, 0, SXF_MULTIPLYSPEED)
+		TNT1 A 0 A_SpawnItemEx("Item3Detect", 0, 1, 0, 1, 0, 0, 0, SXF_MULTIPLYSPEED)
+		TNT1 A 1 A_SpawnItemEx("Item3PlatformVoxelF",0,0,0,momx,momy,momz,0,SXF_TRANSVEL)
+		TNT1 A 0 A_SpawnItemEx("Item3Detect", 0, 1, 0, 1, 0, 0, 0, SXF_MULTIPLYSPEED)
+		TNT1 A 1 A_SpawnItemEx("Item3PlatformVoxelF",0,0,0,momx,momy,momz,0,SXF_TRANSVEL)
+        ITEM F 0 A_JumpIf(ceilingz-z < 128+height, "Halt")
+        ITEM F 0 A_JumpIfInventory("Item3Flag", 1, "RiseF2")
+        //ITEM F 1 A_JumpIf(true, "Halt")
+        //wait
+		RiseF1Wait:
+		TNT1 A 0 A_JumpIf(true, "Halt")
+		TNT1 A 1 A_SpawnItemEx("Item3PlatformVoxelF",0,0,0,momx,momy,momz,0,SXF_TRANSVEL)
+		loop
+    RiseF2:
+        ITEM F 0 A_TakeInventory("Item3Flag", 1)
+        //ITEM F 2 A_SpawnItemEx("Item3Detect", 0, 1, 0, 1, 0, 0, 0, SXF_MULTIPLYSPEED)
+		TNT1 A 0 A_SpawnItemEx("Item3Detect", 0, 1, 0, 1, 0, 0, 0, SXF_MULTIPLYSPEED)
+		TNT1 A 1 A_SpawnItemEx("Item3PlatformVoxelF",0,0,0,momx,momy,momz,0,SXF_TRANSVEL)
+		TNT1 A 0 A_SpawnItemEx("Item3Detect", 0, 1, 0, 1, 0, 0, 0, SXF_MULTIPLYSPEED)
+		TNT1 A 1 A_SpawnItemEx("Item3PlatformVoxelF",0,0,0,momx,momy,momz,0,SXF_TRANSVEL)
+        ITEM F 0 A_JumpIf(ceilingz-z < 128+height, "Halt")
+        ITEM F 0 A_JumpIfInventory("Item3Flag", 1, "RiseFG")
+        //ITEM F 1 A_JumpIf(true, "Halt")
+        //wait
+		RiseF2Wait:
+		TNT1 A 0 A_JumpIf(true, "Halt")
+		TNT1 A 1 A_SpawnItemEx("Item3PlatformVoxelF",0,0,0,momx,momy,momz,0,SXF_TRANSVEL)
+		loop
+    RiseFG:
+        ITEM F 0 A_TakeInventory("Item3Flag", 1)
+        //ITEM FG 1 A_SpawnItemEx("Item3Detect", 0, 1, 0, 1, 0, 0, 0, SXF_MULTIPLYSPEED)
+		TNT1 A 0 A_SpawnItemEx("Item3Detect", 0, 1, 0, 1, 0, 0, 0, SXF_MULTIPLYSPEED)
+		TNT1 A 1 A_SpawnItemEx("Item3PlatformVoxelF",0,0,0,momx,momy,momz,0,SXF_TRANSVEL)
+		TNT1 A 0 A_SpawnItemEx("Item3Detect", 0, 1, 0, 1, 0, 0, 0, SXF_MULTIPLYSPEED)
+		TNT1 A 1 A_SpawnItemEx("Item3PlatformVoxelG",0,0,0,momx,momy,momz,0,SXF_TRANSVEL)
+        ITEM F 0 A_JumpIf(ceilingz-z < 128+height, "Halt")
+        ITEM F 0 A_JumpIfInventory("Item3Flag", 1, "RiseG1")
+        //ITEM F 1 A_JumpIf(true, "Halt")
+        //wait
+		RiseFGWait:
+		TNT1 A 0 A_JumpIf(true, "Halt")
+		TNT1 A 1 A_SpawnItemEx("Item3PlatformVoxelF",0,0,0,momx,momy,momz,0,SXF_TRANSVEL)
+		loop
+    RiseG1:
+        ITEM F 0 A_TakeInventory("Item3Flag", 1)
+        //ITEM G 2 A_SpawnItemEx("Item3Detect", 0, 1, 0, 1, 0, 0, 0, SXF_MULTIPLYSPEED)
+		TNT1 A 0 A_SpawnItemEx("Item3Detect", 0, 1, 0, 1, 0, 0, 0, SXF_MULTIPLYSPEED)
+		TNT1 A 1 A_SpawnItemEx("Item3PlatformVoxelG",0,0,0,momx,momy,momz,0,SXF_TRANSVEL)
+		TNT1 A 0 A_SpawnItemEx("Item3Detect", 0, 1, 0, 1, 0, 0, 0, SXF_MULTIPLYSPEED)
+		TNT1 A 1 A_SpawnItemEx("Item3PlatformVoxelG",0,0,0,momx,momy,momz,0,SXF_TRANSVEL)
+        ITEM G 0 A_JumpIf(ceilingz-z < 128+height, "Halt")
+        ITEM G 0 A_JumpIfInventory("Item3Flag", 1, "RiseG2")
+        //ITEM F 1 A_JumpIf(true, "Halt")
+        //wait
+		RiseG1Wait:
+		TNT1 A 0 A_JumpIf(true, "Halt")
+		TNT1 A 1 A_SpawnItemEx("Item3PlatformVoxelF",0,0,0,momx,momy,momz,0,SXF_TRANSVEL)
+		loop
+    RiseG2:
+        ITEM F 0 A_TakeInventory("Item3Flag", 1)
+        //ITEM G 2 A_SpawnItemEx("Item3Detect", 0, 1, 0, 1, 0, 0, 0, SXF_MULTIPLYSPEED)
+		TNT1 A 0 A_SpawnItemEx("Item3Detect", 0, 1, 0, 1, 0, 0, 0, SXF_MULTIPLYSPEED)
+		TNT1 A 1 A_SpawnItemEx("Item3PlatformVoxelG",0,0,0,momx,momy,momz,0,SXF_TRANSVEL)
+		TNT1 A 0 A_SpawnItemEx("Item3Detect", 0, 1, 0, 1, 0, 0, 0, SXF_MULTIPLYSPEED)
+		TNT1 A 1 A_SpawnItemEx("Item3PlatformVoxelG",0,0,0,momx,momy,momz,0,SXF_TRANSVEL)
+        ITEM G 0 A_JumpIf(ceilingz-z < 128+height, "Halt")
+        ITEM G 0 A_JumpIfInventory("Item3Flag", 1, "RiseF1")
+        //ITEM F 1 A_JumpIf(true, "Halt")
+        //wait
+		RiseG2Wait:
+		TNT1 A 0 A_JumpIf(true, "Halt")
+		TNT1 A 1 A_SpawnItemEx("Item3PlatformVoxelF",0,0,0,momx,momy,momz,0,SXF_TRANSVEL)
+		loop
+    Halt:
+        ITEM F 0 A_Stop
+        ITEM F 0 A_PlaySoundEx("item/item3wait", "voice")
+        //ITEM FG 5
+		TNT1 AAAAA 1 A_SpawnItemEx("Item3PlatformVoxelF",0,0,0,momx,momy,momz,0,SXF_TRANSVEL)
+		TNT1 AAAAA 1 A_SpawnItemEx("Item3PlatformVoxelG",0,0,0,momx,momy,momz,0,SXF_TRANSVEL)
+        ITEM F 0 A_Countdown
+        goto Halt+1
+    //Death:
+        //TNT1 A 0 A_SpawnItemEx("ExplosionEffect1")
+        //stop
+Death:
+TNT1 A 0 A_JumpIfInventory("VoxelSpawned",1,"Death2")
+TNT1 A 1 A_GiveInventory("ProjectileDCode",1)
+Death2:
+TNT1 A 0 A_SpawnItemEx("ExplosionEffect1T",0,0,0,0,0,0,0,SXF_TRANSFERTRANSLATION)
+stop
+    }
+}
+
+
+actor Item3PlatformVoxelF : VoxelVisualYBillboard
+{
+states
+{
+OpenGL:
+ITE0 F 1
+stop
+Software:
+ITEM F 1
+stop
+}
+}
+
+actor Item3PlatformVoxelG : VoxelVisualYBillboard
+{
+states
+{
+OpenGL:
+ITE0 G 1
+stop
+Software:
+ITEM G 1
+stop
+}
+}
+
+actor ConcreteShot_V : ConcreteShot replaces ConcreteShot
+{
+translation "0:255=0:255"
+States
+{
+Spawn:
+TNT1 AA 0 A_GiveInventory("ProjectileCode",1)
+goto "Super::Spawn"
+Death:
+TNT1 A 0 A_GiveInventory("ProjectileDCode",1)
+TNT1 A 0 A_ChangeFlag(NOGRAVITY, 1)
+TNT1 AAAA 1 A_SpawnItemEx("ConcreteShotVoxelD",0,0,0,momx,momy,momz,0,SXF_TRANSVEL)
+CONC D 0 A_JumpIfCloser(48, "XDeath")
+CONC B 0 A_SpawnItemEx("ConcreteBlock",0,0,0,0,0,0,0, SXF_ABSOLUTEANGLE)
+CONC E 0 A_PlaySoundEx("weapon/concreteblock","Weapon")
+stop
+}
+}
+
+actor ConcreteShotVoxelD : VoxelVisual
+{
+states
+{
+OpenGL:
+CON0 D 1
+stop
+Software:
+CONC D 1
+stop
+}
+}
+
+actor ConcreteBlock_V : ConcreteBlock replaces ConcreteBlock
+{
+translation "0:255=0:255"
+States
+{
+Spawn:
+TNT1 A 0
+TNT1 A 0 A_GiveInventory("ProjectileCode",1)
+TNT1 A 0 A_ClearTarget
+TNT1 A 1 A_SpawnItemEx("ConcreteBlockVoxelD",0,0,0,momx,momy,momz,0,SXF_TRANSVEL)
+CONC E 0 A_ChangeFlag(TOUCHY, false)
+CONC E 0 A_ChangeFlag(MISSILE, false)
+CONC E 0 A_ChangeFlag(SOLID, true)
+//CONC EF 64
+TNT1 AAAAAAAAAA 1 A_SpawnItemEx("ConcreteBlockVoxelE",0,0,0,momx,momy,momz,0,SXF_TRANSVEL)
+TNT1 AAAAAAAAAA 1 A_SpawnItemEx("ConcreteBlockVoxelE",0,0,0,momx,momy,momz,0,SXF_TRANSVEL)
+TNT1 AAAAAAAAAA 1 A_SpawnItemEx("ConcreteBlockVoxelE",0,0,0,momx,momy,momz,0,SXF_TRANSVEL)
+TNT1 AAAAAAAAAA 1 A_SpawnItemEx("ConcreteBlockVoxelE",0,0,0,momx,momy,momz,0,SXF_TRANSVEL)
+TNT1 AAAAAAAAAA 1 A_SpawnItemEx("ConcreteBlockVoxelE",0,0,0,momx,momy,momz,0,SXF_TRANSVEL)
+TNT1 AAAAAAAAAA 1 A_SpawnItemEx("ConcreteBlockVoxelE",0,0,0,momx,momy,momz,0,SXF_TRANSVEL)
+TNT1 AAAA 1 A_SpawnItemEx("ConcreteBlockVoxelE",0,0,0,momx,momy,momz,0,SXF_TRANSVEL)
+TNT1 AAAAAAAAAA 1 A_SpawnItemEx("ConcreteBlockVoxelF",0,0,0,momx,momy,momz,0,SXF_TRANSVEL)
+TNT1 AAAAAAAAAA 1 A_SpawnItemEx("ConcreteBlockVoxelF",0,0,0,momx,momy,momz,0,SXF_TRANSVEL)
+TNT1 AAAAAAAAAA 1 A_SpawnItemEx("ConcreteBlockVoxelF",0,0,0,momx,momy,momz,0,SXF_TRANSVEL)
+TNT1 AAAAAAAAAA 1 A_SpawnItemEx("ConcreteBlockVoxelF",0,0,0,momx,momy,momz,0,SXF_TRANSVEL)
+TNT1 AAAAAAAAAA 1 A_SpawnItemEx("ConcreteBlockVoxelF",0,0,0,momx,momy,momz,0,SXF_TRANSVEL)
+TNT1 AAAAAAAAAA 1 A_SpawnItemEx("ConcreteBlockVoxelF",0,0,0,momx,momy,momz,0,SXF_TRANSVEL)
+TNT1 AAAA 1 A_SpawnItemEx("ConcreteBlockVoxelF",0,0,0,momx,momy,momz,0,SXF_TRANSVEL)
+Goto Death
+Death:
+TNT1 A 0 A_GiveInventory("ProjectileDCode",1)
+TNT1 A 0 A_NoBlocking
+//CONC FG 3
+TNT1 AAA 1 A_SpawnItemEx("ConcreteBlockVoxelF",0,0,0,momx,momy,momz,0,SXF_TRANSVEL)
+TNT1 AAA 1 A_SpawnItemEx("ConcreteBlockVoxelG",0,0,0,momx,momy,momz,0,SXF_TRANSVEL)
+stop
+}
+}
+
+actor ConcreteBlockVoxel : VoxelVisualYBillboard { scale 2.0 }
+
+actor ConcreteBlockVoxelD : ConcreteBlockVoxel
+{
+states
+{
+OpenGL:
+CON0 D 1
+stop
+Software:
+CONC D 1
+stop
+}
+}
+
+actor ConcreteBlockVoxelE : ConcreteBlockVoxel
+{
+states
+{
+OpenGL:
+CON0 E 1
+stop
+Software:
+CONC E 1
+stop
+}
+}
+
+actor ConcreteBlockVoxelF : ConcreteBlockVoxel
+{
+states
+{
+OpenGL:
+CON0 F 1
+stop
+Software:
+CONC F 1
+stop
+}
+}
+
+actor ConcreteBlockVoxelG : ConcreteBlockVoxel
+{
+states
+{
+OpenGL:
+CON0 G 1
+stop
+Software:
+CONC G 1
+stop
+}
+}
+
+actor IceWall_V : IceWall replaces IceWall
+{
+translation "0:255=0:255"
+States
+{
+Spawn:
+TNT1 A 0
+TNT1 A 0 A_GiveInventory("ProjectileCode",1)
+TNT1 A 0 A_TakeInventory("IceWallFlag",1,0,AAPTR_TARGET)
+TNT1 A 1 A_SpawnItemEx("IceWallVoxelF",0,0,0,momx,momy,momz,0,SXF_TRANSVEL)
+SpawnLoop:
+ICWL F 0 A_JumpIfInventory("IceWallFlag",1,"Death",AAPTR_TARGET)
+TNT1 A 1 A_SpawnItemEx("IceWallVoxelF",0,0,0,momx,momy,momz,0,SXF_TRANSVEL)
+ICWL F 0 A_JumpIf(momx>1||momy>1||momx<-1||momy<-1,"MoveBegin")
+ICWL F 0 Thing_Damage(0, 1)
+ICWL F 0 A_Explode(11, 64, 0)
+loop
+MoveBegin:
+ICWL F 0 ACS_NamedExecuteAlways("core_stickyLifts",0,STICKYMODE_GUTSLIFT)
+ICWL F 0 A_ChangeFlag("PUSHABLE",0)
+ICWL F 0 ACS_ExecuteAlways(994, 0, 1)
+ICWL F 0 A_JumpIfInventory("IceWallFlag",1,"Death",AAPTR_TARGET)
+TNT1 A 1 A_SpawnItemEx("IceWallVoxelF",0,0,0,momx,momy,momz,0,SXF_TRANSVEL)
+Accelerate:
+/*
+ICWL F 0 A_Recoil(-3)
+ICWL FFFFF 1 A_JumpIfInventory("IceWallFlag",1,"Death",AAPTR_TARGET)
+ICWL F 0 A_Recoil(-3)
+ICWL FFFFF 1 A_JumpIfInventory("IceWallFlag",1,"Death",AAPTR_TARGET)
+ICWL F 0 A_Recoil(-3)
+ICWL FFFFF 1 A_JumpIfInventory("IceWallFlag",1,"Death",AAPTR_TARGET)
+ICWL F 0 A_Recoil(-2)
+ICWL FFFFF 1 A_JumpIfInventory("IceWallFlag",1,"Death",AAPTR_TARGET)
+ICWL F 0 A_Recoil(-2)
+ICWL FFFFF 1 A_JumpIfInventory("IceWallFlag",1,"Death",AAPTR_TARGET)
+*/
+ICWL F 0 A_Recoil(-3)
+ICWL F 0 A_JumpIfInventory("IceWallFlag",1,"Death",AAPTR_TARGET)
+TNT1 A 1 A_SpawnItemEx("IceWallVoxelF",0,0,0,momx,momy,momz,0,SXF_TRANSVEL)
+ICWL F 0 A_JumpIfInventory("IceWallFlag",1,"Death",AAPTR_TARGET)
+TNT1 A 1 A_SpawnItemEx("IceWallVoxelF",0,0,0,momx,momy,momz,0,SXF_TRANSVEL)
+ICWL F 0 A_JumpIfInventory("IceWallFlag",1,"Death",AAPTR_TARGET)
+TNT1 A 1 A_SpawnItemEx("IceWallVoxelF",0,0,0,momx,momy,momz,0,SXF_TRANSVEL)
+ICWL F 0 A_JumpIfInventory("IceWallFlag",1,"Death",AAPTR_TARGET)
+TNT1 A 1 A_SpawnItemEx("IceWallVoxelF",0,0,0,momx,momy,momz,0,SXF_TRANSVEL)
+ICWL F 0 A_JumpIfInventory("IceWallFlag",1,"Death",AAPTR_TARGET)
+TNT1 A 1 A_SpawnItemEx("IceWallVoxelF",0,0,0,momx,momy,momz,0,SXF_TRANSVEL)
+ICWL F 0 A_Recoil(-3)
+ICWL F 0 A_JumpIfInventory("IceWallFlag",1,"Death",AAPTR_TARGET)
+TNT1 A 1 A_SpawnItemEx("IceWallVoxelF",0,0,0,momx,momy,momz,0,SXF_TRANSVEL)
+ICWL F 0 A_JumpIfInventory("IceWallFlag",1,"Death",AAPTR_TARGET)
+TNT1 A 1 A_SpawnItemEx("IceWallVoxelF",0,0,0,momx,momy,momz,0,SXF_TRANSVEL)
+ICWL F 0 A_JumpIfInventory("IceWallFlag",1,"Death",AAPTR_TARGET)
+TNT1 A 1 A_SpawnItemEx("IceWallVoxelF",0,0,0,momx,momy,momz,0,SXF_TRANSVEL)
+ICWL F 0 A_JumpIfInventory("IceWallFlag",1,"Death",AAPTR_TARGET)
+TNT1 A 1 A_SpawnItemEx("IceWallVoxelF",0,0,0,momx,momy,momz,0,SXF_TRANSVEL)
+ICWL F 0 A_JumpIfInventory("IceWallFlag",1,"Death",AAPTR_TARGET)
+TNT1 A 1 A_SpawnItemEx("IceWallVoxelF",0,0,0,momx,momy,momz,0,SXF_TRANSVEL)
+ICWL F 0 A_Recoil(-3)
+ICWL F 0 A_JumpIfInventory("IceWallFlag",1,"Death",AAPTR_TARGET)
+TNT1 A 1 A_SpawnItemEx("IceWallVoxelF",0,0,0,momx,momy,momz,0,SXF_TRANSVEL)
+ICWL F 0 A_JumpIfInventory("IceWallFlag",1,"Death",AAPTR_TARGET)
+TNT1 A 1 A_SpawnItemEx("IceWallVoxelF",0,0,0,momx,momy,momz,0,SXF_TRANSVEL)
+ICWL F 0 A_JumpIfInventory("IceWallFlag",1,"Death",AAPTR_TARGET)
+TNT1 A 1 A_SpawnItemEx("IceWallVoxelF",0,0,0,momx,momy,momz,0,SXF_TRANSVEL)
+ICWL F 0 A_JumpIfInventory("IceWallFlag",1,"Death",AAPTR_TARGET)
+TNT1 A 1 A_SpawnItemEx("IceWallVoxelF",0,0,0,momx,momy,momz,0,SXF_TRANSVEL)
+ICWL F 0 A_JumpIfInventory("IceWallFlag",1,"Death",AAPTR_TARGET)
+TNT1 A 1 A_SpawnItemEx("IceWallVoxelF",0,0,0,momx,momy,momz,0,SXF_TRANSVEL)
+ICWL F 0 A_Recoil(-2)
+ICWL F 0 A_JumpIfInventory("IceWallFlag",1,"Death",AAPTR_TARGET)
+TNT1 A 1 A_SpawnItemEx("IceWallVoxelF",0,0,0,momx,momy,momz,0,SXF_TRANSVEL)
+ICWL F 0 A_JumpIfInventory("IceWallFlag",1,"Death",AAPTR_TARGET)
+TNT1 A 1 A_SpawnItemEx("IceWallVoxelF",0,0,0,momx,momy,momz,0,SXF_TRANSVEL)
+ICWL F 0 A_JumpIfInventory("IceWallFlag",1,"Death",AAPTR_TARGET)
+TNT1 A 1 A_SpawnItemEx("IceWallVoxelF",0,0,0,momx,momy,momz,0,SXF_TRANSVEL)
+ICWL F 0 A_JumpIfInventory("IceWallFlag",1,"Death",AAPTR_TARGET)
+TNT1 A 1 A_SpawnItemEx("IceWallVoxelF",0,0,0,momx,momy,momz,0,SXF_TRANSVEL)
+ICWL F 0 A_JumpIfInventory("IceWallFlag",1,"Death",AAPTR_TARGET)
+TNT1 A 1 A_SpawnItemEx("IceWallVoxelF",0,0,0,momx,momy,momz,0,SXF_TRANSVEL)
+ICWL F 0 A_Recoil(-2)
+ICWL F 0 A_JumpIfInventory("IceWallFlag",1,"Death",AAPTR_TARGET)
+TNT1 A 1 A_SpawnItemEx("IceWallVoxelF",0,0,0,momx,momy,momz,0,SXF_TRANSVEL)
+ICWL F 0 A_JumpIfInventory("IceWallFlag",1,"Death",AAPTR_TARGET)
+TNT1 A 1 A_SpawnItemEx("IceWallVoxelF",0,0,0,momx,momy,momz,0,SXF_TRANSVEL)
+ICWL F 0 A_JumpIfInventory("IceWallFlag",1,"Death",AAPTR_TARGET)
+TNT1 A 1 A_SpawnItemEx("IceWallVoxelF",0,0,0,momx,momy,momz,0,SXF_TRANSVEL)
+ICWL F 0 A_JumpIfInventory("IceWallFlag",1,"Death",AAPTR_TARGET)
+TNT1 A 1 A_SpawnItemEx("IceWallVoxelF",0,0,0,momx,momy,momz,0,SXF_TRANSVEL)
+ICWL F 0 A_JumpIfInventory("IceWallFlag",1,"Death",AAPTR_TARGET)
+TNT1 A 1 A_SpawnItemEx("IceWallVoxelF",0,0,0,momx,momy,momz,0,SXF_TRANSVEL)
+Moving:
+ICWL F 0 A_JumpIfInventory("IceWallFlag",1,"Death",AAPTR_TARGET)
+ICWL F 0 Thing_Damage(0, 1)
+ICWL F 0 A_JumpIfHealthLower(75,"MovingLow")
+TNT1 A 1 A_SpawnItemEx("IceWallVoxelF",0,0,0,momx,momy,momz,0,SXF_TRANSVEL)
+loop
+MovingLow:
+ICWL K 0 A_JumpIfInventory("IceWallFlag",1,"Death",AAPTR_TARGET)
+ICWL K 0 Thing_Damage(0, 1)
+TNT1 A 1 A_SpawnItemEx("IceWallVoxelK",0,0,0,momx,momy,momz,0,SXF_TRANSVEL)
+loop
+Death:
+ICWL K 0 A_TakeInventory("CutterFlag", 1)
+ICWL K 0 A_Stop
+ICWL K 0 A_ChangeFlag("NOGRAVITY", 1)
+ICWL K 0 A_ChangeFlag("SOLID", 0)
+ICWL K 0 A_ChangeFlag("SHOOTABLE", 0)
+//ICWL K 10
+TNT1 AAAAAAAAAA 1 A_SpawnItemEx("IceWallVoxelK",0,0,0,momx,momy,momz,0,SXF_TRANSVEL)
+ICWL LM 5
+stop
+}
+}
+
+actor IceWallVoxelF : VoxelVisual
+{
+states
+{
+OpenGL:
+ICW0 F 1
+stop
+Software:
+ICWL F 1
+stop
+}
+}
+
+actor IceWallVoxelK : VoxelVisual
+{
+states
+{
+OpenGL:
+ICW0 K 1
+stop
+Software:
+ICWL K 1
+stop
+}
+}
