@@ -1,5 +1,16 @@
+//X
+weapon/XChargeLoop 	junkloop
+weapon/XChargeStart junkstar
+
+//Sigma?
 weapon/SGALARM SGALARM
 
+//Morph Moth
+weapon/MothSpin MOTHSPIN $volume weapon/MothSpin 0.3
+weapon/MothSpreadJunk MJUNKGO
+weapon/MothwireUp MOTHUP
+
+//Flame Stag??
 $volume weapon/BASH1 1.5
 $volume weapon/BASH2 1.5
 
@@ -7,15 +18,19 @@ weapon/FIRE1 FIRE1
 weapon/BASH1 BASH1
 weapon/BASH2 BASH2
 
+//Boomer Kuwanger
 weapon/BKCUTT BKCUTT
 weapon/BKDASH BKDASH
 weapon/BKTELE BKTELE
+//Storm Eagle
 weapon/SESTORM SESTORM
 weapon/SEDIVE SEDIVE
 weapon/SEFLAP SEFLAP
 
+//I dont have a CLUE as to what this is
 weapon/GrenadeBusterShot SHTSON
 
+//mac :D
 weapon/BALAMAC MACCC
 weapon/MACSTUN MACSTU
 weapon/MACTELE MSTUN

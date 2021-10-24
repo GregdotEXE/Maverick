@@ -33,37 +33,45 @@ Actor XBusterBoss : BaseMM8BDMWepX
 		Fire:
 		BUST B 0 A_JumpIfInventory("IsPicking",1,"GiveFirstArmor")
 		BUST B 1
+		BUST B 1 A_Refire("HoldGo")
+		goto MegaShot
+		HoldGo:
+		BUST B 0 A_PlaySoundEx("weapon/XChargeStart","Weapon")
 		goto Hold
 		Hold:
 		BUST B 0 A_JumpIfInventory("WeaponCharge",8,"Charge")
-		BUST B 2 A_GiveInventory("WeaponCharge",1)
+		BUST B 3 A_GiveInventory("WeaponCharge",1)
 		BUST B 0 A_Refire
 		goto MegaShot
 		Charge:
 		BUST B 0 A_JumpIfInventory("WeaponCharge",20,"Charge2")
-		BUST B 1 //ACS_ExecuteAlways(998,0,14981,1)
-		BUST B 2 A_GiveInventory("WeaponCharge",1)
-		BUST B 1 //ACS_ExecuteAlways(998,0,14980,1)
+		BUST C 2 //ACS_ExecuteAlways(998,0,14981,1)
+		BUST C 2 A_GiveInventory("WeaponCharge",1)
+		BUST C 2 //ACS_ExecuteAlways(998,0,14980,1)
+		BUST B 0 A_PlaySoundEx("weapon/XChargeLoop","Weapon")
 		BUST B 0 A_Refire
 		Goto MegaShot
 		Charge2:
-		BUST B 1 //ACS_ExecuteAlways(998,0,14983,1)
-		BUST B 1
-		BUST B 1 //ACS_ExecuteAlways(998,0,14980,1)
+		BUST D 6 A_PlaySoundEx("weapon/XChargeLoop","Weapon")
 		BUST B 0 A_Refire
 		Goto MegaShot
 		
 		MegaShot:
-		BUST B 3
 		BUST B 0 A_JumpIfInventory("WeaponCharge",20,"BigLemonShoot")
 		BUST B 0 A_JumpIfInventory("WeaponCharge",8,"MidLemonShoot")
-		BUST B 2 A_GiveInventory("MegamanXMain_CI",1)
+		TNT1 A 0 A_PlaySoundEx("weapon/mbuster","Weapon")
+		BUST C 0 A_GiveInventory("MegamanXMain_CI",1)
+		BUST CDC 2
 		goto Ender
 		MidLemonShoot:
-		BUST B 2 A_GiveInventory("MegamanXMain2_CI",1)
+		TNT1 A 0 A_PlaySoundEx("weapon/megaarmmini","Weapon")
+		BUST C 0 A_GiveInventory("MegamanXMain2_CI",1)
+		BUST DCB 2
 		goto Ender
 		BigLemonShoot:
-		BUST B 2 A_GiveInventory("MegamanXMain3_CI",1)
+		TNT1 A 0 A_PlaySoundEx("weapon/napalm","Weapon")
+		BUST D 0 A_GiveInventory("MegamanXMain3_CI",1)
+		BUST CB 2
 		goto Ender
 		Ender:
 		BUST B 5 A_TakeInventory("WeaponCharge",999)
@@ -77,10 +85,20 @@ Actor XBusterBoss : BaseMM8BDMWepX
 		BUST B 1 A_JumpIf(floorz-z==0,"Dash")
 		goto Ready1
 		Dash:
+		TNT1 A 0 A_PlaySoundEx("weapon/solarshoot","Weapon")
+		BUST B 0 //A_GunFlash("Flash.Anim")
 		BUST B 0 A_ChangeVelocity(40,0,momz,3)
 		BUST B 0 A_SetArg(3,momy)
 		BUST B 0 A_SetArg(2,momx)
-		BUST B 20
+		BUST B 1 Offset(0,30)
+		BUST B 1 Offset(0,35)
+		BUST B 1 Offset(0,40)
+		BUST B 1 Offset(0,45)
+		BUST B 15 Offset(0,50)
+		BUST B 1 Offset(0,45)
+		BUST B 1 Offset(0,40)
+		BUST B 1 Offset(0,35)
+		BUST B 1 Offset(0,30)
 		goto Ready1
 		GiveSecondArmor:
 		TNT1 A 0 A_GiveInventory("SecondArmorPickup",1)
@@ -140,6 +158,12 @@ Actor XBusterBoss : BaseMM8BDMWepX
 		GiveThirdArmor:
 		TNT1 A 0 A_GiveInventory("ThirdArmorPickup",1)
 		goto Ready1
+		
+		Flash.Anim:
+		BDAS ZZGG 1 Offset(0,0)
+		BDAS FFFFF 2 Offset(0,0)
+		BDAS GZ 2 Offset(0,0)
+		stop
 	}
 }
 
@@ -240,11 +264,11 @@ actor MegaLemon
 	States
 	{
 		Spawn:
-		BUST A 1
+		ARRS B 1
 		wait
 		
 		Death:
-		BUST A 1
+		TNT1 A 1
 		stop
 	}
 }
@@ -258,16 +282,16 @@ actor MegaMidLemon
 	Damage (15)
 	radius 7
 	height 7
-	Speed 38
+	Speed 48
 	scale 2.5
 	States
 	{
 		Spawn:
-		BUST A 1
-		wait
+		ARRS EF 3
+		loop
 		
 		Death:
-		BUST A 1
+		TNT1 A 1
 		stop
 	}
 }
@@ -281,16 +305,16 @@ actor MegaBigLemon
 	Damage (20)
 	radius 10
 	height 10
-	Speed 40
+	Speed 64
 	scale 2.5
 	States
 	{
 		Spawn:
-		BUST A 1
-		wait
+		ARRS CD 3
+		loop
 		
 		Death:
-		BUST A 1
+		TNT1 A 1
 		stop
 	}
 }
@@ -309,11 +333,11 @@ actor Hadoken : FastProjectile
 	States
 	{
 		Spawn:
-		BUST A 1
+		CHBU EFG 1
 		wait
 		
 		Death:
-		BUST A 1
+		CHBU EFG 1
 		stop
 	}
 }
