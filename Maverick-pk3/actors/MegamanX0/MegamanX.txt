@@ -11,16 +11,16 @@ player.StartItem "CanGiga",1
 States
 {
 Spawn:
-MEGA A 0
-MEGA B 1
-MEGA A 1
+MMXS A 0
+MMXS B 1
+MMXS A 1
 Goto Spawn+2
 See:
-MEGA BCDE 5
+MMXS BCDE 5
 Goto Spawn
 Missile:
-MEGA F 5
-MEGA G 4
+MMXS F 5
+MMXS G 4
 goto Spawn
 }
 }
