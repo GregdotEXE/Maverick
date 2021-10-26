@@ -1,15 +1,16 @@
 actor FlameStag : ClassBase1
 {
-//player.ScoreIcon "C_X2##X"
+player.ScoreIcon "C_X2A2X"
 player.displayname "Flame Stag"
-Health 100
-Player.MaxHealth 100
+Health 75
+Player.MaxHealth 75
 player.startitem "SpeedBurnerBoss"
-player.ForwardMove .8, .8
-player.SideMove .8, .8
-player.jumpz 10
+player.ForwardMove .9, .9
+player.SideMove .88, .88
+player.jumpz 15
 player.startitem "FSAmmo", 28
-player.startitem "NormalArmor"
+player.startitem "CanWallJump"
+player.startitem "CanWallJumpStack", 5
 States
 {
 Spawn:
