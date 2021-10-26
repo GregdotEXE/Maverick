@@ -43,6 +43,48 @@ Texture "C_X1A1X", 32, 32
 	Patch "SEAGMUG", 0, 0
 }
 
+Sprite "C_X1A2", 32, 32
+{
+	XScale 2.000
+	YScale 2.000
+	Patch "C_X1A2", 0, 0
+}
+
+Texture "C_X1A2X", 32, 32
+{
+	XScale 4.000
+	YScale 4.000
+	Patch "C_X1A2", 0, 0
+}
+
+Sprite "C_X2A2", 32, 32
+{
+	XScale 2.000
+	YScale 2.000
+	Patch "C_X2A2", 0, 0
+}
+
+Texture "C_X2A2X", 32, 32
+{
+	XScale 4.000
+	YScale 4.000
+	Patch "C_X2A2", 0, 0
+}
+
+Sprite "C_X3A1", 32, 32
+{
+	XScale 2.000
+	YScale 2.000
+	Patch "C_X3A1", 0, 0
+}
+
+Texture "C_X3A1X", 32, 32
+{
+	XScale 4.000
+	YScale 4.000
+	Patch "C_X3A1", 0, 0
+}
+
 Sprite "C_X3A0", 32, 32
 {
 	XScale 2.000
