@@ -76,6 +76,11 @@ texture VARMLA8,56,8{patch BARMLA8,0,0{rotate 90}}
 texture BARMLAS,8,56{}
 texture BARMFL,8,56{patch BARENERG,0,0{Translation"192:192=57:57","198:198=60:60"}}
 texture VARMFL,56,8{patch BARMFL,0,0{rotate 90}}
+//Flame Stag
+texture BARSTG,8,56{patch BARENERG,0,0{Translation"192:192=219:219","198:198=180:180"}}
+texture VARSTG,56,8{patch BARSGM1,0,0{rotate 90}}
+texture BARSTG2,8,56{patch BARENERG,0,0{Translation"192:192=198:198","198:198=199:199"}}
+texture VARSTG2,56,8{patch BARSGM1,0,0{rotate 90}}
 
 //Blast Hornet
 texture BARBLH,8,56{patch BARENERG,0,0{Translation"192:192=160:160","198:198=228:228"}}
